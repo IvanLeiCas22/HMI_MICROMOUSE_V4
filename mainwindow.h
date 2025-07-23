@@ -35,6 +35,9 @@ private slots:
     // --- Slot para procesar paquetes del micromouse ---
     void onPacketReceived(quint8 command, const QByteArray &payload);
 
+    // --- Slots para enviar comandos ---
+    void on_btnSendCMD_clicked();
+
 private:
     Ui::MainWindow *ui;
     QButtonGroup *navigationButtonGroup; // Nuevo miembro para agrupar los botones de navegación
@@ -44,5 +47,6 @@ private:
     // --- Funciones de ayuda ---
     void updateSerialPortList();
     void updateUIState(bool connected);
+    void populateCMDComboBox();
 };
 #endif // MAINWINDOW_H

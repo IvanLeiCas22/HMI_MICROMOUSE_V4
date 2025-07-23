@@ -20,6 +20,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
@@ -71,10 +72,10 @@ public:
     QGroupBox *groupCMDSend;
     QVBoxLayout *verticalLayout_6;
     QHBoxLayout *horizontalLayout_6;
-    QLabel *label_2;
-    QComboBox *comboBox;
-    QPushButton *pushButton;
-    QLineEdit *commsLog;
+    QLabel *CMDTitleLabel;
+    QComboBox *CMDComboBox;
+    QPushButton *btnSendCMD;
+    QPlainTextEdit *commsLog;
     QWidget *page_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -347,39 +348,35 @@ public:
         verticalLayout_6->setObjectName("verticalLayout_6");
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName("horizontalLayout_6");
-        label_2 = new QLabel(groupCMDSend);
-        label_2->setObjectName("label_2");
+        CMDTitleLabel = new QLabel(groupCMDSend);
+        CMDTitleLabel->setObjectName("CMDTitleLabel");
 
-        horizontalLayout_6->addWidget(label_2);
+        horizontalLayout_6->addWidget(CMDTitleLabel);
 
-        comboBox = new QComboBox(groupCMDSend);
-        comboBox->setObjectName("comboBox");
+        CMDComboBox = new QComboBox(groupCMDSend);
+        CMDComboBox->setObjectName("CMDComboBox");
         QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(comboBox->sizePolicy().hasHeightForWidth());
-        comboBox->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(CMDComboBox->sizePolicy().hasHeightForWidth());
+        CMDComboBox->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_6->addWidget(comboBox);
+        horizontalLayout_6->addWidget(CMDComboBox);
 
 
         verticalLayout_6->addLayout(horizontalLayout_6);
 
-        pushButton = new QPushButton(groupCMDSend);
-        pushButton->setObjectName("pushButton");
+        btnSendCMD = new QPushButton(groupCMDSend);
+        btnSendCMD->setObjectName("btnSendCMD");
 
-        verticalLayout_6->addWidget(pushButton);
+        verticalLayout_6->addWidget(btnSendCMD);
 
 
         verticalLayout_2->addWidget(groupCMDSend);
 
-        commsLog = new QLineEdit(page);
+        commsLog = new QPlainTextEdit(page);
         commsLog->setObjectName("commsLog");
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(commsLog->sizePolicy().hasHeightForWidth());
-        commsLog->setSizePolicy(sizePolicy2);
+        commsLog->setReadOnly(true);
 
         verticalLayout_2->addWidget(commsLog);
 
@@ -428,8 +425,8 @@ public:
         btnDisconnectUDP->setText(QCoreApplication::translate("MainWindow", "Desconectar", nullptr));
         labelCommStatus->setText(QCoreApplication::translate("MainWindow", "Estado Conexi\303\263n", nullptr));
         groupCMDSend->setTitle(QCoreApplication::translate("MainWindow", "Test envio de comandos", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Comando:", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Enviar", nullptr));
+        CMDTitleLabel->setText(QCoreApplication::translate("MainWindow", "Comando:", nullptr));
+        btnSendCMD->setText(QCoreApplication::translate("MainWindow", "Enviar", nullptr));
     } // retranslateUi
 
 };

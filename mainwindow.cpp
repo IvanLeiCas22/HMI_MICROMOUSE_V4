@@ -2,7 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox> // Para mostrar mensajes de error
 #include <QDebug>      // Para imprimir en la consola de depuración
-#include <QDataStream> // <-- AÑADIR ESTA LÍNEA
+#include <QDataStream>
+#include <QTextBlock>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), serialPort(new QSerialPort(this)), m_parser(new UnerbusParser(this))
@@ -28,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateSerialPortList();
     updateUIState(false); // Estado inicial: desconectado
+
+    populateCMDComboBox();
 }
 
 MainWindow::~MainWindow()
@@ -139,6 +142,7 @@ void MainWindow::onSerialPort_ReadyRead()
     // Pasamos los datos al parser
     const QByteArray data = serialPort->readAll();
     m_parser->processData(data);
+    qDebug() << "Datos recibidos del puerto serie:" << data.toHex(' ');
 }
 
 // --- NUEVO SLOT PARA PROCESAR PAQUETES ---
@@ -150,9 +154,32 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
 
     qDebug() << "Paquete válido recibido! CMD:" << Qt::hex << command << "Payload:" << payload.toHex(' ');
 
+    // Formateamos el mensaje y lo mostramos en el QPlainText "commsLog"
+    QString logMessage = QString("Recibido CMD: 0x%1, Payload: %2")
+                             .arg(command, 2, 16, QChar('0').toUpper()) // Muestra el comando en hexadecimal
+                             .arg(QString(payload.toHex(' ')));         // Muestra el payload en hexadecimal
+    ui->commsLog->appendPlainText(logMessage);
+
+    if (ui->commsLog->document()->blockCount() > 200) // Limita el número de líneas en el log
+    {
+        // Mueve el cursor al inicio del documento
+        QTextCursor cursor(ui->commsLog->document()->findBlockByNumber(0));
+        // Selecciona el bloque completo (la primera línea)
+        cursor.select(QTextCursor::BlockUnderCursor);
+        // Elimina la selección
+        cursor.removeSelectedText();
+        // Elimina el salto de línea que puede quedar al inicio
+        cursor.deleteChar();
+    }
+
     // Aquí va la lógica para manejar cada comando
     switch (command)
     {
+    case Unerbus::CMD_GET_ALIVE:
+    {
+        qDebug() << "Comando GET_ALIVE recibido.";
+        break;
+    }
     case Unerbus::CMD_GET_LAST_ADC_VALUES:
     {
         if (payload.size() >= 16)
@@ -197,4 +224,46 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
     }
+}
+
+void MainWindow::populateCMDComboBox()
+{
+    ui->CMDComboBox->clear();
+    ui->CMDComboBox->addItem("GET_ALIVE (0xF0)", Unerbus::CMD_GET_ALIVE);
+    ui->CMDComboBox->addItem("GET_BUTTON_STATE (0x12)", Unerbus::CMD_GET_BUTTON_STATE);
+    ui->CMDComboBox->addItem("GET_MPU_DATA (0xA2)", Unerbus::CMD_GET_MPU_DATA);
+    ui->CMDComboBox->addItem("GET_LAST_ADC_VALUES (0xA0)", Unerbus::CMD_GET_LAST_ADC_VALUES);
+    ui->CMDComboBox->addItem("GET_MOTOR_SPEEDS (0xA4)", Unerbus::CMD_GET_MOTOR_SPEEDS);
+    ui->CMDComboBox->addItem("GET_MOTOR_PWM (0xA6)", Unerbus::CMD_GET_MOTOR_PWM);
+    ui->CMDComboBox->addItem("GET_LOCAL_IP_ADDRESS (0xE0)", Unerbus::CMD_GET_LOCAL_IP_ADDRESS);
+    ui->CMDComboBox->addItem("SET_UART_BYPASS_CONTROL (0xE0)", Unerbus::CMD_SET_UART_BYPASS_CONTROL);
+    ui->CMDComboBox->addItem("GET_PID_GAINS (0x41)", Unerbus::CMD_GET_PID_GAINS);
+    ui->CMDComboBox->addItem("GET_CONTROL_PARAMETERS (0x43)", Unerbus::CMD_GET_CONTROL_PARAMETERS);
+    ui->CMDComboBox->addItem("GET_MOTOR_BASE_SPEEDS (0x45)", Unerbus::CMD_GET_MOTOR_BASE_SPEEDS);
+    ui->CMDComboBox->addItem("GET_TURN_PID_GAINS (0x49)", Unerbus::CMD_GET_TURN_PID_GAINS);
+}
+
+void MainWindow::on_btnSendCMD_clicked()
+{
+    if (!serialPort->isOpen())
+    {
+        QMessageBox::warning(this, "Error", "El puerto serie no está abierto.");
+        return;
+    }
+
+    quint8 cmd = ui->CMDComboBox->currentData().toUInt();
+
+    QByteArray packet;
+    packet.append(Unerbus::HEADER); // "UNER"
+    packet.append(0x02);            // LENGTH (CMD + CHECKSUM)
+    packet.append(Unerbus::TOKEN);  // ':'
+    packet.append(cmd);             // CMD
+
+    quint8 checksum = 0;
+    for (int i = 0; i < packet.size(); ++i)
+        checksum ^= static_cast<quint8>(packet.at(i));
+    packet.append(checksum); // CHECKSUM
+
+    serialPort->write(packet);
+    qDebug() << "Paquete enviado:" << packet.toHex(' ');
 }
