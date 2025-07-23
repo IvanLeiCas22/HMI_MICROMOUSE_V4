@@ -316,6 +316,7 @@ Makefile: ../../HMI_MICROMOUSE_V4.pro D:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/wi
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Widgets.prl \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Gui.prl \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6SerialPort.prl \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Network.prl \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Core.prl \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6EntryPoint.prl \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/features/build_pass.prf
@@ -566,6 +567,7 @@ D:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/features/lex.prf:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Widgets.prl:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Gui.prl:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6SerialPort.prl:
+D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Network.prl:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6Core.prl:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/Qt6EntryPoint.prl:
 D:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/features/build_pass.prf:

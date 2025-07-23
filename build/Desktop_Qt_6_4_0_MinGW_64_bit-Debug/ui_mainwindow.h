@@ -65,6 +65,8 @@ public:
     QLineEdit *localPortLineEdit;
     QLineEdit *RemoteIpLineEdit;
     QLabel *RemoteIPLabel;
+    QLabel *RemotePortLabel;
+    QLineEdit *RemotePortLineEdit;
     QHBoxLayout *horizontalLayout_7;
     QPushButton *btnConnectUDP;
     QPushButton *btnDisconnectUDP;
@@ -282,6 +284,7 @@ public:
         verticalLayout_5->setObjectName("verticalLayout_5");
         gridLayout = new QGridLayout();
         gridLayout->setObjectName("gridLayout");
+        gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         localPortLabel = new QLabel(groupUDP);
         localPortLabel->setObjectName("localPortLabel");
         localPortLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
@@ -305,6 +308,17 @@ public:
         RemoteIPLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         gridLayout->addWidget(RemoteIPLabel, 1, 0, 1, 1);
+
+        RemotePortLabel = new QLabel(groupUDP);
+        RemotePortLabel->setObjectName("RemotePortLabel");
+
+        gridLayout->addWidget(RemotePortLabel, 2, 0, 1, 1);
+
+        RemotePortLineEdit = new QLineEdit(groupUDP);
+        RemotePortLineEdit->setObjectName("RemotePortLineEdit");
+        RemotePortLineEdit->setReadOnly(true);
+
+        gridLayout->addWidget(RemotePortLineEdit, 2, 1, 1, 1);
 
 
         verticalLayout_5->addLayout(gridLayout);
@@ -420,7 +434,9 @@ public:
         btnDisconnectSerie->setText(QCoreApplication::translate("MainWindow", "Desconectar", nullptr));
         groupUDP->setTitle(QCoreApplication::translate("MainWindow", "UDP", nullptr));
         localPortLabel->setText(QCoreApplication::translate("MainWindow", "Puerto local:", nullptr));
+        localPortLineEdit->setText(QCoreApplication::translate("MainWindow", "30010", nullptr));
         RemoteIPLabel->setText(QCoreApplication::translate("MainWindow", "IP remota:", nullptr));
+        RemotePortLabel->setText(QCoreApplication::translate("MainWindow", "Puerto remoto:", nullptr));
         btnConnectUDP->setText(QCoreApplication::translate("MainWindow", "Conectar", nullptr));
         btnDisconnectUDP->setText(QCoreApplication::translate("MainWindow", "Desconectar", nullptr));
         labelCommStatus->setText(QCoreApplication::translate("MainWindow", "Estado Conexi\303\263n", nullptr));

@@ -1,4 +1,4 @@
-QT       += core gui serialport
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,7 +11,8 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    Comunicacion/unerbusparser.cpp
+    Comunicacion/unerbusparser.cpp \
+    Comunicacion/unerbus_protocol.cpp
 
 HEADERS += \
     mainwindow.h \

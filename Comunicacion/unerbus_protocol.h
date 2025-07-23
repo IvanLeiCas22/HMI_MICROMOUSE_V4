@@ -1,17 +1,19 @@
 #ifndef UNERBUS_PROTOCOL_H
 #define UNERBUS_PROTOCOL_H
 
+#include <QObject> // Para Q_NAMESPACE
 #include <QtGlobal>
 
 namespace Unerbus
 {
+    Q_NAMESPACE
 
     // Definición del protocolo (constantes)
     const QByteArray HEADER = "UNER";
     const char TOKEN = ':';
 
-    // Enumeración de los comandos, extraída de app_config.h
-    enum CommandId : quint8
+    // Enumeración de los comandos, extraída de app_config.h en STM32
+    enum class CommandId : quint8
     {
         CMD_ACK = 0x0D,
         CMD_GET_ALIVE = 0xF0,
@@ -39,6 +41,7 @@ namespace Unerbus
         CMD_GET_TURN_PID_GAINS = 0x49,
         CMD_OTHERS
     };
+    Q_ENUM_NS(CommandId)
 
 } // namespace Unerbus
 

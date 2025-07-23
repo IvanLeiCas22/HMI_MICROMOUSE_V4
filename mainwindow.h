@@ -6,6 +6,7 @@
 #include <QtSerialPort/QSerialPort>     // Incluir para QSerialPort
 #include <QtSerialPort/QSerialPortInfo> // Incluir para QSerialPortInfo
 #include "Comunicacion/unerbusparser.h"
+#include <QtNetwork/QUdpSocket>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -31,6 +32,9 @@ private slots:
     void on_btnRefreshPorts_clicked();
     void onSerialPort_ReadyRead();
     void handleSerialError(QSerialPort::SerialPortError error);
+    void on_btnConnectUDP_clicked();
+    void on_btnDisconnectUDP_clicked();
+    void onUDPReadyRead();
 
     // --- Slot para procesar paquetes del micromouse ---
     void onPacketReceived(quint8 command, const QByteArray &payload);
@@ -44,9 +48,14 @@ private:
     QSerialPort *serialPort;             // Miembro para manejar el puerto serie
     UnerbusParser *m_parser;             // Nuevo miembro para manejar el parser
 
+    QUdpSocket *udpSocket;
+    QString remoteIp;
+    quint16 remotePort;
+    quint16 localPort;
+
     // --- Funciones de ayuda ---
     void updateSerialPortList();
-    void updateUIState(bool connected);
+    void updateUIState(bool serialConnected, bool udpConnected);
     void populateCMDComboBox();
 };
 #endif // MAINWINDOW_H

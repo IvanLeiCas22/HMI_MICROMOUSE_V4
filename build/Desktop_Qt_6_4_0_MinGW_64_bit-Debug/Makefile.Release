@@ -13,13 +13,13 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -O2 -Wall -Wextra -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I../../../HMI_MICROMOUSE_V4 -I. -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -Irelease -I. -I/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ 
+INCPATH       = -I../../../HMI_MICROMOUSE_V4 -I. -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -Irelease -I. -I/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Widgets.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Gui.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6SerialPort.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Core.a -lmingw32 D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Widgets.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Gui.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6SerialPort.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Network.a D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6Core.a -lmingw32 D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -52,19 +52,24 @@ OBJECTS_DIR   = release
 
 SOURCES       = ..\..\main.cpp \
 		..\..\mainwindow.cpp \
-		..\..\Comunicacion\unerbusparser.cpp release\moc_mainwindow.cpp \
-		release\moc_unerbusparser.cpp
+		..\..\Comunicacion\unerbusparser.cpp \
+		..\..\Comunicacion\unerbus_protocol.cpp release\moc_mainwindow.cpp \
+		release\moc_unerbusparser.cpp \
+		release\moc_unerbus_protocol.cpp
 OBJECTS       = release/main.o \
 		release/mainwindow.o \
 		release/unerbusparser.o \
+		release/unerbus_protocol.o \
 		release/moc_mainwindow.o \
-		release/moc_unerbusparser.o
+		release/moc_unerbusparser.o \
+		release/moc_unerbus_protocol.o
 
 DIST          =  ..\..\mainwindow.h \
 		..\..\Comunicacion\unerbusparser.h \
 		..\..\Comunicacion\unerbus_protocol.h ..\..\main.cpp \
 		..\..\mainwindow.cpp \
-		..\..\Comunicacion\unerbusparser.cpp
+		..\..\Comunicacion\unerbusparser.cpp \
+		..\..\Comunicacion\unerbus_protocol.cpp
 QMAKE_TARGET  = HMI_MICROMOUSE_V4
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = HMI_MICROMOUSE_V4.exe
@@ -75,7 +80,7 @@ DESTDIR_TARGET = release\HMI_MICROMOUSE_V4.exe
 first: all
 all: Makefile.Release  release/HMI_MICROMOUSE_V4.exe
 
-release/HMI_MICROMOUSE_V4.exe: D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Widgets.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Gui.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6SerialPort.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Core.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) 
+release/HMI_MICROMOUSE_V4.exe: D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Widgets.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Gui.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6SerialPort.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Network.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6Core.a D:/PROGRAMACOMPU/6.4.0/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS) $(LIBS)
 
 qmake: FORCE
@@ -84,10 +89,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) HMI_MICROMOUSE_V4.zip $(SOURCES) $(DIST) ..\..\..\..\HMI_MICROMOUSE_V4.pro D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\spec_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\device_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\sanitize.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\gcc-base.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\g++-base.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\windows-vulkan.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\g++-win32.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\windows-desktop.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\qconfig.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_freetype.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_libjpeg.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_libpng.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3danimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3danimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dcore.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dcore_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dextras.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dextras_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dinput.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dinput_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dlogic.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dlogic_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickanimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickextras.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickinput.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickrender.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3drender.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3drender_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_activeqt.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_activeqt_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axbase_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axcontainer.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axcontainer_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axserver.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bluetooth.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bluetooth_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bodymovin_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_charts.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_charts_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_chartsqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_chartsqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_concurrent.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_core.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_core_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualization.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualization_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualizationqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualizationqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_dbus.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designer.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designer_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_freetype_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_gui.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_gui_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_harfbuzz_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_help.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_help_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_httpserver.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_httpserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_jpeg_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_jsonrpc_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssettings.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_languageserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_linguist.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_linguist_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimedia.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimedia_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediaquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediawidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_network.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_network_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_networkauth.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_networkauth_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_nfc.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_nfc_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_opengl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_png_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioning.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioning_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioningquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioningquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_printsupport.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlintegration.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlintegration_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmltest.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysics.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysics_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysicshelpers.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysicshelpers_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjects.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjectsqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjectsqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_repparser.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_repparser_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxmlqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxmlqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensors.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensors_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensorsquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensorsquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialbus.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialbus_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialport.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialport_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_spatialaudio.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_spatialaudio_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sql.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sql_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachine.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachine_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachineqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachineqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svg.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svg_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_testlib.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_texttospeech.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_texttospeech_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_tools_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uitools.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_virtualkeyboard.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_virtualkeyboard_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webchannel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webchannel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_websockets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_websockets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webview.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webview_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webviewquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webviewquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_widgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_xml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_xml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt_functions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\win32-g++\qmake.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\spec_post.prf .qmake.stash D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exclusive_builds.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\toolchain.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\default_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\default_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resolve_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exclusive_builds_post.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\default_post.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\build_pass.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qml_debug.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\entrypoint.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\precompile_header.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\warn_on.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resources_functions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resources.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\moc.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\opengl.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\uic.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qmake_use.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\file_copies.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\windows.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\testcase_targets.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exceptions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\yacc.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\lex.prf ..\..\HMI_MICROMOUSE_V4.pro D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Widgets.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Gui.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6SerialPort.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Core.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6EntryPoint.prl    D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\data\dummy.cpp ..\..\mainwindow.h ..\..\Comunicacion\unerbusparser.h ..\..\Comunicacion\unerbus_protocol.h  ..\..\main.cpp ..\..\mainwindow.cpp ..\..\Comunicacion\unerbusparser.cpp ..\..\mainwindow.ui    
+	$(ZIP) HMI_MICROMOUSE_V4.zip $(SOURCES) $(DIST) ..\..\..\..\HMI_MICROMOUSE_V4.pro D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\spec_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\device_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\sanitize.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\gcc-base.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\g++-base.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\windows_vulkan_sdk.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\windows-vulkan.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\g++-win32.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\common\windows-desktop.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\qconfig.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_freetype.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_libjpeg.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_ext_libpng.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3danimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3danimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dcore.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dcore_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dextras.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dextras_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dinput.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dinput_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dlogic.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dlogic_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickanimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickextras.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickinput.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickrender.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3drender.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_3drender_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_activeqt.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_activeqt_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axbase_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axcontainer.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axcontainer_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axserver.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_axserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bluetooth.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bluetooth_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_bodymovin_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_charts.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_charts_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_chartsqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_chartsqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_concurrent.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_concurrent_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_core.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_core_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualization.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualization_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualizationqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_datavisualizationqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_dbus.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_dbus_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designer.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designer_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_designercomponents_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_entrypoint_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_fb_support_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_freetype_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_gui.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_gui_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_harfbuzz_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_help.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_help_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_httpserver.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_httpserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_jpeg_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_jsonrpc_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsanimation.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsanimation_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssettings.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssettings_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssharedimage.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labssharedimage_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_languageserver_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_linguist.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_linguist_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimedia.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimedia_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediaquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediawidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_network.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_network_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_networkauth.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_networkauth_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_nfc.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_nfc_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_opengl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_opengl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_openglwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_openglwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_png_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioning.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioning_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioningquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_positioningquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_printsupport.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_printsupport_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcore.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlcore_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmldebug_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmldom_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlintegration.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlintegration_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlmodels.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlmodels_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmltest.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmltest_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysics.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysics_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysicshelpers.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick3dphysicshelpers_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicklayouts.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicklayouts_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickparticles_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickshapes_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktemplates2.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjects.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjectsqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_remoteobjectsqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_repparser.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_repparser_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxmlqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_scxmlqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensors.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensors_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensorsquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sensorsquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialbus.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialbus_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialport.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_serialport_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_spatialaudio.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_spatialaudio_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sql.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_sql_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachine.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachine_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachineqml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_statemachineqml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svg.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svg_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svgwidgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_svgwidgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_testlib.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_testlib_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_texttospeech.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_texttospeech_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_tools_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uiplugin.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uitools.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_uitools_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_virtualkeyboard.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_virtualkeyboard_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webchannel.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webchannel_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_websockets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_websockets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webview.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webview_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webviewquick.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_webviewquick_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_widgets.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_widgets_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_xml.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_xml_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\modules\qt_lib_zlib_private.pri D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt_functions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\win32-g++\qmake.conf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\spec_post.prf .qmake.stash D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exclusive_builds.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\toolchain.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\default_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\default_pre.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resolve_config.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exclusive_builds_post.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\default_post.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\build_pass.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qml_debug.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\entrypoint.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\precompile_header.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\warn_on.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qt.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resources_functions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\resources.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\moc.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\opengl.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\uic.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\qmake_use.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\file_copies.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\win32\windows.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\testcase_targets.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\exceptions.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\yacc.prf D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\lex.prf ..\..\HMI_MICROMOUSE_V4.pro D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Widgets.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Gui.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6SerialPort.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Network.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6Core.prl D:\PROGRAMACOMPU\6.4.0\mingw_64\lib\Qt6EntryPoint.prl    D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\data\dummy.cpp ..\..\mainwindow.h ..\..\Comunicacion\unerbusparser.h ..\..\Comunicacion\unerbus_protocol.h  ..\..\main.cpp ..\..\mainwindow.cpp ..\..\Comunicacion\unerbusparser.cpp ..\..\Comunicacion\unerbus_protocol.cpp ..\..\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\mainwindow.o release\unerbusparser.o release\moc_mainwindow.o release\moc_unerbusparser.o
+	-$(DEL_FILE) release\main.o release\mainwindow.o release\unerbusparser.o release\unerbus_protocol.o release\moc_mainwindow.o release\moc_unerbusparser.o release\moc_unerbus_protocol.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -112,9 +117,9 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: D:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o release\moc_predefs.h D:\PROGRAMACOMPU\6.4.0\mingw_64\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_unerbusparser.cpp
+compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_unerbusparser.cpp release/moc_unerbus_protocol.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_unerbusparser.cpp
+	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_unerbusparser.cpp release\moc_unerbus_protocol.cpp
 release/moc_mainwindow.cpp: ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QMainWindow \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qmainwindow.h \
@@ -265,9 +270,16 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QByteArray \
 		../../Comunicacion/unerbus_protocol.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/QUdpSocket \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qudpsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qhostaddress.h \
 		release/moc_predefs.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/bin/moc.exe
-	D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_4_0_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ -IC:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4 -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -I. -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/PROGRAMACOMPU/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
+	D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_4_0_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ -IC:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4 -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -I. -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/PROGRAMACOMPU/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
 
 release/moc_unerbusparser.cpp: ../../Comunicacion/unerbusparser.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QObject \
@@ -345,7 +357,83 @@ release/moc_unerbusparser.cpp: ../../Comunicacion/unerbusparser.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal \
 		release/moc_predefs.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/bin/moc.exe
-	D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_4_0_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ -IC:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4 -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -I. -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/PROGRAMACOMPU/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\Comunicacion\unerbusparser.h -o release\moc_unerbusparser.cpp
+	D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_4_0_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ -IC:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4 -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -I. -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/PROGRAMACOMPU/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\Comunicacion\unerbusparser.h -o release\moc_unerbusparser.cpp
+
+release/moc_unerbus_protocol.cpp: ../../Comunicacion/unerbus_protocol.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QObject \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobject.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobjectdefs.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qnamespace.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qglobal.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qconfig-bootstrapped.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qconfig.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtcore-config.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtconfigmacros.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtcoreexports.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qsystemdetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qprocessordetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompilerdetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtypeinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainerfwd.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qsysinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qlogging.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qflags.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompare_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbasicatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic_bootstrap.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qgenericatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic_cxx11.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qglobalstatic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qnumeric.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qversiontagging.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qforeach.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtmetamacros.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstring.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qchar.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearray.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qrefcount.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydata.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qpair.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydatapointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydataops.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainertools_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearrayview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringfwd.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringliteral.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qanystringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qutf8stringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringtokenizer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringbuilder.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qlist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qhashfunctions.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiterator.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearraylist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringlist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringmatcher.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcoreevent.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qscopedpointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmetatype.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompare.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qscopeguard.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qdatastream.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiodevicebase.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiterable.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmetacontainer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainerinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtaggedpointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmath.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobject_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbindingstorage.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal \
+		release/moc_predefs.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/bin/moc.exe
+	D:\PROGRAMACOMPU\6.4.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_4_0_MinGW_64_bit-Debug/release/moc_predefs.h -ID:/PROGRAMACOMPU/6.4.0/mingw_64/mkspecs/win32-g++ -IC:/Users/GAMING/Desktop/MICROCONTROLADORES/Qt/HMI_MICROMOUSE_V4 -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtSerialPort -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork -ID:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore -I. -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -ID:/PROGRAMACOMPU/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -ID:/PROGRAMACOMPU/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\Comunicacion\unerbus_protocol.h -o release\moc_unerbus_protocol.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -520,6 +608,13 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QByteArray \
 		../../Comunicacion/unerbus_protocol.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/QUdpSocket \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qudpsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qhostaddress.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QApplication \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qapplication.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcoreapplication.h \
@@ -695,6 +790,13 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QByteArray \
 		../../Comunicacion/unerbus_protocol.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/QUdpSocket \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qudpsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtNetwork/qhostaddress.h \
 		ui_mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QVariant \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QApplication \
@@ -756,6 +858,15 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QMenuBar \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qmenubar.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qmenu.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QPlainTextEdit \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qplaintextedit.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qtextedit.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qabstracttextdocumentlayout.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qtextlayout.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qglyphrun.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qrawfont.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qfontdatabase.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/QPushButton \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qpushbutton.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qabstractbutton.h \
@@ -770,7 +881,11 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qmessagebox.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtWidgets/qdialog.h \
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QDebug \
-		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QDataStream
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QDataStream \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/QTextBlock \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtGui/qtextobject.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QMetaEnum \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmetaobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp
 
 release/unerbusparser.o: ../../Comunicacion/unerbusparser.cpp ../../Comunicacion/unerbusparser.h \
@@ -862,11 +977,88 @@ release/unerbusparser.o: ../../Comunicacion/unerbusparser.cpp ../../Comunicacion
 		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qvarlengtharray.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\unerbusparser.o ..\..\Comunicacion\unerbusparser.cpp
 
+release/unerbus_protocol.o: ../../Comunicacion/unerbus_protocol.cpp ../../Comunicacion/unerbus_protocol.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QObject \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobject.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobjectdefs.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qnamespace.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qglobal.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qconfig-bootstrapped.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qconfig.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtcore-config.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtconfigmacros.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtcoreexports.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qsystemdetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qprocessordetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompilerdetection.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtypeinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainerfwd.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qsysinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qlogging.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qflags.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompare_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbasicatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic_bootstrap.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qgenericatomic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qatomic_cxx11.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qglobalstatic.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qnumeric.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qversiontagging.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qforeach.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtmetamacros.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstring.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qchar.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearray.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qrefcount.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydata.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qpair.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydatapointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qarraydataops.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainertools_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearrayview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringfwd.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringliteral.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qanystringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qutf8stringview.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringtokenizer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringbuilder.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qlist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qhashfunctions.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiterator.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbytearraylist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringlist.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qalgorithms.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qstringmatcher.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcoreevent.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qscopedpointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmetatype.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcompare.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qscopeguard.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qdatastream.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiodevicebase.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qiterable.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmetacontainer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qcontainerinfo.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qtaggedpointer.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qmath.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qobject_impl.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/qbindingstorage.h \
+		D:/PROGRAMACOMPU/6.4.0/mingw_64/include/QtCore/QtGlobal
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\unerbus_protocol.o ..\..\Comunicacion\unerbus_protocol.cpp
+
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_mainwindow.o release\moc_mainwindow.cpp
 
 release/moc_unerbusparser.o: release/moc_unerbusparser.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_unerbusparser.o release\moc_unerbusparser.cpp
+
+release/moc_unerbus_protocol.o: release/moc_unerbus_protocol.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_unerbus_protocol.o release\moc_unerbus_protocol.cpp
 
 ####### Install
 

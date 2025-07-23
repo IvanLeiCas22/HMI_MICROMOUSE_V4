@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MainWindow_t {
-    uint offsetsAndSizes[32];
+    uint offsetsAndSizes[38];
     char stringdata0[11];
     char stringdata1[27];
     char stringdata2[1];
@@ -39,10 +39,13 @@ struct qt_meta_stringdata_MainWindow_t {
     char stringdata9[18];
     char stringdata10[29];
     char stringdata11[6];
-    char stringdata12[17];
-    char stringdata13[8];
-    char stringdata14[8];
-    char stringdata15[22];
+    char stringdata12[25];
+    char stringdata13[28];
+    char stringdata14[15];
+    char stringdata15[17];
+    char stringdata16[8];
+    char stringdata17[8];
+    char stringdata18[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MainWindow_t::offsetsAndSizes) + ofs), len 
@@ -60,10 +63,13 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
         QT_MOC_LITERAL(170, 17),  // "handleSerialError"
         QT_MOC_LITERAL(188, 28),  // "QSerialPort::SerialPortError"
         QT_MOC_LITERAL(217, 5),  // "error"
-        QT_MOC_LITERAL(223, 16),  // "onPacketReceived"
-        QT_MOC_LITERAL(240, 7),  // "command"
-        QT_MOC_LITERAL(248, 7),  // "payload"
-        QT_MOC_LITERAL(256, 21)   // "on_btnSendCMD_clicked"
+        QT_MOC_LITERAL(223, 24),  // "on_btnConnectUDP_clicked"
+        QT_MOC_LITERAL(248, 27),  // "on_btnDisconnectUDP_clicked"
+        QT_MOC_LITERAL(276, 14),  // "onUDPReadyRead"
+        QT_MOC_LITERAL(291, 16),  // "onPacketReceived"
+        QT_MOC_LITERAL(308, 7),  // "command"
+        QT_MOC_LITERAL(316, 7),  // "payload"
+        QT_MOC_LITERAL(324, 21)   // "on_btnSendCMD_clicked"
     },
     "MainWindow",
     "on_navigationButtonClicked",
@@ -77,6 +83,9 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
     "handleSerialError",
     "QSerialPort::SerialPortError",
     "error",
+    "on_btnConnectUDP_clicked",
+    "on_btnDisconnectUDP_clicked",
+    "onUDPReadyRead",
     "onPacketReceived",
     "command",
     "payload",
@@ -91,7 +100,7 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -99,14 +108,17 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   62,    2, 0x08,    1 /* Private */,
-       5,    0,   65,    2, 0x08,    3 /* Private */,
-       6,    0,   66,    2, 0x08,    4 /* Private */,
-       7,    0,   67,    2, 0x08,    5 /* Private */,
-       8,    0,   68,    2, 0x08,    6 /* Private */,
-       9,    1,   69,    2, 0x08,    7 /* Private */,
-      12,    2,   72,    2, 0x08,    9 /* Private */,
-      15,    0,   77,    2, 0x08,   12 /* Private */,
+       1,    1,   80,    2, 0x08,    1 /* Private */,
+       5,    0,   83,    2, 0x08,    3 /* Private */,
+       6,    0,   84,    2, 0x08,    4 /* Private */,
+       7,    0,   85,    2, 0x08,    5 /* Private */,
+       8,    0,   86,    2, 0x08,    6 /* Private */,
+       9,    1,   87,    2, 0x08,    7 /* Private */,
+      12,    0,   90,    2, 0x08,    9 /* Private */,
+      13,    0,   91,    2, 0x08,   10 /* Private */,
+      14,    0,   92,    2, 0x08,   11 /* Private */,
+      15,    2,   93,    2, 0x08,   12 /* Private */,
+      18,    0,   98,    2, 0x08,   15 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -115,7 +127,10 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,   13,   14,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,   16,   17,
     QMetaType::Void,
 
        0        // eod
@@ -144,6 +159,12 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'handleSerialError'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QSerialPort::SerialPortError, std::false_type>,
+        // method 'on_btnConnectUDP_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnDisconnectUDP_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onUDPReadyRead'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onPacketReceived'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
@@ -166,8 +187,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->on_btnRefreshPorts_clicked(); break;
         case 4: _t->onSerialPort_ReadyRead(); break;
         case 5: _t->handleSerialError((*reinterpret_cast< std::add_pointer_t<QSerialPort::SerialPortError>>(_a[1]))); break;
-        case 6: _t->onPacketReceived((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
-        case 7: _t->on_btnSendCMD_clicked(); break;
+        case 6: _t->on_btnConnectUDP_clicked(); break;
+        case 7: _t->on_btnDisconnectUDP_clicked(); break;
+        case 8: _t->onUDPReadyRead(); break;
+        case 9: _t->onPacketReceived((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 10: _t->on_btnSendCMD_clicked(); break;
         default: ;
         }
     }
@@ -192,13 +216,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }
