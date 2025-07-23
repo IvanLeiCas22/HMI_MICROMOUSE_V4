@@ -215,7 +215,7 @@ public:
         titleHome = new QLabel(page);
         titleHome->setObjectName("titleHome");
         QFont font3;
-        font3.setPointSize(20);
+        font3.setPointSize(18);
         font3.setBold(true);
         titleHome->setFont(font3);
         titleHome->setAlignment(Qt::AlignCenter);
@@ -354,6 +354,11 @@ public:
 
         comboBox = new QComboBox(groupCMDSend);
         comboBox->setObjectName("comboBox");
+        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(comboBox->sizePolicy().hasHeightForWidth());
+        comboBox->setSizePolicy(sizePolicy1);
 
         horizontalLayout_6->addWidget(comboBox);
 
@@ -370,11 +375,11 @@ public:
 
         commsLog = new QLineEdit(page);
         commsLog->setObjectName("commsLog");
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(commsLog->sizePolicy().hasHeightForWidth());
-        commsLog->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(commsLog->sizePolicy().hasHeightForWidth());
+        commsLog->setSizePolicy(sizePolicy2);
 
         verticalLayout_2->addWidget(commsLog);
 
@@ -409,7 +414,7 @@ public:
         btnHome->setText(QCoreApplication::translate("MainWindow", "Inicio", nullptr));
         btnSensors->setText(QCoreApplication::translate("MainWindow", "Sensores", nullptr));
         btnConfig->setText(QCoreApplication::translate("MainWindow", "Configuraci\303\263n", nullptr));
-        titleHome->setText(QCoreApplication::translate("MainWindow", "MICROMOUSE HMI", nullptr));
+        titleHome->setText(QCoreApplication::translate("MainWindow", "Inicio", nullptr));
         groupConnection->setTitle(QCoreApplication::translate("MainWindow", "Conexi\303\263n", nullptr));
         groupSerie->setTitle(QCoreApplication::translate("MainWindow", "Serie", nullptr));
         portLabel->setText(QCoreApplication::translate("MainWindow", "Puerto:", nullptr));
