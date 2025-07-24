@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
@@ -44,7 +46,7 @@ public:
     QPushButton *btnConfig;
     QSpacerItem *verticalSpacer;
     QStackedWidget *stackedScreens;
-    QWidget *page;
+    QWidget *pageHome;
     QVBoxLayout *verticalLayout_2;
     QLabel *titleHome;
     QGroupBox *groupConnection;
@@ -77,8 +79,64 @@ public:
     QLabel *CMDTitleLabel;
     QComboBox *CMDComboBox;
     QPushButton *btnSendCMD;
+    QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_10;
     QPlainTextEdit *commsLog;
-    QWidget *page_2;
+    QWidget *pageSensors;
+    QVBoxLayout *verticalLayout_7;
+    QLabel *titleSensors;
+    QGroupBox *groupIRSensors;
+    QVBoxLayout *verticalLayout_8;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *labelDistanceSensors;
+    QFrame *line_2;
+    QGridLayout *layoutDistanceSensors;
+    QProgressBar *progBarIrRightSide;
+    QProgressBar *progBarIrRightDiag;
+    QProgressBar *progBarIrFrontRight;
+    QLabel *labelIrFrontRight;
+    QLabel *labelIrRightDiag;
+    QLabel *labelIrLeftDiag;
+    QProgressBar *progBarIrLeftDiag;
+    QLabel *labelIrFrontLeft;
+    QLabel *labelIrLeftSide;
+    QProgressBar *progBarIrFrontLeft;
+    QLabel *labelIrRightSide;
+    QProgressBar *progBarIrLeftSide;
+    QLabel *label_9;
+    QFrame *line_3;
+    QGridLayout *layoutGroundSensors;
+    QLabel *labelIrGroundFront;
+    QLabel *labelIrGroundRear;
+    QProgressBar *progBarIrGroundFront;
+    QProgressBar *progBarIrGroundRear;
+    QGroupBox *groupMPU6050;
+    QVBoxLayout *verticalLayout_9;
+    QHBoxLayout *horizontalLayout_9;
+    QLabel *label_7;
+    QFrame *line_4;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label;
+    QLineEdit *accelXLineEdit;
+    QLabel *label_2;
+    QLineEdit *accelYLineEdit;
+    QLabel *label_3;
+    QLineEdit *accelZLineEdit;
+    QLabel *label_8;
+    QFrame *line_5;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_4;
+    QLineEdit *gyroXLineEdit;
+    QLabel *label_5;
+    QLineEdit *gyroYLineEdit;
+    QLabel *label_6;
+    QLineEdit *gyroZLineEdit;
+    QSpacerItem *verticalSpacer_2;
+    QHBoxLayout *horizontalLayout_10;
+    QPushButton *btnRefreshSensorsValues;
+    QCheckBox *chkBoxAutoRefreshSensorsValues;
+    QSpacerItem *horizontalSpacer_2;
+    QWidget *pageConfig;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -86,16 +144,19 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->resize(1000, 819);
+        QFont font;
+        font.setPointSize(11);
+        MainWindow->setFont(font);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         horizontalLayout = new QHBoxLayout(centralwidget);
         horizontalLayout->setObjectName("horizontalLayout");
         navigationFrame = new QFrame(centralwidget);
         navigationFrame->setObjectName("navigationFrame");
-        QFont font;
-        font.setPointSize(12);
-        navigationFrame->setFont(font);
+        QFont font1;
+        font1.setPointSize(12);
+        navigationFrame->setFont(font1);
         navigationFrame->setStyleSheet(QString::fromUtf8("QFrame#navigationFrame {\n"
 "  background-color: rgb(45, 58, 75);\n"
 "  border-radius: 12px;\n"
@@ -108,12 +169,12 @@ public:
         logoLabel = new QLabel(navigationFrame);
         logoLabel->setObjectName("logoLabel");
         logoLabel->setMinimumSize(QSize(0, 60));
-        QFont font1;
-        font1.setFamilies({QString::fromUtf8("Segoe UI")});
-        font1.setPointSize(18);
-        font1.setBold(true);
-        font1.setItalic(false);
-        logoLabel->setFont(font1);
+        QFont font2;
+        font2.setFamilies({QString::fromUtf8("Segoe UI")});
+        font2.setPointSize(18);
+        font2.setBold(true);
+        font2.setItalic(false);
+        logoLabel->setFont(font2);
         logoLabel->setStyleSheet(QString::fromUtf8("color: white;\n"
 "font-weight: bold;\n"
 "text-align: center;"));
@@ -131,10 +192,10 @@ public:
 
         btnHome = new QPushButton(navigationFrame);
         btnHome->setObjectName("btnHome");
-        QFont font2;
-        font2.setPointSize(11);
-        font2.setBold(true);
-        btnHome->setFont(font2);
+        QFont font3;
+        font3.setPointSize(11);
+        font3.setBold(true);
+        btnHome->setFont(font3);
         btnHome->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
 "  color: white;\n"
@@ -158,7 +219,7 @@ public:
 
         btnSensors = new QPushButton(navigationFrame);
         btnSensors->setObjectName("btnSensors");
-        btnSensors->setFont(font2);
+        btnSensors->setFont(font3);
         btnSensors->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
 "  color: white;\n"
@@ -181,7 +242,7 @@ public:
 
         btnConfig = new QPushButton(navigationFrame);
         btnConfig->setObjectName("btnConfig");
-        btnConfig->setFont(font2);
+        btnConfig->setFont(font3);
         btnConfig->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
 "  color: white;\n"
@@ -211,27 +272,32 @@ public:
 
         stackedScreens = new QStackedWidget(centralwidget);
         stackedScreens->setObjectName("stackedScreens");
-        page = new QWidget();
-        page->setObjectName("page");
-        verticalLayout_2 = new QVBoxLayout(page);
+        pageHome = new QWidget();
+        pageHome->setObjectName("pageHome");
+        verticalLayout_2 = new QVBoxLayout(pageHome);
         verticalLayout_2->setObjectName("verticalLayout_2");
-        titleHome = new QLabel(page);
+        titleHome = new QLabel(pageHome);
         titleHome->setObjectName("titleHome");
-        QFont font3;
-        font3.setPointSize(18);
-        font3.setBold(true);
-        titleHome->setFont(font3);
+        QFont font4;
+        font4.setPointSize(18);
+        font4.setBold(true);
+        titleHome->setFont(font4);
         titleHome->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(titleHome);
 
-        groupConnection = new QGroupBox(page);
+        groupConnection = new QGroupBox(pageHome);
         groupConnection->setObjectName("groupConnection");
-        groupConnection->setFont(font);
+        QFont font5;
+        font5.setPointSize(14);
+        groupConnection->setFont(font5);
         verticalLayout_3 = new QVBoxLayout(groupConnection);
         verticalLayout_3->setObjectName("verticalLayout_3");
         groupSerie = new QGroupBox(groupConnection);
         groupSerie->setObjectName("groupSerie");
+        QFont font6;
+        font6.setPointSize(13);
+        groupSerie->setFont(font6);
         verticalLayout_4 = new QVBoxLayout(groupSerie);
         verticalLayout_4->setObjectName("verticalLayout_4");
         horizontalLayout_4 = new QHBoxLayout();
@@ -243,17 +309,25 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(portLabel->sizePolicy().hasHeightForWidth());
         portLabel->setSizePolicy(sizePolicy);
+        portLabel->setFont(font);
         portLabel->setMargin(0);
 
         horizontalLayout_4->addWidget(portLabel);
 
         comboBoxPorts = new QComboBox(groupSerie);
         comboBoxPorts->setObjectName("comboBoxPorts");
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(comboBoxPorts->sizePolicy().hasHeightForWidth());
+        comboBoxPorts->setSizePolicy(sizePolicy1);
+        comboBoxPorts->setFont(font);
 
         horizontalLayout_4->addWidget(comboBoxPorts);
 
         btnRefreshPorts = new QPushButton(groupSerie);
         btnRefreshPorts->setObjectName("btnRefreshPorts");
+        btnRefreshPorts->setFont(font);
 
         horizontalLayout_4->addWidget(btnRefreshPorts);
 
@@ -264,11 +338,13 @@ public:
         horizontalLayout_5->setObjectName("horizontalLayout_5");
         btnConnectSerie = new QPushButton(groupSerie);
         btnConnectSerie->setObjectName("btnConnectSerie");
+        btnConnectSerie->setFont(font);
 
         horizontalLayout_5->addWidget(btnConnectSerie);
 
         btnDisconnectSerie = new QPushButton(groupSerie);
         btnDisconnectSerie->setObjectName("btnDisconnectSerie");
+        btnDisconnectSerie->setFont(font);
 
         horizontalLayout_5->addWidget(btnDisconnectSerie);
 
@@ -280,6 +356,7 @@ public:
 
         groupUDP = new QGroupBox(groupConnection);
         groupUDP->setObjectName("groupUDP");
+        groupUDP->setFont(font6);
         verticalLayout_5 = new QVBoxLayout(groupUDP);
         verticalLayout_5->setObjectName("verticalLayout_5");
         gridLayout = new QGridLayout();
@@ -287,6 +364,7 @@ public:
         gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         localPortLabel = new QLabel(groupUDP);
         localPortLabel->setObjectName("localPortLabel");
+        localPortLabel->setFont(font);
         localPortLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         localPortLabel->setMargin(0);
 
@@ -294,28 +372,33 @@ public:
 
         localPortLineEdit = new QLineEdit(groupUDP);
         localPortLineEdit->setObjectName("localPortLineEdit");
+        localPortLineEdit->setFont(font);
 
         gridLayout->addWidget(localPortLineEdit, 0, 1, 1, 1);
 
         RemoteIpLineEdit = new QLineEdit(groupUDP);
         RemoteIpLineEdit->setObjectName("RemoteIpLineEdit");
+        RemoteIpLineEdit->setFont(font);
         RemoteIpLineEdit->setReadOnly(true);
 
         gridLayout->addWidget(RemoteIpLineEdit, 1, 1, 1, 1);
 
         RemoteIPLabel = new QLabel(groupUDP);
         RemoteIPLabel->setObjectName("RemoteIPLabel");
+        RemoteIPLabel->setFont(font);
         RemoteIPLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         gridLayout->addWidget(RemoteIPLabel, 1, 0, 1, 1);
 
         RemotePortLabel = new QLabel(groupUDP);
         RemotePortLabel->setObjectName("RemotePortLabel");
+        RemotePortLabel->setFont(font);
 
         gridLayout->addWidget(RemotePortLabel, 2, 0, 1, 1);
 
         RemotePortLineEdit = new QLineEdit(groupUDP);
         RemotePortLineEdit->setObjectName("RemotePortLineEdit");
+        RemotePortLineEdit->setFont(font);
         RemotePortLineEdit->setReadOnly(true);
 
         gridLayout->addWidget(RemotePortLineEdit, 2, 1, 1, 1);
@@ -327,11 +410,13 @@ public:
         horizontalLayout_7->setObjectName("horizontalLayout_7");
         btnConnectUDP = new QPushButton(groupUDP);
         btnConnectUDP->setObjectName("btnConnectUDP");
+        btnConnectUDP->setFont(font);
 
         horizontalLayout_7->addWidget(btnConnectUDP);
 
         btnDisconnectUDP = new QPushButton(groupUDP);
         btnDisconnectUDP->setObjectName("btnDisconnectUDP");
+        btnDisconnectUDP->setFont(font);
 
         horizontalLayout_7->addWidget(btnDisconnectUDP);
 
@@ -343,9 +428,7 @@ public:
 
         labelCommStatus = new QLabel(groupConnection);
         labelCommStatus->setObjectName("labelCommStatus");
-        QFont font4;
-        font4.setPointSize(10);
-        labelCommStatus->setFont(font4);
+        labelCommStatus->setFont(font6);
         labelCommStatus->setStyleSheet(QString::fromUtf8("color: red;"));
         labelCommStatus->setAlignment(Qt::AlignCenter);
         labelCommStatus->setMargin(10);
@@ -355,25 +438,27 @@ public:
 
         verticalLayout_2->addWidget(groupConnection);
 
-        groupCMDSend = new QGroupBox(page);
+        groupCMDSend = new QGroupBox(pageHome);
         groupCMDSend->setObjectName("groupCMDSend");
-        groupCMDSend->setFont(font);
+        groupCMDSend->setFont(font5);
         verticalLayout_6 = new QVBoxLayout(groupCMDSend);
         verticalLayout_6->setObjectName("verticalLayout_6");
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName("horizontalLayout_6");
         CMDTitleLabel = new QLabel(groupCMDSend);
         CMDTitleLabel->setObjectName("CMDTitleLabel");
+        CMDTitleLabel->setFont(font);
 
         horizontalLayout_6->addWidget(CMDTitleLabel);
 
         CMDComboBox = new QComboBox(groupCMDSend);
         CMDComboBox->setObjectName("CMDComboBox");
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(CMDComboBox->sizePolicy().hasHeightForWidth());
-        CMDComboBox->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(CMDComboBox->sizePolicy().hasHeightForWidth());
+        CMDComboBox->setSizePolicy(sizePolicy2);
+        CMDComboBox->setFont(font);
 
         horizontalLayout_6->addWidget(CMDComboBox);
 
@@ -382,29 +467,382 @@ public:
 
         btnSendCMD = new QPushButton(groupCMDSend);
         btnSendCMD->setObjectName("btnSendCMD");
+        btnSendCMD->setFont(font);
 
         verticalLayout_6->addWidget(btnSendCMD);
 
 
         verticalLayout_2->addWidget(groupCMDSend);
 
-        commsLog = new QPlainTextEdit(page);
+        groupBox = new QGroupBox(pageHome);
+        groupBox->setObjectName("groupBox");
+        groupBox->setFont(font5);
+        verticalLayout_10 = new QVBoxLayout(groupBox);
+        verticalLayout_10->setObjectName("verticalLayout_10");
+        commsLog = new QPlainTextEdit(groupBox);
         commsLog->setObjectName("commsLog");
+        commsLog->setFont(font);
         commsLog->setReadOnly(true);
 
-        verticalLayout_2->addWidget(commsLog);
+        verticalLayout_10->addWidget(commsLog);
 
-        stackedScreens->addWidget(page);
-        page_2 = new QWidget();
-        page_2->setObjectName("page_2");
-        stackedScreens->addWidget(page_2);
+
+        verticalLayout_2->addWidget(groupBox);
+
+        stackedScreens->addWidget(pageHome);
+        pageSensors = new QWidget();
+        pageSensors->setObjectName("pageSensors");
+        verticalLayout_7 = new QVBoxLayout(pageSensors);
+        verticalLayout_7->setObjectName("verticalLayout_7");
+        titleSensors = new QLabel(pageSensors);
+        titleSensors->setObjectName("titleSensors");
+        titleSensors->setFont(font4);
+        titleSensors->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_7->addWidget(titleSensors);
+
+        groupIRSensors = new QGroupBox(pageSensors);
+        groupIRSensors->setObjectName("groupIRSensors");
+        groupIRSensors->setFont(font5);
+        verticalLayout_8 = new QVBoxLayout(groupIRSensors);
+        verticalLayout_8->setObjectName("verticalLayout_8");
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        labelDistanceSensors = new QLabel(groupIRSensors);
+        labelDistanceSensors->setObjectName("labelDistanceSensors");
+        labelDistanceSensors->setFont(font6);
+
+        horizontalLayout_2->addWidget(labelDistanceSensors);
+
+
+        verticalLayout_8->addLayout(horizontalLayout_2);
+
+        line_2 = new QFrame(groupIRSensors);
+        line_2->setObjectName("line_2");
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_8->addWidget(line_2);
+
+        layoutDistanceSensors = new QGridLayout();
+        layoutDistanceSensors->setObjectName("layoutDistanceSensors");
+        progBarIrRightSide = new QProgressBar(groupIRSensors);
+        progBarIrRightSide->setObjectName("progBarIrRightSide");
+        progBarIrRightSide->setFont(font);
+        progBarIrRightSide->setMaximum(4095);
+        progBarIrRightSide->setValue(0);
+        progBarIrRightSide->setAlignment(Qt::AlignCenter);
+        progBarIrRightSide->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrRightSide, 0, 1, 1, 1);
+
+        progBarIrRightDiag = new QProgressBar(groupIRSensors);
+        progBarIrRightDiag->setObjectName("progBarIrRightDiag");
+        progBarIrRightDiag->setFont(font);
+        progBarIrRightDiag->setMaximum(4095);
+        progBarIrRightDiag->setValue(0);
+        progBarIrRightDiag->setAlignment(Qt::AlignCenter);
+        progBarIrRightDiag->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrRightDiag, 1, 1, 1, 1);
+
+        progBarIrFrontRight = new QProgressBar(groupIRSensors);
+        progBarIrFrontRight->setObjectName("progBarIrFrontRight");
+        progBarIrFrontRight->setFont(font);
+        progBarIrFrontRight->setMaximum(4095);
+        progBarIrFrontRight->setValue(0);
+        progBarIrFrontRight->setAlignment(Qt::AlignCenter);
+        progBarIrFrontRight->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrFrontRight, 2, 1, 1, 1);
+
+        labelIrFrontRight = new QLabel(groupIRSensors);
+        labelIrFrontRight->setObjectName("labelIrFrontRight");
+        labelIrFrontRight->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrFrontRight, 2, 0, 1, 1);
+
+        labelIrRightDiag = new QLabel(groupIRSensors);
+        labelIrRightDiag->setObjectName("labelIrRightDiag");
+        labelIrRightDiag->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrRightDiag, 1, 0, 1, 1);
+
+        labelIrLeftDiag = new QLabel(groupIRSensors);
+        labelIrLeftDiag->setObjectName("labelIrLeftDiag");
+        labelIrLeftDiag->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrLeftDiag, 4, 0, 1, 1);
+
+        progBarIrLeftDiag = new QProgressBar(groupIRSensors);
+        progBarIrLeftDiag->setObjectName("progBarIrLeftDiag");
+        progBarIrLeftDiag->setFont(font);
+        progBarIrLeftDiag->setMaximum(4095);
+        progBarIrLeftDiag->setValue(0);
+        progBarIrLeftDiag->setAlignment(Qt::AlignCenter);
+        progBarIrLeftDiag->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrLeftDiag, 4, 1, 1, 1);
+
+        labelIrFrontLeft = new QLabel(groupIRSensors);
+        labelIrFrontLeft->setObjectName("labelIrFrontLeft");
+        labelIrFrontLeft->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrFrontLeft, 3, 0, 1, 1);
+
+        labelIrLeftSide = new QLabel(groupIRSensors);
+        labelIrLeftSide->setObjectName("labelIrLeftSide");
+        labelIrLeftSide->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrLeftSide, 5, 0, 1, 1);
+
+        progBarIrFrontLeft = new QProgressBar(groupIRSensors);
+        progBarIrFrontLeft->setObjectName("progBarIrFrontLeft");
+        progBarIrFrontLeft->setFont(font);
+        progBarIrFrontLeft->setMaximum(4095);
+        progBarIrFrontLeft->setValue(0);
+        progBarIrFrontLeft->setAlignment(Qt::AlignCenter);
+        progBarIrFrontLeft->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrFrontLeft, 3, 1, 1, 1);
+
+        labelIrRightSide = new QLabel(groupIRSensors);
+        labelIrRightSide->setObjectName("labelIrRightSide");
+        labelIrRightSide->setFont(font);
+
+        layoutDistanceSensors->addWidget(labelIrRightSide, 0, 0, 1, 1);
+
+        progBarIrLeftSide = new QProgressBar(groupIRSensors);
+        progBarIrLeftSide->setObjectName("progBarIrLeftSide");
+        progBarIrLeftSide->setFont(font);
+        progBarIrLeftSide->setMaximum(4095);
+        progBarIrLeftSide->setValue(0);
+        progBarIrLeftSide->setAlignment(Qt::AlignCenter);
+        progBarIrLeftSide->setTextVisible(true);
+
+        layoutDistanceSensors->addWidget(progBarIrLeftSide, 5, 1, 1, 1);
+
+
+        verticalLayout_8->addLayout(layoutDistanceSensors);
+
+        label_9 = new QLabel(groupIRSensors);
+        label_9->setObjectName("label_9");
+        label_9->setFont(font6);
+
+        verticalLayout_8->addWidget(label_9);
+
+        line_3 = new QFrame(groupIRSensors);
+        line_3->setObjectName("line_3");
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_8->addWidget(line_3);
+
+        layoutGroundSensors = new QGridLayout();
+        layoutGroundSensors->setObjectName("layoutGroundSensors");
+        labelIrGroundFront = new QLabel(groupIRSensors);
+        labelIrGroundFront->setObjectName("labelIrGroundFront");
+        labelIrGroundFront->setFont(font);
+        labelIrGroundFront->setMargin(0);
+
+        layoutGroundSensors->addWidget(labelIrGroundFront, 0, 0, 1, 1);
+
+        labelIrGroundRear = new QLabel(groupIRSensors);
+        labelIrGroundRear->setObjectName("labelIrGroundRear");
+        labelIrGroundRear->setFont(font);
+        labelIrGroundRear->setLineWidth(1);
+        labelIrGroundRear->setMargin(0);
+        labelIrGroundRear->setIndent(-1);
+
+        layoutGroundSensors->addWidget(labelIrGroundRear, 3, 0, 1, 1);
+
+        progBarIrGroundFront = new QProgressBar(groupIRSensors);
+        progBarIrGroundFront->setObjectName("progBarIrGroundFront");
+        progBarIrGroundFront->setFont(font);
+        progBarIrGroundFront->setMaximum(4095);
+        progBarIrGroundFront->setValue(0);
+        progBarIrGroundFront->setAlignment(Qt::AlignCenter);
+
+        layoutGroundSensors->addWidget(progBarIrGroundFront, 0, 1, 1, 1);
+
+        progBarIrGroundRear = new QProgressBar(groupIRSensors);
+        progBarIrGroundRear->setObjectName("progBarIrGroundRear");
+        progBarIrGroundRear->setFont(font);
+        progBarIrGroundRear->setMaximum(4095);
+        progBarIrGroundRear->setValue(0);
+        progBarIrGroundRear->setAlignment(Qt::AlignCenter);
+
+        layoutGroundSensors->addWidget(progBarIrGroundRear, 3, 1, 1, 1);
+
+
+        verticalLayout_8->addLayout(layoutGroundSensors);
+
+
+        verticalLayout_7->addWidget(groupIRSensors);
+
+        groupMPU6050 = new QGroupBox(pageSensors);
+        groupMPU6050->setObjectName("groupMPU6050");
+        groupMPU6050->setFont(font5);
+        verticalLayout_9 = new QVBoxLayout(groupMPU6050);
+        verticalLayout_9->setObjectName("verticalLayout_9");
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setObjectName("horizontalLayout_9");
+        label_7 = new QLabel(groupMPU6050);
+        label_7->setObjectName("label_7");
+        label_7->setFont(font6);
+
+        horizontalLayout_9->addWidget(label_7);
+
+
+        verticalLayout_9->addLayout(horizontalLayout_9);
+
+        line_4 = new QFrame(groupMPU6050);
+        line_4->setObjectName("line_4");
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_9->addWidget(line_4);
+
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName("horizontalLayout_8");
+        label = new QLabel(groupMPU6050);
+        label->setObjectName("label");
+        label->setFont(font);
+
+        horizontalLayout_8->addWidget(label);
+
+        accelXLineEdit = new QLineEdit(groupMPU6050);
+        accelXLineEdit->setObjectName("accelXLineEdit");
+        accelXLineEdit->setFont(font);
+        accelXLineEdit->setReadOnly(true);
+
+        horizontalLayout_8->addWidget(accelXLineEdit);
+
+        label_2 = new QLabel(groupMPU6050);
+        label_2->setObjectName("label_2");
+        label_2->setFont(font);
+
+        horizontalLayout_8->addWidget(label_2);
+
+        accelYLineEdit = new QLineEdit(groupMPU6050);
+        accelYLineEdit->setObjectName("accelYLineEdit");
+        accelYLineEdit->setFont(font);
+        accelYLineEdit->setReadOnly(true);
+
+        horizontalLayout_8->addWidget(accelYLineEdit);
+
+        label_3 = new QLabel(groupMPU6050);
+        label_3->setObjectName("label_3");
+        label_3->setFont(font);
+
+        horizontalLayout_8->addWidget(label_3);
+
+        accelZLineEdit = new QLineEdit(groupMPU6050);
+        accelZLineEdit->setObjectName("accelZLineEdit");
+        accelZLineEdit->setFont(font);
+        accelZLineEdit->setReadOnly(true);
+
+        horizontalLayout_8->addWidget(accelZLineEdit);
+
+
+        verticalLayout_9->addLayout(horizontalLayout_8);
+
+        label_8 = new QLabel(groupMPU6050);
+        label_8->setObjectName("label_8");
+        label_8->setFont(font6);
+
+        verticalLayout_9->addWidget(label_8);
+
+        line_5 = new QFrame(groupMPU6050);
+        line_5->setObjectName("line_5");
+        line_5->setFrameShape(QFrame::HLine);
+        line_5->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_9->addWidget(line_5);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        label_4 = new QLabel(groupMPU6050);
+        label_4->setObjectName("label_4");
+        label_4->setFont(font);
+
+        horizontalLayout_3->addWidget(label_4);
+
+        gyroXLineEdit = new QLineEdit(groupMPU6050);
+        gyroXLineEdit->setObjectName("gyroXLineEdit");
+        gyroXLineEdit->setFont(font);
+        gyroXLineEdit->setReadOnly(true);
+
+        horizontalLayout_3->addWidget(gyroXLineEdit);
+
+        label_5 = new QLabel(groupMPU6050);
+        label_5->setObjectName("label_5");
+        label_5->setFont(font);
+
+        horizontalLayout_3->addWidget(label_5);
+
+        gyroYLineEdit = new QLineEdit(groupMPU6050);
+        gyroYLineEdit->setObjectName("gyroYLineEdit");
+        gyroYLineEdit->setFont(font);
+        gyroYLineEdit->setReadOnly(true);
+
+        horizontalLayout_3->addWidget(gyroYLineEdit);
+
+        label_6 = new QLabel(groupMPU6050);
+        label_6->setObjectName("label_6");
+        label_6->setFont(font);
+
+        horizontalLayout_3->addWidget(label_6);
+
+        gyroZLineEdit = new QLineEdit(groupMPU6050);
+        gyroZLineEdit->setObjectName("gyroZLineEdit");
+        gyroZLineEdit->setFont(font);
+        gyroZLineEdit->setReadOnly(true);
+
+        horizontalLayout_3->addWidget(gyroZLineEdit);
+
+
+        verticalLayout_9->addLayout(horizontalLayout_3);
+
+
+        verticalLayout_7->addWidget(groupMPU6050);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_7->addItem(verticalSpacer_2);
+
+        horizontalLayout_10 = new QHBoxLayout();
+        horizontalLayout_10->setObjectName("horizontalLayout_10");
+        btnRefreshSensorsValues = new QPushButton(pageSensors);
+        btnRefreshSensorsValues->setObjectName("btnRefreshSensorsValues");
+        btnRefreshSensorsValues->setFont(font);
+
+        horizontalLayout_10->addWidget(btnRefreshSensorsValues);
+
+        chkBoxAutoRefreshSensorsValues = new QCheckBox(pageSensors);
+        chkBoxAutoRefreshSensorsValues->setObjectName("chkBoxAutoRefreshSensorsValues");
+        chkBoxAutoRefreshSensorsValues->setFont(font);
+
+        horizontalLayout_10->addWidget(chkBoxAutoRefreshSensorsValues);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_10->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_7->addLayout(horizontalLayout_10);
+
+        stackedScreens->addWidget(pageSensors);
+        pageConfig = new QWidget();
+        pageConfig->setObjectName("pageConfig");
+        stackedScreens->addWidget(pageConfig);
 
         horizontalLayout->addWidget(stackedScreens);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 1000, 25));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -412,7 +850,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(0);
+        stackedScreens->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -421,7 +859,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        logoLabel->setText(QCoreApplication::translate("MainWindow", "Micromouse", nullptr));
+        logoLabel->setText(QCoreApplication::translate("MainWindow", "MICRO", nullptr));
         btnHome->setText(QCoreApplication::translate("MainWindow", "Inicio", nullptr));
         btnSensors->setText(QCoreApplication::translate("MainWindow", "Sensores", nullptr));
         btnConfig->setText(QCoreApplication::translate("MainWindow", "Configuraci\303\263n", nullptr));
@@ -440,9 +878,41 @@ public:
         btnConnectUDP->setText(QCoreApplication::translate("MainWindow", "Conectar", nullptr));
         btnDisconnectUDP->setText(QCoreApplication::translate("MainWindow", "Desconectar", nullptr));
         labelCommStatus->setText(QCoreApplication::translate("MainWindow", "Estado Conexi\303\263n", nullptr));
-        groupCMDSend->setTitle(QCoreApplication::translate("MainWindow", "Test envio de comandos", nullptr));
+        groupCMDSend->setTitle(QCoreApplication::translate("MainWindow", "Envio de comandos", nullptr));
         CMDTitleLabel->setText(QCoreApplication::translate("MainWindow", "Comando:", nullptr));
         btnSendCMD->setText(QCoreApplication::translate("MainWindow", "Enviar", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "Log de comunicaciones", nullptr));
+        titleSensors->setText(QCoreApplication::translate("MainWindow", "Sensores", nullptr));
+        groupIRSensors->setTitle(QCoreApplication::translate("MainWindow", "TCRT5000", nullptr));
+        labelDistanceSensors->setText(QCoreApplication::translate("MainWindow", "Distancia", nullptr));
+        progBarIrRightSide->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        progBarIrRightDiag->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        progBarIrFrontRight->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        labelIrFrontRight->setText(QCoreApplication::translate("MainWindow", "Frontal der.", nullptr));
+        labelIrRightDiag->setText(QCoreApplication::translate("MainWindow", "Diagonal der.", nullptr));
+        labelIrLeftDiag->setText(QCoreApplication::translate("MainWindow", "Diagonal izq.", nullptr));
+        progBarIrLeftDiag->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        labelIrFrontLeft->setText(QCoreApplication::translate("MainWindow", "Frontal izq.", nullptr));
+        labelIrLeftSide->setText(QCoreApplication::translate("MainWindow", "Lateral izq.", nullptr));
+        progBarIrFrontLeft->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        labelIrRightSide->setText(QCoreApplication::translate("MainWindow", "Lateral der.", nullptr));
+        progBarIrLeftSide->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "Suelo", nullptr));
+        labelIrGroundFront->setText(QCoreApplication::translate("MainWindow", "Suelo frontal", nullptr));
+        labelIrGroundRear->setText(QCoreApplication::translate("MainWindow", "Suelo trasero ", nullptr));
+        progBarIrGroundFront->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        progBarIrGroundRear->setFormat(QCoreApplication::translate("MainWindow", "%v", nullptr));
+        groupMPU6050->setTitle(QCoreApplication::translate("MainWindow", "MPU6050", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Aceler\303\263metro", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Ax", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Ay", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Az", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Giroscopio", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "Gx", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Gy", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Gz", nullptr));
+        btnRefreshSensorsValues->setText(QCoreApplication::translate("MainWindow", "Actualizar", nullptr));
+        chkBoxAutoRefreshSensorsValues->setText(QCoreApplication::translate("MainWindow", "Actualizaci\303\263n autom\303\241tica", nullptr));
     } // retranslateUi
 
 };

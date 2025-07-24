@@ -1,13 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QMessageBox> // Para mostrar mensajes de error
-#include <QDebug>      // Para imprimir en la consola de depuración
+#include <QMessageBox>
+#include <QDebug>
 #include <QDataStream>
 #include <QTextBlock>
 #include <QMetaEnum>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), serialPort(new QSerialPort(this)), m_parser(new UnerbusParser(this)), udpSocket(nullptr)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      serialPort(new QSerialPort(this)),
+      m_parser(new UnerbusParser(this)),
+      udpSocket(nullptr),
+      sensorUpdateTimer(new QTimer(this))
 {
     ui->setupUi(this);
 
@@ -28,11 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     // Conectar el parser
     connect(m_parser, &UnerbusParser::packetReceived, this, &MainWindow::onPacketReceived);
 
-    // Conectar el socket UDP
-    connect(udpSocket, &QUdpSocket::readyRead, this, &MainWindow::onUDPReadyRead);
+    // --- Conectar el temporizador de sensores ---
+    connect(sensorUpdateTimer, &QTimer::timeout, this, &MainWindow::requestSensorData);
 
     updateSerialPortList();
-    updateUIState(false, false); // Estado inicial: desconectado
+    updateUIState(false, false);                   // Estado inicial: desconectado
+    updateConnectionStatus("Desconectado", "red"); // Establecer estado inicial
 
     populateCMDComboBox();
 }
@@ -82,19 +88,11 @@ void MainWindow::updateUIState(bool serialConnected, bool udpConnected)
     ui->btnDisconnectSerie->setEnabled(serialConnected);
 
     // UDP
-    ui->RemoteIpLineEdit->setEnabled(false);   // Siempre deshabilitado
-    ui->RemotePortLineEdit->setEnabled(false); // Siempre deshabilitado
+    ui->RemoteIpLineEdit->setEnabled(false);
+    ui->RemotePortLineEdit->setEnabled(false);
     ui->localPortLineEdit->setEnabled(!udpConnected && !serialConnected);
     ui->btnConnectUDP->setEnabled(!udpConnected && !serialConnected);
     ui->btnDisconnectUDP->setEnabled(udpConnected);
-
-    // Estado
-    if (serialConnected)
-        ui->labelCommStatus->setText("Conectado por Serie");
-    else if (udpConnected)
-        ui->labelCommStatus->setText("Conectado por UDP");
-    else
-        ui->labelCommStatus->setText("Desconectado");
 }
 
 void MainWindow::on_btnConnectSerie_clicked()
@@ -115,13 +113,13 @@ void MainWindow::on_btnConnectSerie_clicked()
     if (serialPort->open(QIODevice::ReadWrite))
     {
         updateUIState(true, false);
-        ui->labelCommStatus->setText("Conectado por Serie");
-        ui->labelCommStatus->setStyleSheet("color: green;"); // Añadir esta línea
+        updateConnectionStatus("Conectado por Serie", "green");
     }
     else
     {
         QMessageBox::critical(this, "Error de Conexión", "No se pudo abrir el puerto: " + serialPort->errorString());
         updateUIState(false, false);
+        updateConnectionStatus("Desconectado", "red"); // Asegurar estado en caso de error
     }
 }
 
@@ -132,8 +130,7 @@ void MainWindow::on_btnDisconnectSerie_clicked()
         serialPort->close();
     }
     updateUIState(false, false);
-    ui->labelCommStatus->setText("Desconectado");
-    ui->labelCommStatus->setStyleSheet("color: red;"); // Añadir esta línea
+    updateConnectionStatus("Desconectado", "red");
 }
 
 void MainWindow::on_btnRefreshPorts_clicked()
@@ -178,7 +175,7 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
                              .arg(QString(payload.toHex(' ')));
     ui->commsLog->appendPlainText(logMessage);
 
-    if (ui->commsLog->document()->blockCount() > 200) // Limita el número de líneas en el log
+    if (ui->commsLog->document()->blockCount() > MAX_LOG_LINES) // Limita el número de líneas en el log
     {
         // Mueve el cursor al inicio del documento
         QTextCursor cursor(ui->commsLog->document()->findBlockByNumber(0));
@@ -200,33 +197,13 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
     }
     case Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES:
     {
-        if (payload.size() >= 16)
-        { // 8 canales * 2 bytes/canal
-            quint16 adc_ch0, adc_ch1, adc_ch2, adc_ch3, adc_ch4, adc_ch5, adc_ch6, adc_ch7;
-            stream >> adc_ch0 >> adc_ch1 >> adc_ch2 >> adc_ch3 >> adc_ch4 >> adc_ch5 >> adc_ch6 >> adc_ch7;
-            // Ahora puedes usar estos valores para actualizar la UI
-            // Ejemplo: ui->labelSensor1->setText(QString::number(adc_ch0));
-            qDebug() << "ADC[0]:" << adc_ch0;
-            qDebug() << "ADC[1]:" << adc_ch1;
-            qDebug() << "ADC[2]:" << adc_ch2;
-            qDebug() << "ADC[3]:" << adc_ch3;
-            qDebug() << "ADC[4]:" << adc_ch4;
-            qDebug() << "ADC[5]:" << adc_ch5;
-            qDebug() << "ADC[6]:" << adc_ch6;
-            qDebug() << "ADC[7]:" << adc_ch7;
-        }
+        updateIrSensorsUI(payload);
         break;
     }
 
     case Unerbus::CommandId::CMD_GET_MPU_DATA:
     {
-        if (payload.size() >= 14)
-        { // 7 valores * 2 bytes/valor
-            qint16 ax, ay, az, temp, gx, gy, gz;
-            stream >> ax >> ay >> az >> temp >> gx >> gy >> gz;
-            // Actualizar la UI con los datos del MPU
-            qDebug() << "Accel X:" << ax << "Gyro Z:" << gz;
-        }
+        updateMpuSensorsUI(payload);
         break;
     }
 
@@ -244,6 +221,11 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
     }
 }
 
+/**
+ * @brief Rellena el ComboBox de comandos manualmente.
+ * @note Se rellena manualmente para incluir solo los comandos de tipo GET
+ *       que no requieren un payload, simplificando la interfaz de envío rápido.
+ */
 void MainWindow::populateCMDComboBox()
 {
     ui->CMDComboBox->clear();
@@ -269,33 +251,8 @@ void MainWindow::on_btnSendCMD_clicked()
         return;
     }
 
-    quint8 cmd = ui->CMDComboBox->currentData().toUInt();
-
-    QByteArray packet;
-    packet.append(Unerbus::HEADER); // "UNER"
-    packet.append(0x02);            // LENGTH (CMD + CHECKSUM)
-    packet.append(Unerbus::TOKEN);  // ':'
-    packet.append(cmd);             // CMD
-
-    quint8 checksum = 0;
-    for (int i = 0; i < packet.size(); ++i)
-        checksum ^= static_cast<quint8>(packet.at(i));
-    packet.append(checksum); // CHECKSUM
-
-    if (serialPort && serialPort->isOpen())
-    {
-        serialPort->write(packet);
-    }
-    else if (udpSocket)
-    {
-        udpSocket->writeDatagram(packet, QHostAddress(remoteIp), remotePort);
-    }
-    else
-    {
-        ui->labelCommStatus->setText("No hay canal de comunicación activo");
-    }
-
-    qDebug() << "Paquete enviado:" << packet.toHex(' ');
+    auto cmdId = static_cast<Unerbus::CommandId>(ui->CMDComboBox->currentData().toUInt());
+    sendUnerbusCommand(cmdId);
 }
 void MainWindow::on_btnConnectUDP_clicked()
 {
@@ -314,8 +271,9 @@ void MainWindow::on_btnConnectUDP_clicked()
     if (!udpSocket->bind(QHostAddress::Any, localPort))
     {
         QMessageBox::critical(this, "Error de Conexión", "No se pudo abrir el puerto UDP. Puede que ya esté en uso.");
-        delete udpSocket;
+        udpSocket->deleteLater();
         udpSocket = nullptr;
+        updateConnectionStatus("Desconectado", "red"); // Asegurar estado en caso de error
         return;
     }
     connect(udpSocket, &QUdpSocket::readyRead, this, &MainWindow::onUDPReadyRead);
@@ -332,8 +290,7 @@ void MainWindow::on_btnConnectUDP_clicked()
         remotePort = remotePortFromUI;
 
         updateUIState(false, true);
-        ui->labelCommStatus->setText("Conectado por UDP");
-        ui->labelCommStatus->setStyleSheet("color: green;");
+        updateConnectionStatus("Conectado por UDP", "green");
         ui->commsLog->appendPlainText(QString("Reconectado directamente a %1:%2").arg(remoteIp).arg(remotePort));
     }
     else
@@ -341,8 +298,7 @@ void MainWindow::on_btnConnectUDP_clicked()
         // --- LÓGICA DE PRIMERA CONEXIÓN ---
         // No hay datos, esperar el primer paquete del robot
         updateUIState(false, true);
-        ui->labelCommStatus->setText(QString("Escuchando en puerto %1...").arg(localPort));
-        ui->labelCommStatus->setStyleSheet("color: orange;");
+        updateConnectionStatus(QString("Escuchando en puerto %1...").arg(localPort), "orange");
     }
 }
 
@@ -358,10 +314,8 @@ void MainWindow::on_btnDisconnectUDP_clicked()
         remoteIp.clear();
         remotePort = 0;
 
-        // Actualizar UI al estado "Desconectado"
         updateUIState(false, false);
-        ui->labelCommStatus->setText("Desconectado UDP");
-        ui->labelCommStatus->setStyleSheet("color: red;"); // Color rojo para "Desconectado"
+        updateConnectionStatus("Desconectado", "red");
     }
 }
 
@@ -390,11 +344,153 @@ void MainWindow::onUDPReadyRead()
             ui->RemoteIpLineEdit->setText(remoteIp);
             ui->RemotePortLineEdit->setText(QString::number(remotePort));
             ui->commsLog->appendPlainText(QString("Conexión establecida con %1:%2").arg(remoteIp).arg(remotePort));
-            ui->labelCommStatus->setText("Conectado por UDP");
-            ui->labelCommStatus->setStyleSheet("color: green;"); // Color verde para "Conectado"
+            updateConnectionStatus("Conectado por UDP", "green");
         }
 
         // Procesar el paquete como siempre
         m_parser->processData(datagram);
     }
+}
+
+/**
+ * @brief Slot para el botón "Actualizar" de la página de sensores.
+ *        Solicita los datos de los sensores una sola vez.
+ */
+void MainWindow::on_btnRefreshSensorsValues_clicked()
+{
+    requestSensorData();
+}
+
+/**
+ * @brief Slot para el checkbox "Actualización automática".
+ *        Inicia o detiene el temporizador que solicita datos de sensores.
+ * @param checked El estado del checkbox.
+ */
+void MainWindow::on_chkBoxAutoRefreshSensorsValues_toggled(bool checked)
+{
+    if (checked)
+    {
+        sensorUpdateTimer->start(SENSOR_UPDATE_INTERVAL_MS); // Actualiza cada 200 ms (5 Hz)
+    }
+    else
+    {
+        sensorUpdateTimer->stop();
+    }
+}
+
+/**
+ * @brief Solicita todos los datos de sensores al microcontrolador.
+ */
+void MainWindow::requestSensorData()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES);
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MPU_DATA);
+}
+
+/**
+ * @brief Actualiza los QProgressBar de los sensores IR con los datos recibidos.
+ * @param payload El payload del paquete CMD_GET_LAST_ADC_VALUES.
+ */
+void MainWindow::updateIrSensorsUI(const QByteArray &payload)
+{
+    if (payload.size() < 16)
+        return; // 8 canales * 2 bytes/canal
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 ir_front_left, ir_front_right, ir_diag_left, ir_diag_right,
+        ir_side_left, ir_side_right, ir_gnd_front, ir_gnd_rear;
+
+    // NOTA: El orden de lectura debe coincidir con el orden de envío en el STM32.
+    // Se asume el siguiente orden, ajústalo si es necesario.
+    stream >> ir_front_left >> ir_front_right >> ir_diag_left >> ir_diag_right >> ir_side_left >> ir_side_right >> ir_gnd_front >> ir_gnd_rear;
+
+    ui->progBarIrFrontLeft->setValue(ir_front_left);
+    ui->progBarIrFrontRight->setValue(ir_front_right);
+    ui->progBarIrLeftDiag->setValue(ir_diag_left);
+    ui->progBarIrRightDiag->setValue(ir_diag_right);
+    ui->progBarIrLeftSide->setValue(ir_side_left);
+    ui->progBarIrRightSide->setValue(ir_side_right);
+    ui->progBarIrGroundFront->setValue(ir_gnd_front);
+    ui->progBarIrGroundRear->setValue(ir_gnd_rear);
+}
+
+/**
+ * @brief Actualiza los QLineEdit del MPU6050 con los datos recibidos.
+ * @param payload El payload del paquete CMD_GET_MPU_DATA.
+ */
+void MainWindow::updateMpuSensorsUI(const QByteArray &payload)
+{
+    if (payload.size() < 14)
+        return; // 7 valores * 2 bytes/valor
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    qint16 ax, ay, az, temp, gx, gy, gz;
+    stream >> ax >> ay >> az >> temp >> gx >> gy >> gz;
+
+    // Ignoramos 'temp' como solicitaste.
+
+    ui->accelXLineEdit->setText(QString::number(ax));
+    ui->accelYLineEdit->setText(QString::number(ay));
+    ui->accelZLineEdit->setText(QString::number(az));
+    ui->gyroXLineEdit->setText(QString::number(gx));
+    ui->gyroYLineEdit->setText(QString::number(gy));
+    ui->gyroZLineEdit->setText(QString::number(gz));
+}
+
+void MainWindow::sendUnerbusCommand(Unerbus::CommandId cmd, const QByteArray &payload)
+{
+    if (!serialPort->isOpen() && !udpSocket)
+    {
+        // No mostramos un error aquí para no ser intrusivos durante el auto-refresco
+        return;
+    }
+
+    QByteArray packet;
+    packet.append(Unerbus::HEADER); // "UNER"
+    // El tamaño es: 1 (CMD) + N (payload) + 1 (Checksum)
+    quint8 length = 1 + payload.size() + 1;
+    packet.append(length);
+    packet.append(Unerbus::TOKEN);           // ':'
+    packet.append(static_cast<quint8>(cmd)); // CMD
+    if (!payload.isEmpty())
+    {
+        packet.append(payload); // PAYLOAD
+    }
+
+    quint8 checksum = 0;
+    // El checksum se calcula sobre todo el paquete antes de añadir el checksum mismo
+    for (quint8 byte : packet)
+    {
+        checksum ^= byte;
+    }
+    packet.append(checksum); // CHECKSUM
+
+    if (serialPort && serialPort->isOpen())
+    {
+        serialPort->write(packet);
+    }
+    else if (udpSocket)
+    {
+        // Si la IP remota no está seteada, no podemos enviar
+        if (remoteIp.isEmpty() || remotePort == 0)
+            return;
+        udpSocket->writeDatagram(packet, QHostAddress(remoteIp), remotePort);
+    }
+
+    qDebug() << "Paquete enviado:" << packet.toHex(' ');
+}
+
+/**
+ * @brief Actualiza el texto y el color de la etiqueta de estado de conexión.
+ * @param text El mensaje a mostrar.
+ * @param colorName El nombre del color (ej: "green", "red", "orange").
+ */
+void MainWindow::updateConnectionStatus(const QString &text, const QString &colorName)
+{
+    ui->labelCommStatus->setText(text);
+    ui->labelCommStatus->setStyleSheet(QString("color: %1;").arg(colorName));
 }

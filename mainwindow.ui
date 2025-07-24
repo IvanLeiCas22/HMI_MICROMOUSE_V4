@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>819</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -58,7 +63,7 @@ font-weight: bold;
 text-align: center;</string>
          </property>
          <property name="text">
-          <string>Micromouse</string>
+          <string>MICRO</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -199,9 +204,9 @@ QPushButton:checked {
     <item>
      <widget class="QStackedWidget" name="stackedScreens">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="page">
+      <widget class="QWidget" name="pageHome">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="titleHome">
@@ -223,7 +228,7 @@ QPushButton:checked {
          <widget class="QGroupBox" name="groupConnection">
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="title">
@@ -232,6 +237,11 @@ QPushButton:checked {
           <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
            <item>
             <widget class="QGroupBox" name="groupSerie">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="title">
               <string>Serie</string>
              </property>
@@ -246,6 +256,11 @@ QPushButton:checked {
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Puerto:</string>
                   </property>
@@ -255,10 +270,27 @@ QPushButton:checked {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBoxPorts"/>
+                 <widget class="QComboBox" name="comboBoxPorts">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnRefreshPorts">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Actualizar</string>
                   </property>
@@ -270,6 +302,11 @@ QPushButton:checked {
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
                  <widget class="QPushButton" name="btnConnectSerie">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Conectar</string>
                   </property>
@@ -277,6 +314,11 @@ QPushButton:checked {
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnDisconnectSerie">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Desconectar</string>
                   </property>
@@ -289,6 +331,11 @@ QPushButton:checked {
            </item>
            <item>
             <widget class="QGroupBox" name="groupUDP">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="title">
               <string>UDP</string>
              </property>
@@ -300,6 +347,11 @@ QPushButton:checked {
                 </property>
                 <item row="0" column="0">
                  <widget class="QLabel" name="localPortLabel">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Puerto local:</string>
                   </property>
@@ -313,6 +365,11 @@ QPushButton:checked {
                 </item>
                 <item row="0" column="1">
                  <widget class="QLineEdit" name="localPortLineEdit">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>30010</string>
                   </property>
@@ -320,6 +377,11 @@ QPushButton:checked {
                 </item>
                 <item row="1" column="1">
                  <widget class="QLineEdit" name="RemoteIpLineEdit">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -327,6 +389,11 @@ QPushButton:checked {
                 </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="RemoteIPLabel">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>IP remota:</string>
                   </property>
@@ -337,6 +404,11 @@ QPushButton:checked {
                 </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="RemotePortLabel">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Puerto remoto:</string>
                   </property>
@@ -344,6 +416,11 @@ QPushButton:checked {
                 </item>
                 <item row="2" column="1">
                  <widget class="QLineEdit" name="RemotePortLineEdit">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
@@ -355,6 +432,11 @@ QPushButton:checked {
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
                  <widget class="QPushButton" name="btnConnectUDP">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Conectar</string>
                   </property>
@@ -362,6 +444,11 @@ QPushButton:checked {
                 </item>
                 <item>
                  <widget class="QPushButton" name="btnDisconnectUDP">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>Desconectar</string>
                   </property>
@@ -376,7 +463,7 @@ QPushButton:checked {
             <widget class="QLabel" name="labelCommStatus">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="styleSheet">
@@ -400,17 +487,22 @@ QPushButton:checked {
          <widget class="QGroupBox" name="groupCMDSend">
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="title">
-           <string>Test envio de comandos</string>
+           <string>Envio de comandos</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
               <widget class="QLabel" name="CMDTitleLabel">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Comando:</string>
                </property>
@@ -424,12 +516,22 @@ QPushButton:checked {
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
               </widget>
              </item>
             </layout>
            </item>
            <item>
             <widget class="QPushButton" name="btnSendCMD">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>Enviar</string>
              </property>
@@ -439,15 +541,679 @@ QPushButton:checked {
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="commsLog">
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
           </property>
+          <property name="title">
+           <string>Log de comunicaciones</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <widget class="QPlainTextEdit" name="commsLog">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2"/>
+      <widget class="QWidget" name="pageSensors">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QLabel" name="titleSensors">
+          <property name="font">
+           <font>
+            <pointsize>18</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Sensores</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupIRSensors">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="title">
+           <string>TCRT5000</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="labelDistanceSensors">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Distancia</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="layoutDistanceSensors">
+             <item row="0" column="1">
+              <widget class="QProgressBar" name="progBarIrRightSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QProgressBar" name="progBarIrRightDiag">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QProgressBar" name="progBarIrFrontRight">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="labelIrFrontRight">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Frontal der.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelIrRightDiag">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Diagonal der.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="labelIrLeftDiag">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Diagonal izq.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QProgressBar" name="progBarIrLeftDiag">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelIrFrontLeft">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Frontal izq.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="labelIrLeftSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Lateral izq.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QProgressBar" name="progBarIrFrontLeft">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelIrRightSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Lateral der.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QProgressBar" name="progBarIrLeftSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Suelo</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="layoutGroundSensors">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelIrGroundFront">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Suelo frontal</string>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelIrGroundRear">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <property name="text">
+                <string>Suelo trasero </string>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+               <property name="indent">
+                <number>-1</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QProgressBar" name="progBarIrGroundFront">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QProgressBar" name="progBarIrGroundRear">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupMPU6050">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="title">
+           <string>MPU6050</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Acelerómetro</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Ax</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="accelXLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Ay</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="accelYLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Az</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="accelZLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Giroscopio</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Gx</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="gyroXLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Gy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="gyroYLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Gz</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="gyroZLineEdit">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QPushButton" name="btnRefreshSensorsValues">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Actualizar</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkBoxAutoRefreshSensorsValues">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Actualización automática</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageConfig"/>
      </widget>
     </item>
    </layout>
@@ -457,8 +1223,8 @@ QPushButton:checked {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>1000</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

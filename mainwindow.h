@@ -7,6 +7,7 @@
 #include <QtSerialPort/QSerialPortInfo> // Incluir para QSerialPortInfo
 #include "Comunicacion/unerbusparser.h"
 #include <QtNetwork/QUdpSocket>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -42,6 +43,11 @@ private slots:
     // --- Slots para enviar comandos ---
     void on_btnSendCMD_clicked();
 
+    // --- Slots para la página de sensores ---
+    void on_btnRefreshSensorsValues_clicked();
+    void on_chkBoxAutoRefreshSensorsValues_toggled(bool checked);
+    void requestSensorData();
+
 private:
     Ui::MainWindow *ui;
     QButtonGroup *navigationButtonGroup; // Nuevo miembro para agrupar los botones de navegación
@@ -53,9 +59,19 @@ private:
     quint16 remotePort;
     quint16 localPort;
 
+    QTimer *sensorUpdateTimer; // Temporizador para actualizaciones automáticas
+
+    // --- Constantes para configuración ---
+    static const int SENSOR_UPDATE_INTERVAL_MS = 200;
+    static const int MAX_LOG_LINES = 200;
+
     // --- Funciones de ayuda ---
     void updateSerialPortList();
     void updateUIState(bool serialConnected, bool udpConnected);
     void populateCMDComboBox();
+    void sendUnerbusCommand(Unerbus::CommandId cmd, const QByteArray &payload = QByteArray()); // Helper para enviar comandos
+    void updateIrSensorsUI(const QByteArray &payload);
+    void updateMpuSensorsUI(const QByteArray &payload);
+    void updateConnectionStatus(const QString &text, const QString &colorName); // Helper para actualizar el estado de conexión
 };
 #endif // MAINWINDOW_H
