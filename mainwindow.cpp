@@ -402,9 +402,8 @@ void MainWindow::updateIrSensorsUI(const QByteArray &payload)
     quint16 ir_front_left, ir_front_right, ir_diag_left, ir_diag_right,
         ir_side_left, ir_side_right, ir_gnd_front, ir_gnd_rear;
 
-    // NOTA: El orden de lectura debe coincidir con el orden de envío en el STM32.
-    // Se asume el siguiente orden, ajústalo si es necesario.
-    stream >> ir_front_left >> ir_front_right >> ir_diag_left >> ir_diag_right >> ir_side_left >> ir_side_right >> ir_gnd_front >> ir_gnd_rear;
+    // Orden: ADC0, ADC1, ADC2, ADC3, ADC4, ADC5, ADC6, ADC7.
+    stream >> ir_side_right >> ir_diag_right >> ir_front_right >> ir_gnd_front >> ir_front_left >> ir_diag_left >> ir_side_left >> ir_gnd_rear;
 
     ui->progBarIrFrontLeft->setValue(ir_front_left);
     ui->progBarIrFrontRight->setValue(ir_front_right);
