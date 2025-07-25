@@ -48,6 +48,18 @@ private slots:
     void on_chkBoxAutoRefreshSensorsValues_toggled(bool checked);
     void requestSensorData();
 
+    // --- Slots para calibración y configuración ---
+    void on_btnCalibrateMPU_clicked();
+
+    // --- Slots para la página de control de motores ---
+    void on_btnApplyPWM_clicked();
+    void on_btnStopMotor_clicked();
+    void on_btnGetPWM_clicked();
+    void on_chkAutoGetPWM_toggled(bool checked);
+    void on_chkRealTimeSetPWM_toggled(bool checked);
+    void on_control_widget_valueChanged(); // Slot para seteo en tiempo real del PWM de los motores
+    void on_btnConfigurePeriod_clicked();
+
 private:
     Ui::MainWindow *ui;
     QButtonGroup *navigationButtonGroup; // Nuevo miembro para agrupar los botones de navegación
@@ -60,9 +72,11 @@ private:
     quint16 localPort;
 
     QTimer *sensorUpdateTimer; // Temporizador para actualizaciones automáticas
+    QTimer *pwmUpdateTimer;    // Temporizador para actualizaciones de PWM
 
     // --- Constantes para configuración ---
     static const int SENSOR_UPDATE_INTERVAL_MS = 200;
+    static const int PWM_UPDATE_INTERVAL_MS = 200; // Intervalo para pedir PWM (5 Hz)
     static const int MAX_LOG_LINES = 200;
 
     // --- Funciones de ayuda ---
@@ -73,5 +87,9 @@ private:
     void updateIrSensorsUI(const QByteArray &payload);
     void updateMpuSensorsUI(const QByteArray &payload);
     void updateConnectionStatus(const QString &text, const QString &colorName); // Helper para actualizar el estado de conexión
+    void setupControlPage();                                                    // Función de configuración del control
+    void requestPwmData();                                                      // Nueva función para pedir datos de PWM
+    void updatePwmUI(const QByteArray &payload);                                // Nueva función para actualizar la UI de PWM
+    void updatePwmControlRanges(quint16 new_period);
 };
 #endif // MAINWINDOW_H

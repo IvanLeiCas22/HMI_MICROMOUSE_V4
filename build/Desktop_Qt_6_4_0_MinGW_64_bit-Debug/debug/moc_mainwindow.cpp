@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MainWindow_t {
-    uint offsetsAndSizes[46];
+    uint offsetsAndSizes[62];
     char stringdata0[11];
     char stringdata1[27];
     char stringdata2[1];
@@ -50,6 +50,14 @@ struct qt_meta_stringdata_MainWindow_t {
     char stringdata20[42];
     char stringdata21[8];
     char stringdata22[18];
+    char stringdata23[27];
+    char stringdata24[23];
+    char stringdata25[24];
+    char stringdata26[21];
+    char stringdata27[25];
+    char stringdata28[29];
+    char stringdata29[31];
+    char stringdata30[30];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MainWindow_t::offsetsAndSizes) + ofs), len 
@@ -77,7 +85,15 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
         QT_MOC_LITERAL(346, 34),  // "on_btnRefreshSensorsValues_cl..."
         QT_MOC_LITERAL(381, 41),  // "on_chkBoxAutoRefreshSensorsVa..."
         QT_MOC_LITERAL(423, 7),  // "checked"
-        QT_MOC_LITERAL(431, 17)   // "requestSensorData"
+        QT_MOC_LITERAL(431, 17),  // "requestSensorData"
+        QT_MOC_LITERAL(449, 26),  // "on_btnCalibrateMPU_clicked"
+        QT_MOC_LITERAL(476, 22),  // "on_btnApplyPWM_clicked"
+        QT_MOC_LITERAL(499, 23),  // "on_btnStopMotor_clicked"
+        QT_MOC_LITERAL(523, 20),  // "on_btnGetPWM_clicked"
+        QT_MOC_LITERAL(544, 24),  // "on_chkAutoGetPWM_toggled"
+        QT_MOC_LITERAL(569, 28),  // "on_chkRealTimeSetPWM_toggled"
+        QT_MOC_LITERAL(598, 30),  // "on_control_widget_valueChanged"
+        QT_MOC_LITERAL(629, 29)   // "on_btnConfigurePeriod_clicked"
     },
     "MainWindow",
     "on_navigationButtonClicked",
@@ -101,7 +117,15 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
     "on_btnRefreshSensorsValues_clicked",
     "on_chkBoxAutoRefreshSensorsValues_toggled",
     "checked",
-    "requestSensorData"
+    "requestSensorData",
+    "on_btnCalibrateMPU_clicked",
+    "on_btnApplyPWM_clicked",
+    "on_btnStopMotor_clicked",
+    "on_btnGetPWM_clicked",
+    "on_chkAutoGetPWM_toggled",
+    "on_chkRealTimeSetPWM_toggled",
+    "on_control_widget_valueChanged",
+    "on_btnConfigurePeriod_clicked"
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
@@ -112,7 +136,7 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -120,20 +144,28 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   98,    2, 0x08,    1 /* Private */,
-       5,    0,  101,    2, 0x08,    3 /* Private */,
-       6,    0,  102,    2, 0x08,    4 /* Private */,
-       7,    0,  103,    2, 0x08,    5 /* Private */,
-       8,    0,  104,    2, 0x08,    6 /* Private */,
-       9,    1,  105,    2, 0x08,    7 /* Private */,
-      12,    0,  108,    2, 0x08,    9 /* Private */,
-      13,    0,  109,    2, 0x08,   10 /* Private */,
-      14,    0,  110,    2, 0x08,   11 /* Private */,
-      15,    2,  111,    2, 0x08,   12 /* Private */,
-      18,    0,  116,    2, 0x08,   15 /* Private */,
-      19,    0,  117,    2, 0x08,   16 /* Private */,
-      20,    1,  118,    2, 0x08,   17 /* Private */,
-      22,    0,  121,    2, 0x08,   19 /* Private */,
+       1,    1,  146,    2, 0x08,    1 /* Private */,
+       5,    0,  149,    2, 0x08,    3 /* Private */,
+       6,    0,  150,    2, 0x08,    4 /* Private */,
+       7,    0,  151,    2, 0x08,    5 /* Private */,
+       8,    0,  152,    2, 0x08,    6 /* Private */,
+       9,    1,  153,    2, 0x08,    7 /* Private */,
+      12,    0,  156,    2, 0x08,    9 /* Private */,
+      13,    0,  157,    2, 0x08,   10 /* Private */,
+      14,    0,  158,    2, 0x08,   11 /* Private */,
+      15,    2,  159,    2, 0x08,   12 /* Private */,
+      18,    0,  164,    2, 0x08,   15 /* Private */,
+      19,    0,  165,    2, 0x08,   16 /* Private */,
+      20,    1,  166,    2, 0x08,   17 /* Private */,
+      22,    0,  169,    2, 0x08,   19 /* Private */,
+      23,    0,  170,    2, 0x08,   20 /* Private */,
+      24,    0,  171,    2, 0x08,   21 /* Private */,
+      25,    0,  172,    2, 0x08,   22 /* Private */,
+      26,    0,  173,    2, 0x08,   23 /* Private */,
+      27,    1,  174,    2, 0x08,   24 /* Private */,
+      28,    1,  177,    2, 0x08,   26 /* Private */,
+      29,    0,  180,    2, 0x08,   28 /* Private */,
+      30,    0,  181,    2, 0x08,   29 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -149,6 +181,14 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -195,6 +235,24 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'requestSensorData'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnCalibrateMPU_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnApplyPWM_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnStopMotor_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnGetPWM_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_chkAutoGetPWM_toggled'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'on_chkRealTimeSetPWM_toggled'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'on_control_widget_valueChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnConfigurePeriod_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -220,6 +278,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->on_btnRefreshSensorsValues_clicked(); break;
         case 12: _t->on_chkBoxAutoRefreshSensorsValues_toggled((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 13: _t->requestSensorData(); break;
+        case 14: _t->on_btnCalibrateMPU_clicked(); break;
+        case 15: _t->on_btnApplyPWM_clicked(); break;
+        case 16: _t->on_btnStopMotor_clicked(); break;
+        case 17: _t->on_btnGetPWM_clicked(); break;
+        case 18: _t->on_chkAutoGetPWM_toggled((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 19: _t->on_chkRealTimeSetPWM_toggled((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 20: _t->on_control_widget_valueChanged(); break;
+        case 21: _t->on_btnConfigurePeriod_clicked(); break;
         default: ;
         }
     }
@@ -244,13 +310,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 22)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 14;
+        _id -= 22;
     }
     return _id;
 }

@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[54];
+    uint offsetsAndSizes[58];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -53,7 +53,9 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata23[17];
     char stringdata24[23];
     char stringdata25[23];
-    char stringdata26[11];
+    char stringdata26[19];
+    char stringdata27[19];
+    char stringdata28[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -85,7 +87,9 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(439, 16),  // "CMD_TURN_DEGREES"
         QT_MOC_LITERAL(456, 22),  // "CMD_SET_TURN_PID_GAINS"
         QT_MOC_LITERAL(479, 22),  // "CMD_GET_TURN_PID_GAINS"
-        QT_MOC_LITERAL(502, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(502, 18),  // "CMD_SET_PWM_PERIOD"
+        QT_MOC_LITERAL(521, 18),  // "CMD_GET_PWM_PERIOD"
+        QT_MOC_LITERAL(540, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -113,6 +117,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_TURN_DEGREES",
     "CMD_SET_TURN_PID_GAINS",
     "CMD_GET_TURN_PID_GAINS",
+    "CMD_SET_PWM_PERIOD",
+    "CMD_GET_PWM_PERIOD",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -132,7 +138,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   25,   19,
+       1,    1, 0x2,   27,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -159,7 +165,9 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       23, uint(Unerbus::CommandId::CMD_TURN_DEGREES),
       24, uint(Unerbus::CommandId::CMD_SET_TURN_PID_GAINS),
       25, uint(Unerbus::CommandId::CMD_GET_TURN_PID_GAINS),
-      26, uint(Unerbus::CommandId::CMD_OTHERS),
+      26, uint(Unerbus::CommandId::CMD_SET_PWM_PERIOD),
+      27, uint(Unerbus::CommandId::CMD_GET_PWM_PERIOD),
+      28, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };
