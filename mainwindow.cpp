@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include <QTextBlock>
 #include <QMetaEnum>
+#include <QIntValidator>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -45,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     populateCMDComboBox();
     setupControlPage(); // Configurar la página de control
+    setupConfigPage();
+
+    QIntValidator *turnAngleValidator = new QIntValidator(-360, 360, this);
+    ui->editTurnAngle->setValidator(turnAngleValidator);
 }
 
 MainWindow::~MainWindow()
@@ -233,6 +238,26 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
             stream >> period;
             updatePwmControlRanges(period);
         }
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_PID_GAINS:
+    {
+        updatePidNavUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS:
+    {
+        updateControlParamsUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_TURN_PID_GAINS:
+    {
+        updatePidTurnUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_MOTOR_BASE_SPEEDS:
+    {
+        updateMotorBaseSpeedsUI(payload);
         break;
     }
     default:
@@ -743,3 +768,219 @@ void MainWindow::on_btnConfigurePeriod_clicked()
     }
 }
 
+/**
+ * @brief Conecta las señales de los botones de la página de configuración a sus slots.
+ */
+void MainWindow::setupConfigPage()
+{
+    // Conexiones para el PID de Navegación
+    connect(ui->btnGetPidNavConfig, &QPushButton::clicked, this, &MainWindow::on_btnGetPidNavConfig_clicked);
+    connect(ui->btnSetPidNavConfig, &QPushButton::clicked, this, &MainWindow::on_btnSetPidNavConfig_clicked);
+
+    // Conexiones para el PID de Giro
+    connect(ui->btnGetPidTurnConfig, &QPushButton::clicked, this, &MainWindow::on_btnGetPidTurnConfig_clicked);
+    connect(ui->btnSetPidTurnConfig, &QPushButton::clicked, this, &MainWindow::on_btnSetPidTurnConfig_clicked);
+
+    // Conexiones para las Velocidades Base de los Motores
+    connect(ui->btnGetBaseMotorsSpeeds, &QPushButton::clicked, this, &MainWindow::on_btnGetBaseMotorsSpeeds_clicked);
+    connect(ui->btnSetBaseMotorsSpeeds, &QPushButton::clicked, this, &MainWindow::on_btnSetBaseMotorsSpeeds_clicked);
+}
+
+/**
+ * @brief Solicita todos los parámetros de configuración del PID de navegación.
+ *        Implementa la sugerencia de pedir todos los datos relacionados a la vez.
+ */
+void MainWindow::on_btnGetPidNavConfig_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_PID_GAINS);
+    // Se pide el segundo grupo de parámetros con un pequeño retardo para no saturar el micro
+    QTimer::singleShot(100, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS); });
+}
+
+/**
+ * @brief Envía todos los parámetros de configuración del PID de navegación.
+ *        Implementa la sugerencia de enviar todos los datos relacionados a la vez.
+ */
+void MainWindow::on_btnSetPidNavConfig_clicked()
+{
+    // 1. Enviar Ganancias (Kp, Ki, Kd)
+    QByteArray gainsPayload;
+    QDataStream gainsStream(&gainsPayload, QIODevice::WriteOnly);
+    gainsStream.setByteOrder(QDataStream::LittleEndian);
+
+    // Convertimos de flotante (UI) a entero (protocolo) multiplicando por 1000
+    gainsStream << static_cast<quint16>(ui->editKpNav->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKiNav->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKdNav->text().toFloat() * 1000.0f);
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_PID_GAINS, gainsPayload);
+
+    // 2. Enviar Parámetros de Control (Setpoint, Corrección Máxima)
+    QTimer::singleShot(100, this, [this]()
+                       {
+        QByteArray paramsPayload;
+        QDataStream paramsStream(&paramsPayload, QIODevice::WriteOnly);
+        paramsStream.setByteOrder(QDataStream::LittleEndian);
+
+        paramsStream << static_cast<quint16>(ui->editSetpointNav->text().toUShort());
+        paramsStream << static_cast<quint16>(ui->editMaxPwmOffsetNav->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_CONTROL_PARAMETERS, paramsPayload); });
+}
+
+/**
+ * @brief Solicita los parámetros de configuración del PID de giro.
+ */
+void MainWindow::on_btnGetPidTurnConfig_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_PID_GAINS);
+}
+
+/**
+ * @brief Envía los parámetros de configuración del PID de giro.
+ */
+void MainWindow::on_btnSetPidTurnConfig_clicked()
+{
+    QByteArray payload;
+    QDataStream stream(&payload, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    // Convertimos de flotante (UI) a entero (protocolo) multiplicando por 100
+    stream << static_cast<quint16>(ui->editKpTurn->text().toFloat() * 100.0f);
+    stream << static_cast<quint16>(ui->editKiTurn->text().toFloat() * 100.0f);
+    stream << static_cast<quint16>(ui->editKdTurn->text().toFloat() * 100.0f);
+
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_PID_GAINS, payload);
+}
+
+/**
+ * @brief Solicita las velocidades base de los motores.
+ */
+void MainWindow::on_btnGetBaseMotorsSpeeds_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MOTOR_BASE_SPEEDS);
+}
+
+/**
+ * @brief Envía las velocidades base de los motores.
+ */
+void MainWindow::on_btnSetBaseMotorsSpeeds_clicked()
+{
+    QByteArray payload;
+    QDataStream stream(&payload, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    stream << static_cast<quint16>(ui->editRightMotorBaseSpeed->text().toUShort());
+    stream << static_cast<quint16>(ui->editLeftMotorBaseSpeed->text().toUShort());
+
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_MOTOR_BASE_SPEEDS, payload);
+}
+
+/**
+ * @brief Actualiza la UI con las ganancias del PID de navegación.
+ */
+void MainWindow::updatePidNavUI(const QByteArray &payload)
+{
+    if (payload.size() < 6)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 kp_int, ki_int, kd_int;
+    stream >> kp_int >> ki_int >> kd_int;
+
+    // Convertimos de entero (protocolo) a flotante (UI) dividiendo por 1000
+    ui->editKpNav->setText(QString::number(kp_int / 1000.0, 'f', 3));
+    ui->editKiNav->setText(QString::number(ki_int / 1000.0, 'f', 3));
+    ui->editKdNav->setText(QString::number(kd_int / 1000.0, 'f', 3));
+}
+
+/**
+ * @brief Actualiza la UI con los parámetros de control (setpoint, etc.).
+ */
+void MainWindow::updateControlParamsUI(const QByteArray &payload)
+{
+    if (payload.size() < 4)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 setpoint, max_correction;
+    stream >> setpoint >> max_correction;
+
+    ui->editSetpointNav->setText(QString::number(setpoint));
+    ui->editMaxPwmOffsetNav->setText(QString::number(max_correction));
+}
+
+/**
+ * @brief Actualiza la UI con las ganancias del PID de giro.
+ */
+void MainWindow::updatePidTurnUI(const QByteArray &payload)
+{
+    if (payload.size() < 6)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 kp_int, ki_int, kd_int;
+    stream >> kp_int >> ki_int >> kd_int;
+
+    // Convertimos de entero (protocolo) a flotante (UI) dividiendo por 100
+    ui->editKpTurn->setText(QString::number(kp_int / 100.0, 'f', 2));
+    ui->editKiTurn->setText(QString::number(ki_int / 100.0, 'f', 2));
+    ui->editKdTurn->setText(QString::number(kd_int / 100.0, 'f', 2));
+}
+
+/**
+ * @brief Actualiza la UI con las velocidades base de los motores.
+ */
+void MainWindow::updateMotorBaseSpeedsUI(const QByteArray &payload)
+{
+    if (payload.size() < 4)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 right_speed, left_speed;
+    stream >> right_speed >> left_speed;
+
+    ui->editRightMotorBaseSpeed->setText(QString::number(right_speed));
+    ui->editLeftMotorBaseSpeed->setText(QString::number(left_speed));
+}
+
+/**
+ * @brief Slot para el botón "Girar".
+ *        Construye y envía el comando CMD_TURN_DEGREES con el ángulo especificado.
+ */
+void MainWindow::on_btnSendTurnAngle_clicked()
+{
+    // 1. Validar que el campo de texto no esté vacío
+    if (ui->editTurnAngle->text().isEmpty())
+    {
+        QMessageBox::warning(this, "Entrada Inválida", "Por favor, ingrese un ángulo de giro.");
+        return;
+    }
+
+    // 2. Obtener el valor del ángulo como un entero de 16 bits con signo
+    bool ok;
+    qint16 angle = static_cast<qint16>(ui->editTurnAngle->text().toInt(&ok));
+
+    if (!ok)
+    {
+        QMessageBox::warning(this, "Valor Inválido", "El valor del ángulo no es un número válido.");
+        return;
+    }
+
+    // 3. Preparar el payload
+    QByteArray payload;
+    QDataStream stream(&payload, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian); // El microcontrolador es Little Endian
+
+    // Escribir el ángulo en el payload. El firmware espera un int16_t.
+    stream << angle;
+
+    // 4. Enviar el comando
+    sendUnerbusCommand(Unerbus::CommandId::CMD_TURN_DEGREES, payload);
+
+    // Opcional: Limpiar el campo de texto después de enviar
+    // ui->editTurnAngle->clear();
+}

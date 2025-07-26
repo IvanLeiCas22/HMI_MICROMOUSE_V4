@@ -59,6 +59,15 @@ private slots:
     void on_chkRealTimeSetPWM_toggled(bool checked);
     void on_control_widget_valueChanged(); // Slot para seteo en tiempo real del PWM de los motores
     void on_btnConfigurePeriod_clicked();
+    void on_btnSendTurnAngle_clicked();
+
+    // --- Slots para la página de configuración ---
+    void on_btnGetBaseMotorsSpeeds_clicked();
+    void on_btnSetBaseMotorsSpeeds_clicked();
+    void on_btnGetPidNavConfig_clicked();
+    void on_btnSetPidNavConfig_clicked();
+    void on_btnGetPidTurnConfig_clicked();
+    void on_btnSetPidTurnConfig_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -91,5 +100,11 @@ private:
     void requestPwmData();                                                      // Nueva función para pedir datos de PWM
     void updatePwmUI(const QByteArray &payload);                                // Nueva función para actualizar la UI de PWM
     void updatePwmControlRanges(quint16 new_period);
+
+    void setupConfigPage();
+    void updatePidNavUI(const QByteArray &payload);
+    void updateControlParamsUI(const QByteArray &payload);
+    void updatePidTurnUI(const QByteArray &payload);
+    void updateMotorBaseSpeedsUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H
