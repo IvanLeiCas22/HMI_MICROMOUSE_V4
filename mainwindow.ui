@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>819</height>
+    <height>887</height>
    </rect>
   </property>
   <property name="font">
@@ -41,6 +41,9 @@
        <enum>QFrame::Plain</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="logoLabel">
          <property name="minimumSize">
@@ -82,6 +85,12 @@ text-align: center;</string>
        </item>
        <item>
         <widget class="QPushButton" name="btnHome">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>11</pointsize>
@@ -119,6 +128,12 @@ QPushButton:checked {
        </item>
        <item>
         <widget class="QPushButton" name="btnSensors">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>11</pointsize>
@@ -153,6 +168,12 @@ QPushButton:checked {
        </item>
        <item>
         <widget class="QPushButton" name="btnConfig">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>11</pointsize>
@@ -187,6 +208,12 @@ QPushButton:checked {
        </item>
        <item>
         <widget class="QPushButton" name="btnControl">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>11</pointsize>
@@ -1372,7 +1399,7 @@ QPushButton:checked {
              <item>
               <widget class="QLineEdit" name="editRightMotorBaseSpeed">
                <property name="text">
-                <string>0</string>
+                <string>2600</string>
                </property>
               </widget>
              </item>
@@ -1386,7 +1413,7 @@ QPushButton:checked {
              <item>
               <widget class="QLineEdit" name="editLeftMotorBaseSpeed">
                <property name="text">
-                <string>0</string>
+                <string>2600</string>
                </property>
               </widget>
              </item>
@@ -1522,10 +1549,10 @@ QPushButton:checked {
           <layout class="QVBoxLayout" name="verticalLayout_16">
            <item>
             <layout class="QGridLayout" name="gridLayout_7">
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_29">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_28">
                <property name="text">
-                <string>kd:</string>
+                <string>ki:</string>
                </property>
               </widget>
              </item>
@@ -1536,10 +1563,31 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_28">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_29">
                <property name="text">
-                <string>ki:</string>
+                <string>kd:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="editKdTurn">
+               <property name="text">
+                <string>0.7</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>Vel. max. giro:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="editKpTurn">
+               <property name="text">
+                <string>13</string>
                </property>
               </widget>
              </item>
@@ -1550,17 +1598,24 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="editKdTurn">
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="editMaxTurnSpeed">
                <property name="text">
-                <string>0</string>
+                <string>6500</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="editKpTurn">
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_35">
                <property name="text">
-                <string>0</string>
+                <string>Vel. min. giro:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="editMinTurnSpeed">
+               <property name="text">
+                <string>2275</string>
                </property>
               </widget>
              </item>
@@ -1620,7 +1675,7 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="text">
-                <string>5000</string>
+                <string>6500</string>
                </property>
               </widget>
              </item>
@@ -1631,6 +1686,85 @@ QPushButton:checked {
                  <pointsize>11</pointsize>
                 </font>
                </property>
+               <property name="text">
+                <string>Configurar</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBoxMpuConfig">
+          <property name="title">
+           <string>MPU</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_19">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <item>
+              <widget class="QLabel" name="label_32">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Acelerometro:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboAccelConfig"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_33">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Giroscopio:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboGyroConfig"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_34">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>DLPF:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboDlpfConfig"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <item>
+              <widget class="QPushButton" name="btnGetMpuConfig">
+               <property name="text">
+                <string>Obtener</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnSetMpuConfig">
                <property name="text">
                 <string>Configurar</string>
                </property>
@@ -1733,19 +1867,19 @@ QPushButton:checked {
              <item row="1" column="1">
               <widget class="QSlider" name="hSliderRightMotorNeg">
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>1000</number>
+                <number>1</number>
                </property>
                <property name="pageStep">
-                <number>1000</number>
+                <number>5</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
                <property name="tickInterval">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1757,13 +1891,13 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>1000</number>
+                <number>1</number>
                </property>
                <property name="pageStep">
-                <number>1000</number>
+                <number>5</number>
                </property>
                <property name="sliderPosition">
                 <number>0</number>
@@ -1784,7 +1918,7 @@ QPushButton:checked {
                 <enum>QSlider::NoTicks</enum>
                </property>
                <property name="tickInterval">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1796,10 +1930,10 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1811,10 +1945,10 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1861,19 +1995,19 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>1000</number>
+                <number>1</number>
                </property>
                <property name="pageStep">
-                <number>1000</number>
+                <number>5</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
                <property name="tickInterval">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1885,13 +2019,13 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>1000</number>
+                <number>1</number>
                </property>
                <property name="pageStep">
-                <number>1000</number>
+                <number>5</number>
                </property>
                <property name="value">
                 <number>0</number>
@@ -1906,7 +2040,7 @@ QPushButton:checked {
                 <enum>QSlider::NoTicks</enum>
                </property>
                <property name="tickInterval">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1930,10 +2064,10 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1945,10 +2079,10 @@ QPushButton:checked {
                 </font>
                </property>
                <property name="maximum">
-                <number>10000</number>
+                <number>100</number>
                </property>
                <property name="singleStep">
-                <number>100</number>
+                <number>1</number>
                </property>
               </widget>
              </item>
@@ -1958,6 +2092,11 @@ QPushButton:checked {
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
               <widget class="QPushButton" name="btnApplyPWM">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Aplicar PWM</string>
                </property>
@@ -1965,6 +2104,11 @@ QPushButton:checked {
              </item>
              <item>
               <widget class="QPushButton" name="btnStopMotor">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Detener motores</string>
                </property>
@@ -1972,6 +2116,11 @@ QPushButton:checked {
              </item>
              <item>
               <widget class="QPushButton" name="btnGetPWM">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
                <property name="text">
                 <string>Obtener PWM</string>
                </property>

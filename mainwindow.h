@@ -68,6 +68,8 @@ private slots:
     void on_btnSetPidNavConfig_clicked();
     void on_btnGetPidTurnConfig_clicked();
     void on_btnSetPidTurnConfig_clicked();
+    void on_btnGetMpuConfig_clicked();
+    void on_btnSetMpuConfig_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -82,6 +84,8 @@ private:
 
     QTimer *sensorUpdateTimer; // Temporizador para actualizaciones automáticas
     QTimer *pwmUpdateTimer;    // Temporizador para actualizaciones de PWM
+
+    quint16 m_pwmPeriod = 1000; // Almacena el período máximo de PWM para escalar los valores de la UI.
 
     // --- Constantes para configuración ---
     static const int SENSOR_UPDATE_INTERVAL_MS = 200;
@@ -106,5 +110,9 @@ private:
     void updateControlParamsUI(const QByteArray &payload);
     void updatePidTurnUI(const QByteArray &payload);
     void updateMotorBaseSpeedsUI(const QByteArray &payload);
+    void updateTurnMaxSpeedUI(const QByteArray &payload);
+    void updateTurnMinSpeedUI(const QByteArray &payload);
+    void updateMpuConfigUI(const QByteArray &payload);
+    void populateMpuConfigComboBoxes();
 };
 #endif // MAINWINDOW_H

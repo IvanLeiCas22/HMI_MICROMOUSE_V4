@@ -39,8 +39,14 @@ namespace Unerbus
         CMD_TURN_DEGREES = 0x47,
         CMD_SET_TURN_PID_GAINS = 0x48,
         CMD_GET_TURN_PID_GAINS = 0x49,
+        CMD_SET_TURN_MAX_SPEED = 0x4A,
+        CMD_GET_TURN_MAX_SPEED = 0x4B,
         CMD_SET_PWM_PERIOD = 0x50,
         CMD_GET_PWM_PERIOD = 0x51,
+        CMD_SET_MPU_CONFIG = 0xA7,
+        CMD_GET_MPU_CONFIG = 0xA8,
+        CMD_SET_TURN_MIN_SPEED = 0x4C,
+        CMD_GET_TURN_MIN_SPEED = 0x4D,
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

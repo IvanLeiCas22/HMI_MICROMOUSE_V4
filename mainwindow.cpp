@@ -255,9 +255,25 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updatePidTurnUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_TURN_MAX_SPEED:
+    {
+        updateTurnMaxSpeedUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_TURN_MIN_SPEED:
+    {
+        updateTurnMinSpeedUI(payload);
+        break;
+    }
     case Unerbus::CommandId::CMD_GET_MOTOR_BASE_SPEEDS:
     {
         updateMotorBaseSpeedsUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_MPU_CONFIG:
+    case Unerbus::CommandId::CMD_SET_MPU_CONFIG: // El SET también devuelve la configuración actual
+    {
+        updateMpuConfigUI(payload);
         break;
     }
     default:
@@ -558,11 +574,17 @@ void MainWindow::on_btnApplyPWM_clicked()
     QDataStream stream(&payload, QIODevice::WriteOnly);
     stream.setByteOrder(QDataStream::LittleEndian); // El microcontrolador es Little Endian
 
-    // Obtener los valores de los spinboxes
-    quint16 right_neg = ui->spinBoxRightMotorNeg->value();
-    quint16 right_pos = ui->spinBoxRightMotorPos->value();
-    quint16 left_neg = ui->spinBoxLeftMotorNeg->value();
-    quint16 left_pos = ui->spinBoxLeftMotorPos->value();
+    // Obtener los valores porcentuales (0-100) de los spinboxes.
+    int right_neg_percent = ui->spinBoxRightMotorNeg->value();
+    int right_pos_percent = ui->spinBoxRightMotorPos->value();
+    int left_neg_percent = ui->spinBoxLeftMotorNeg->value();
+    int left_pos_percent = ui->spinBoxLeftMotorPos->value();
+
+    // Escalar los valores porcentuales al rango del período del PWM (m_pwmPeriod es el 100%).
+    quint16 right_neg = static_cast<quint16>((right_neg_percent / 100.0f) * m_pwmPeriod);
+    quint16 right_pos = static_cast<quint16>((right_pos_percent / 100.0f) * m_pwmPeriod);
+    quint16 left_neg = static_cast<quint16>((left_neg_percent / 100.0f) * m_pwmPeriod);
+    quint16 left_pos = static_cast<quint16>((left_pos_percent / 100.0f) * m_pwmPeriod);
 
     // Escribir en el payload en el orden que espera el firmware:
     // CH1 (Derecho, Reversa), CH2 (Derecho, Avance), CH3 (Izquierdo, Reversa), CH4 (Izquierdo, Avance)
@@ -685,15 +707,28 @@ void MainWindow::requestPwmData()
 void MainWindow::updatePwmUI(const QByteArray &payload)
 {
     if (payload.size() < 8)
-        return; // 4 canales * 2 bytes/canal
+        return;
+
+    // Protección contra división por cero si el período aún no se ha recibido.
+    if (m_pwmPeriod == 0)
+    {
+        qWarning() << "Intento de actualizar UI de PWM con período 0. Abortando.";
+        return;
+    }
 
     QDataStream stream(payload);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    quint16 right_neg, right_pos, left_neg, left_pos;
-    stream >> right_neg >> right_pos >> left_neg >> left_pos;
+    quint16 right_neg_abs, right_pos_abs, left_neg_abs, left_pos_abs;
+    stream >> right_neg_abs >> right_pos_abs >> left_neg_abs >> left_pos_abs;
 
-    // Bloquear señales para evitar bucles de actualización
+    // 1. Escalar los valores absolutos a un porcentaje (0-100) para la UI.
+    int right_neg_percent = (right_neg_abs * 100) / m_pwmPeriod;
+    int right_pos_percent = (right_pos_abs * 100) / m_pwmPeriod;
+    int left_neg_percent = (left_neg_abs * 100) / m_pwmPeriod;
+    int left_pos_percent = (left_pos_abs * 100) / m_pwmPeriod;
+
+    // 2. Bloquear señales para evitar bucles de actualización o envíos no deseados.
     ui->hSliderRightMotorNeg->blockSignals(true);
     ui->spinBoxRightMotorNeg->blockSignals(true);
     ui->hSliderRightMotorPos->blockSignals(true);
@@ -703,13 +738,19 @@ void MainWindow::updatePwmUI(const QByteArray &payload)
     ui->hSliderLeftMotorPos->blockSignals(true);
     ui->spinBoxLeftMotorPos->blockSignals(true);
 
-    // Actualizar valores
-    ui->hSliderRightMotorNeg->setValue(right_neg);
-    ui->hSliderRightMotorPos->setValue(right_pos);
-    ui->hSliderLeftMotorNeg->setValue(left_neg);
-    ui->hSliderLeftMotorPos->setValue(left_pos);
+    // 3. Actualizar valores de los sliders.
+    ui->hSliderRightMotorNeg->setValue(right_neg_percent);
+    ui->hSliderRightMotorPos->setValue(right_pos_percent);
+    ui->hSliderLeftMotorNeg->setValue(left_neg_percent);
+    ui->hSliderLeftMotorPos->setValue(left_pos_percent);
 
-    // Desbloquear señales
+    // 4. --- MODIFICACIÓN CLAVE: Actualizar también los spinboxes ---
+    ui->spinBoxRightMotorNeg->setValue(right_neg_percent);
+    ui->spinBoxRightMotorPos->setValue(right_pos_percent);
+    ui->spinBoxLeftMotorNeg->setValue(left_neg_percent);
+    ui->spinBoxLeftMotorPos->setValue(left_pos_percent);
+
+    // 5. Desbloquear señales para que la UI vuelva a ser interactiva.
     ui->hSliderRightMotorNeg->blockSignals(false);
     ui->spinBoxRightMotorNeg->blockSignals(false);
     ui->hSliderRightMotorPos->blockSignals(false);
@@ -726,20 +767,11 @@ void MainWindow::updatePwmUI(const QByteArray &payload)
  */
 void MainWindow::updatePwmControlRanges(quint16 new_period)
 {
-    // Actualizar el campo de texto
+    // Guardar el valor del período real para los cálculos de escalado.
+    m_pwmPeriod = new_period;
+
+    // Actualizar el campo de texto informativo en la página de configuración.
     ui->lineEditPwmPeriod->setText(QString::number(new_period));
-
-    // Actualizar los máximos de todos los controles de PWM
-    ui->hSliderRightMotorPos->setMaximum(new_period);
-    ui->spinBoxRightMotorPos->setMaximum(new_period);
-    ui->hSliderRightMotorNeg->setMaximum(new_period);
-    ui->spinBoxRightMotorNeg->setMaximum(new_period);
-    ui->hSliderLeftMotorPos->setMaximum(new_period);
-    ui->spinBoxLeftMotorPos->setMaximum(new_period);
-    ui->hSliderLeftMotorNeg->setMaximum(new_period);
-    ui->spinBoxLeftMotorNeg->setMaximum(new_period);
-
-    qDebug() << "Rango de PWM actualizado a:" << new_period;
 }
 
 /**
@@ -750,7 +782,7 @@ void MainWindow::on_btnConfigurePeriod_clicked()
     bool ok;
     quint16 new_period = ui->lineEditPwmPeriod->text().toUShort(&ok);
 
-    if (ok && new_period > 100)
+    if (ok && new_period > 10)
     { // Validar un mínimo razonable
         QByteArray payload;
         QDataStream stream(&payload, QIODevice::WriteOnly);
@@ -784,6 +816,8 @@ void MainWindow::setupConfigPage()
     // Conexiones para las Velocidades Base de los Motores
     connect(ui->btnGetBaseMotorsSpeeds, &QPushButton::clicked, this, &MainWindow::on_btnGetBaseMotorsSpeeds_clicked);
     connect(ui->btnSetBaseMotorsSpeeds, &QPushButton::clicked, this, &MainWindow::on_btnSetBaseMotorsSpeeds_clicked);
+
+    populateMpuConfigComboBoxes();
 }
 
 /**
@@ -833,6 +867,11 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
 void MainWindow::on_btnGetPidTurnConfig_clicked()
 {
     sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_PID_GAINS);
+    // Pedimos la velocidad máxima de giro con un pequeño retardo
+    QTimer::singleShot(100, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_MAX_SPEED); });
+    QTimer::singleShot(200, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_MIN_SPEED); });
 }
 
 /**
@@ -850,6 +889,24 @@ void MainWindow::on_btnSetPidTurnConfig_clicked()
     stream << static_cast<quint16>(ui->editKdTurn->text().toFloat() * 100.0f);
 
     sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_PID_GAINS, payload);
+
+    QTimer::singleShot(100, this, [this]()
+                       {
+        QByteArray speedPayload;
+        QDataStream speedStream(&speedPayload, QIODevice::WriteOnly);
+        speedStream.setByteOrder(QDataStream::LittleEndian);
+
+        speedStream << static_cast<quint16>(ui->editMaxTurnSpeed->text().toUShort());
+
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_MAX_SPEED, speedPayload); });
+
+    QTimer::singleShot(200, this, [this]()
+                       {
+        QByteArray minSpeedPayload;
+        QDataStream minSpeedStream(&minSpeedPayload, QIODevice::WriteOnly);
+        minSpeedStream.setByteOrder(QDataStream::LittleEndian);
+        minSpeedStream << static_cast<quint16>(ui->editMinTurnSpeed->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_MIN_SPEED, minSpeedPayload); });
 }
 
 /**
@@ -983,4 +1040,113 @@ void MainWindow::on_btnSendTurnAngle_clicked()
 
     // Opcional: Limpiar el campo de texto después de enviar
     // ui->editTurnAngle->clear();
+}
+
+/**
+ * @brief Actualiza la UI con la velocidad máxima de giro.
+ */
+void MainWindow::updateTurnMaxSpeedUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 speed;
+    stream >> speed;
+
+    ui->editMaxTurnSpeed->setText(QString::number(speed));
+}
+
+/**
+ * @brief Slot para el botón "Obtener" de la configuración del MPU.
+ */
+void MainWindow::on_btnGetMpuConfig_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MPU_CONFIG);
+}
+
+/**
+ * @brief Slot para el botón "Establecer" de la configuración del MPU.
+ */
+void MainWindow::on_btnSetMpuConfig_clicked()
+{
+    QByteArray payload;
+    QDataStream stream(&payload, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    // Obtener los valores de los ComboBox (el valor real, no el texto)
+    quint8 accel_config = ui->comboAccelConfig->currentData().toUInt();
+    quint8 gyro_config = ui->comboGyroConfig->currentData().toUInt();
+    quint8 dlpf_config = ui->comboDlpfConfig->currentData().toUInt();
+
+    stream << accel_config << gyro_config << dlpf_config;
+
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_MPU_CONFIG, payload);
+}
+
+/**
+ * @brief Rellena los ComboBox de configuración del MPU con los valores y textos correspondientes.
+ */
+void MainWindow::populateMpuConfigComboBoxes()
+{
+    // --- Rango del Acelerómetro ---
+    ui->comboAccelConfig->clear();
+    ui->comboAccelConfig->addItem("±2g", 0x00);
+    ui->comboAccelConfig->addItem("±4g", 0x08);
+    ui->comboAccelConfig->addItem("±8g", 0x10);
+    ui->comboAccelConfig->addItem("±16g", 0x18);
+
+    // --- Rango del Giroscopio ---
+    ui->comboGyroConfig->clear();
+    ui->comboGyroConfig->addItem("±250°/s", 0x00);
+    ui->comboGyroConfig->addItem("±500°/s", 0x08);
+    ui->comboGyroConfig->addItem("±1000°/s", 0x10);
+    ui->comboGyroConfig->addItem("±2000°/s", 0x18);
+
+    // --- Filtro Digital Pasa-Bajos (DLPF) ---
+    ui->comboDlpfConfig->clear();
+    ui->comboDlpfConfig->addItem("260 Hz", 0x00);
+    ui->comboDlpfConfig->addItem("184 Hz", 0x01);
+    ui->comboDlpfConfig->addItem("94 Hz", 0x02);
+    ui->comboDlpfConfig->addItem("44 Hz", 0x03);
+    ui->comboDlpfConfig->addItem("21 Hz", 0x04);
+    ui->comboDlpfConfig->addItem("10 Hz", 0x05);
+    ui->comboDlpfConfig->addItem("5 Hz", 0x06);
+}
+
+/**
+ * @brief Actualiza la UI con la configuración del MPU recibida.
+ */
+void MainWindow::updateMpuConfigUI(const QByteArray &payload)
+{
+    if (payload.size() < 3)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint8 accel_config, gyro_config, dlpf_config;
+    stream >> accel_config >> gyro_config >> dlpf_config;
+
+    // Buscar y seleccionar el item correspondiente en cada ComboBox
+    ui->comboAccelConfig->setCurrentIndex(ui->comboAccelConfig->findData(accel_config));
+    ui->comboGyroConfig->setCurrentIndex(ui->comboGyroConfig->findData(gyro_config));
+    ui->comboDlpfConfig->setCurrentIndex(ui->comboDlpfConfig->findData(dlpf_config));
+}
+
+/**
+ * @brief Actualiza la UI con la velocidad mínima de giro.
+ */
+void MainWindow::updateTurnMinSpeedUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 speed;
+    stream >> speed;
+
+    ui->editMinTurnSpeed->setText(QString::number(speed));
 }

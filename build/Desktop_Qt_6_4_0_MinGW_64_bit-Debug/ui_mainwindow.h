@@ -181,12 +181,16 @@ public:
     QGroupBox *groupBox_5;
     QVBoxLayout *verticalLayout_16;
     QGridLayout *gridLayout_7;
-    QLabel *label_29;
-    QLabel *label_27;
     QLabel *label_28;
-    QLineEdit *editKiTurn;
+    QLabel *label_27;
+    QLabel *label_29;
     QLineEdit *editKdTurn;
+    QLabel *label_31;
     QLineEdit *editKpTurn;
+    QLineEdit *editKiTurn;
+    QLineEdit *editMaxTurnSpeed;
+    QLabel *label_35;
+    QLineEdit *editMinTurnSpeed;
     QHBoxLayout *horizontalLayout_15;
     QPushButton *btnGetPidTurnConfig;
     QPushButton *btnSetPidTurnConfig;
@@ -196,6 +200,18 @@ public:
     QLabel *label_14;
     QLineEdit *lineEditPwmPeriod;
     QPushButton *btnConfigurePeriod;
+    QGroupBox *groupBoxMpuConfig;
+    QVBoxLayout *verticalLayout_19;
+    QHBoxLayout *horizontalLayout_20;
+    QLabel *label_32;
+    QComboBox *comboAccelConfig;
+    QLabel *label_33;
+    QComboBox *comboGyroConfig;
+    QLabel *label_34;
+    QComboBox *comboDlpfConfig;
+    QHBoxLayout *horizontalLayout_21;
+    QPushButton *btnGetMpuConfig;
+    QPushButton *btnSetMpuConfig;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageControl;
     QVBoxLayout *verticalLayout_12;
@@ -242,7 +258,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 819);
+        MainWindow->resize(1000, 887);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -263,6 +279,7 @@ public:
         navigationFrame->setFrameShape(QFrame::StyledPanel);
         navigationFrame->setFrameShadow(QFrame::Plain);
         verticalLayout = new QVBoxLayout(navigationFrame);
+        verticalLayout->setSpacing(0);
         verticalLayout->setObjectName("verticalLayout");
         logoLabel = new QLabel(navigationFrame);
         logoLabel->setObjectName("logoLabel");
@@ -290,6 +307,7 @@ public:
 
         btnHome = new QPushButton(navigationFrame);
         btnHome->setObjectName("btnHome");
+        btnHome->setMinimumSize(QSize(0, 50));
         QFont font3;
         font3.setPointSize(11);
         font3.setBold(true);
@@ -317,6 +335,7 @@ public:
 
         btnSensors = new QPushButton(navigationFrame);
         btnSensors->setObjectName("btnSensors");
+        btnSensors->setMinimumSize(QSize(0, 50));
         btnSensors->setFont(font3);
         btnSensors->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
@@ -340,6 +359,7 @@ public:
 
         btnConfig = new QPushButton(navigationFrame);
         btnConfig->setObjectName("btnConfig");
+        btnConfig->setMinimumSize(QSize(0, 50));
         btnConfig->setFont(font3);
         btnConfig->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
@@ -363,6 +383,7 @@ public:
 
         btnControl = new QPushButton(navigationFrame);
         btnControl->setObjectName("btnControl");
+        btnControl->setMinimumSize(QSize(0, 50));
         btnControl->setFont(font3);
         btnControl->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "  background-color: #2d3a4b;\n"
@@ -1155,35 +1176,55 @@ public:
         verticalLayout_16->setObjectName("verticalLayout_16");
         gridLayout_7 = new QGridLayout();
         gridLayout_7->setObjectName("gridLayout_7");
-        label_29 = new QLabel(groupBox_5);
-        label_29->setObjectName("label_29");
+        label_28 = new QLabel(groupBox_5);
+        label_28->setObjectName("label_28");
 
-        gridLayout_7->addWidget(label_29, 2, 0, 1, 1);
+        gridLayout_7->addWidget(label_28, 1, 0, 1, 1);
 
         label_27 = new QLabel(groupBox_5);
         label_27->setObjectName("label_27");
 
         gridLayout_7->addWidget(label_27, 0, 0, 1, 1);
 
-        label_28 = new QLabel(groupBox_5);
-        label_28->setObjectName("label_28");
+        label_29 = new QLabel(groupBox_5);
+        label_29->setObjectName("label_29");
 
-        gridLayout_7->addWidget(label_28, 1, 0, 1, 1);
-
-        editKiTurn = new QLineEdit(groupBox_5);
-        editKiTurn->setObjectName("editKiTurn");
-
-        gridLayout_7->addWidget(editKiTurn, 1, 1, 1, 1);
+        gridLayout_7->addWidget(label_29, 2, 0, 1, 1);
 
         editKdTurn = new QLineEdit(groupBox_5);
         editKdTurn->setObjectName("editKdTurn");
 
         gridLayout_7->addWidget(editKdTurn, 2, 1, 1, 1);
 
+        label_31 = new QLabel(groupBox_5);
+        label_31->setObjectName("label_31");
+
+        gridLayout_7->addWidget(label_31, 0, 2, 1, 1);
+
         editKpTurn = new QLineEdit(groupBox_5);
         editKpTurn->setObjectName("editKpTurn");
 
         gridLayout_7->addWidget(editKpTurn, 0, 1, 1, 1);
+
+        editKiTurn = new QLineEdit(groupBox_5);
+        editKiTurn->setObjectName("editKiTurn");
+
+        gridLayout_7->addWidget(editKiTurn, 1, 1, 1, 1);
+
+        editMaxTurnSpeed = new QLineEdit(groupBox_5);
+        editMaxTurnSpeed->setObjectName("editMaxTurnSpeed");
+
+        gridLayout_7->addWidget(editMaxTurnSpeed, 0, 3, 1, 1);
+
+        label_35 = new QLabel(groupBox_5);
+        label_35->setObjectName("label_35");
+
+        gridLayout_7->addWidget(label_35, 1, 2, 1, 1);
+
+        editMinTurnSpeed = new QLineEdit(groupBox_5);
+        editMinTurnSpeed->setObjectName("editMinTurnSpeed");
+
+        gridLayout_7->addWidget(editMinTurnSpeed, 1, 3, 1, 1);
 
 
         verticalLayout_16->addLayout(gridLayout_7);
@@ -1237,6 +1278,72 @@ public:
 
         verticalLayout_11->addWidget(groupBox_3);
 
+        groupBoxMpuConfig = new QGroupBox(pageConfig);
+        groupBoxMpuConfig->setObjectName("groupBoxMpuConfig");
+        verticalLayout_19 = new QVBoxLayout(groupBoxMpuConfig);
+        verticalLayout_19->setObjectName("verticalLayout_19");
+        horizontalLayout_20 = new QHBoxLayout();
+        horizontalLayout_20->setObjectName("horizontalLayout_20");
+        label_32 = new QLabel(groupBoxMpuConfig);
+        label_32->setObjectName("label_32");
+        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_32->sizePolicy().hasHeightForWidth());
+        label_32->setSizePolicy(sizePolicy3);
+
+        horizontalLayout_20->addWidget(label_32);
+
+        comboAccelConfig = new QComboBox(groupBoxMpuConfig);
+        comboAccelConfig->setObjectName("comboAccelConfig");
+
+        horizontalLayout_20->addWidget(comboAccelConfig);
+
+        label_33 = new QLabel(groupBoxMpuConfig);
+        label_33->setObjectName("label_33");
+        sizePolicy3.setHeightForWidth(label_33->sizePolicy().hasHeightForWidth());
+        label_33->setSizePolicy(sizePolicy3);
+
+        horizontalLayout_20->addWidget(label_33);
+
+        comboGyroConfig = new QComboBox(groupBoxMpuConfig);
+        comboGyroConfig->setObjectName("comboGyroConfig");
+
+        horizontalLayout_20->addWidget(comboGyroConfig);
+
+        label_34 = new QLabel(groupBoxMpuConfig);
+        label_34->setObjectName("label_34");
+        sizePolicy3.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
+        label_34->setSizePolicy(sizePolicy3);
+
+        horizontalLayout_20->addWidget(label_34);
+
+        comboDlpfConfig = new QComboBox(groupBoxMpuConfig);
+        comboDlpfConfig->setObjectName("comboDlpfConfig");
+
+        horizontalLayout_20->addWidget(comboDlpfConfig);
+
+
+        verticalLayout_19->addLayout(horizontalLayout_20);
+
+        horizontalLayout_21 = new QHBoxLayout();
+        horizontalLayout_21->setObjectName("horizontalLayout_21");
+        btnGetMpuConfig = new QPushButton(groupBoxMpuConfig);
+        btnGetMpuConfig->setObjectName("btnGetMpuConfig");
+
+        horizontalLayout_21->addWidget(btnGetMpuConfig);
+
+        btnSetMpuConfig = new QPushButton(groupBoxMpuConfig);
+        btnSetMpuConfig->setObjectName("btnSetMpuConfig");
+
+        horizontalLayout_21->addWidget(btnSetMpuConfig);
+
+
+        verticalLayout_19->addLayout(horizontalLayout_21);
+
+
+        verticalLayout_11->addWidget(groupBoxMpuConfig);
+
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_11->addItem(verticalSpacer_3);
@@ -1287,43 +1394,43 @@ public:
 
         hSliderRightMotorNeg = new QSlider(groupBoxPWM);
         hSliderRightMotorNeg->setObjectName("hSliderRightMotorNeg");
-        hSliderRightMotorNeg->setMaximum(10000);
-        hSliderRightMotorNeg->setSingleStep(1000);
-        hSliderRightMotorNeg->setPageStep(1000);
+        hSliderRightMotorNeg->setMaximum(100);
+        hSliderRightMotorNeg->setSingleStep(1);
+        hSliderRightMotorNeg->setPageStep(5);
         hSliderRightMotorNeg->setOrientation(Qt::Horizontal);
-        hSliderRightMotorNeg->setTickInterval(100);
+        hSliderRightMotorNeg->setTickInterval(1);
 
         gridLayout_4->addWidget(hSliderRightMotorNeg, 1, 1, 1, 1);
 
         hSliderRightMotorPos = new QSlider(groupBoxPWM);
         hSliderRightMotorPos->setObjectName("hSliderRightMotorPos");
         hSliderRightMotorPos->setFont(font6);
-        hSliderRightMotorPos->setMaximum(10000);
-        hSliderRightMotorPos->setSingleStep(1000);
-        hSliderRightMotorPos->setPageStep(1000);
+        hSliderRightMotorPos->setMaximum(100);
+        hSliderRightMotorPos->setSingleStep(1);
+        hSliderRightMotorPos->setPageStep(5);
         hSliderRightMotorPos->setSliderPosition(0);
         hSliderRightMotorPos->setTracking(true);
         hSliderRightMotorPos->setOrientation(Qt::Horizontal);
         hSliderRightMotorPos->setInvertedAppearance(false);
         hSliderRightMotorPos->setInvertedControls(false);
         hSliderRightMotorPos->setTickPosition(QSlider::NoTicks);
-        hSliderRightMotorPos->setTickInterval(100);
+        hSliderRightMotorPos->setTickInterval(1);
 
         gridLayout_4->addWidget(hSliderRightMotorPos, 0, 1, 1, 1);
 
         spinBoxRightMotorPos = new QSpinBox(groupBoxPWM);
         spinBoxRightMotorPos->setObjectName("spinBoxRightMotorPos");
         spinBoxRightMotorPos->setFont(font);
-        spinBoxRightMotorPos->setMaximum(10000);
-        spinBoxRightMotorPos->setSingleStep(100);
+        spinBoxRightMotorPos->setMaximum(100);
+        spinBoxRightMotorPos->setSingleStep(1);
 
         gridLayout_4->addWidget(spinBoxRightMotorPos, 0, 2, 1, 1);
 
         spinBoxRightMotorNeg = new QSpinBox(groupBoxPWM);
         spinBoxRightMotorNeg->setObjectName("spinBoxRightMotorNeg");
         spinBoxRightMotorNeg->setFont(font);
-        spinBoxRightMotorNeg->setMaximum(10000);
-        spinBoxRightMotorNeg->setSingleStep(100);
+        spinBoxRightMotorNeg->setMaximum(100);
+        spinBoxRightMotorNeg->setSingleStep(1);
 
         gridLayout_4->addWidget(spinBoxRightMotorNeg, 1, 2, 1, 1);
 
@@ -1354,25 +1461,25 @@ public:
         hSliderLeftMotorPos = new QSlider(groupBoxPWM);
         hSliderLeftMotorPos->setObjectName("hSliderLeftMotorPos");
         hSliderLeftMotorPos->setFont(font);
-        hSliderLeftMotorPos->setMaximum(10000);
-        hSliderLeftMotorPos->setSingleStep(1000);
-        hSliderLeftMotorPos->setPageStep(1000);
+        hSliderLeftMotorPos->setMaximum(100);
+        hSliderLeftMotorPos->setSingleStep(1);
+        hSliderLeftMotorPos->setPageStep(5);
         hSliderLeftMotorPos->setOrientation(Qt::Horizontal);
-        hSliderLeftMotorPos->setTickInterval(100);
+        hSliderLeftMotorPos->setTickInterval(1);
 
         gridLayout_5->addWidget(hSliderLeftMotorPos, 0, 1, 1, 1);
 
         hSliderLeftMotorNeg = new QSlider(groupBoxPWM);
         hSliderLeftMotorNeg->setObjectName("hSliderLeftMotorNeg");
         hSliderLeftMotorNeg->setFont(font);
-        hSliderLeftMotorNeg->setMaximum(10000);
-        hSliderLeftMotorNeg->setSingleStep(1000);
-        hSliderLeftMotorNeg->setPageStep(1000);
+        hSliderLeftMotorNeg->setMaximum(100);
+        hSliderLeftMotorNeg->setSingleStep(1);
+        hSliderLeftMotorNeg->setPageStep(5);
         hSliderLeftMotorNeg->setValue(0);
         hSliderLeftMotorNeg->setTracking(true);
         hSliderLeftMotorNeg->setOrientation(Qt::Horizontal);
         hSliderLeftMotorNeg->setTickPosition(QSlider::NoTicks);
-        hSliderLeftMotorNeg->setTickInterval(100);
+        hSliderLeftMotorNeg->setTickInterval(1);
 
         gridLayout_5->addWidget(hSliderLeftMotorNeg, 1, 1, 1, 1);
 
@@ -1385,16 +1492,16 @@ public:
         spinBoxLeftMotorPos = new QSpinBox(groupBoxPWM);
         spinBoxLeftMotorPos->setObjectName("spinBoxLeftMotorPos");
         spinBoxLeftMotorPos->setFont(font);
-        spinBoxLeftMotorPos->setMaximum(10000);
-        spinBoxLeftMotorPos->setSingleStep(100);
+        spinBoxLeftMotorPos->setMaximum(100);
+        spinBoxLeftMotorPos->setSingleStep(1);
 
         gridLayout_5->addWidget(spinBoxLeftMotorPos, 0, 2, 1, 1);
 
         spinBoxLeftMotorNeg = new QSpinBox(groupBoxPWM);
         spinBoxLeftMotorNeg->setObjectName("spinBoxLeftMotorNeg");
         spinBoxLeftMotorNeg->setFont(font);
-        spinBoxLeftMotorNeg->setMaximum(10000);
-        spinBoxLeftMotorNeg->setSingleStep(100);
+        spinBoxLeftMotorNeg->setMaximum(100);
+        spinBoxLeftMotorNeg->setSingleStep(1);
 
         gridLayout_5->addWidget(spinBoxLeftMotorNeg, 1, 2, 1, 1);
 
@@ -1405,16 +1512,19 @@ public:
         horizontalLayout_11->setObjectName("horizontalLayout_11");
         btnApplyPWM = new QPushButton(groupBoxPWM);
         btnApplyPWM->setObjectName("btnApplyPWM");
+        btnApplyPWM->setFont(font6);
 
         horizontalLayout_11->addWidget(btnApplyPWM);
 
         btnStopMotor = new QPushButton(groupBoxPWM);
         btnStopMotor->setObjectName("btnStopMotor");
+        btnStopMotor->setFont(font6);
 
         horizontalLayout_11->addWidget(btnStopMotor);
 
         btnGetPWM = new QPushButton(groupBoxPWM);
         btnGetPWM->setObjectName("btnGetPWM");
+        btnGetPWM->setFont(font6);
 
         horizontalLayout_11->addWidget(btnGetPWM);
 
@@ -1463,11 +1573,11 @@ public:
         horizontalLayout_12->setObjectName("horizontalLayout_12");
         chkAutoGetPWM = new QCheckBox(pageControl);
         chkAutoGetPWM->setObjectName("chkAutoGetPWM");
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(chkAutoGetPWM->sizePolicy().hasHeightForWidth());
-        chkAutoGetPWM->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(chkAutoGetPWM->sizePolicy().hasHeightForWidth());
+        chkAutoGetPWM->setSizePolicy(sizePolicy4);
 
         horizontalLayout_12->addWidget(chkAutoGetPWM);
 
@@ -1594,18 +1704,28 @@ public:
         btnGetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "PID giro", nullptr));
-        label_29->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
-        label_27->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_28->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
-        editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        label_27->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
+        label_29->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
         editKdTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        label_31->setText(QCoreApplication::translate("MainWindow", "Vel. max. giro:", nullptr));
         editKpTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        label_35->setText(QCoreApplication::translate("MainWindow", "Vel. min. giro:", nullptr));
+        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "Periodo TIM4 (ARR):", nullptr));
         lineEditPwmPeriod->setText(QCoreApplication::translate("MainWindow", "5000", nullptr));
         btnConfigurePeriod->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
+        groupBoxMpuConfig->setTitle(QCoreApplication::translate("MainWindow", "MPU", nullptr));
+        label_32->setText(QCoreApplication::translate("MainWindow", "Acelerometro:", nullptr));
+        label_33->setText(QCoreApplication::translate("MainWindow", "Giroscopio:", nullptr));
+        label_34->setText(QCoreApplication::translate("MainWindow", "DLPF:", nullptr));
+        btnGetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
+        btnSetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         titleHome_2->setText(QCoreApplication::translate("MainWindow", "Control", nullptr));
         groupBoxPWM->setTitle(QCoreApplication::translate("MainWindow", "PWM", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Motor Derecho", nullptr));

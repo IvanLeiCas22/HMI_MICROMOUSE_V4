@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MainWindow_t {
-    uint offsetsAndSizes[76];
+    uint offsetsAndSizes[80];
     char stringdata0[11];
     char stringdata1[27];
     char stringdata2[1];
@@ -65,6 +65,8 @@ struct qt_meta_stringdata_MainWindow_t {
     char stringdata35[30];
     char stringdata36[31];
     char stringdata37[31];
+    char stringdata38[27];
+    char stringdata39[27];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MainWindow_t::offsetsAndSizes) + ofs), len 
@@ -107,7 +109,9 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
         QT_MOC_LITERAL(755, 29),  // "on_btnGetPidNavConfig_clicked"
         QT_MOC_LITERAL(785, 29),  // "on_btnSetPidNavConfig_clicked"
         QT_MOC_LITERAL(815, 30),  // "on_btnGetPidTurnConfig_clicked"
-        QT_MOC_LITERAL(846, 30)   // "on_btnSetPidTurnConfig_clicked"
+        QT_MOC_LITERAL(846, 30),  // "on_btnSetPidTurnConfig_clicked"
+        QT_MOC_LITERAL(877, 26),  // "on_btnGetMpuConfig_clicked"
+        QT_MOC_LITERAL(904, 26)   // "on_btnSetMpuConfig_clicked"
     },
     "MainWindow",
     "on_navigationButtonClicked",
@@ -146,7 +150,9 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
     "on_btnGetPidNavConfig_clicked",
     "on_btnSetPidNavConfig_clicked",
     "on_btnGetPidTurnConfig_clicked",
-    "on_btnSetPidTurnConfig_clicked"
+    "on_btnSetPidTurnConfig_clicked",
+    "on_btnGetMpuConfig_clicked",
+    "on_btnSetMpuConfig_clicked"
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
@@ -157,7 +163,7 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      31,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -165,35 +171,37 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  188,    2, 0x08,    1 /* Private */,
-       5,    0,  191,    2, 0x08,    3 /* Private */,
-       6,    0,  192,    2, 0x08,    4 /* Private */,
-       7,    0,  193,    2, 0x08,    5 /* Private */,
-       8,    0,  194,    2, 0x08,    6 /* Private */,
-       9,    1,  195,    2, 0x08,    7 /* Private */,
-      12,    0,  198,    2, 0x08,    9 /* Private */,
-      13,    0,  199,    2, 0x08,   10 /* Private */,
-      14,    0,  200,    2, 0x08,   11 /* Private */,
-      15,    2,  201,    2, 0x08,   12 /* Private */,
-      18,    0,  206,    2, 0x08,   15 /* Private */,
-      19,    0,  207,    2, 0x08,   16 /* Private */,
-      20,    1,  208,    2, 0x08,   17 /* Private */,
-      22,    0,  211,    2, 0x08,   19 /* Private */,
-      23,    0,  212,    2, 0x08,   20 /* Private */,
-      24,    0,  213,    2, 0x08,   21 /* Private */,
-      25,    0,  214,    2, 0x08,   22 /* Private */,
-      26,    0,  215,    2, 0x08,   23 /* Private */,
-      27,    1,  216,    2, 0x08,   24 /* Private */,
-      28,    1,  219,    2, 0x08,   26 /* Private */,
-      29,    0,  222,    2, 0x08,   28 /* Private */,
-      30,    0,  223,    2, 0x08,   29 /* Private */,
-      31,    0,  224,    2, 0x08,   30 /* Private */,
-      32,    0,  225,    2, 0x08,   31 /* Private */,
-      33,    0,  226,    2, 0x08,   32 /* Private */,
-      34,    0,  227,    2, 0x08,   33 /* Private */,
-      35,    0,  228,    2, 0x08,   34 /* Private */,
-      36,    0,  229,    2, 0x08,   35 /* Private */,
-      37,    0,  230,    2, 0x08,   36 /* Private */,
+       1,    1,  200,    2, 0x08,    1 /* Private */,
+       5,    0,  203,    2, 0x08,    3 /* Private */,
+       6,    0,  204,    2, 0x08,    4 /* Private */,
+       7,    0,  205,    2, 0x08,    5 /* Private */,
+       8,    0,  206,    2, 0x08,    6 /* Private */,
+       9,    1,  207,    2, 0x08,    7 /* Private */,
+      12,    0,  210,    2, 0x08,    9 /* Private */,
+      13,    0,  211,    2, 0x08,   10 /* Private */,
+      14,    0,  212,    2, 0x08,   11 /* Private */,
+      15,    2,  213,    2, 0x08,   12 /* Private */,
+      18,    0,  218,    2, 0x08,   15 /* Private */,
+      19,    0,  219,    2, 0x08,   16 /* Private */,
+      20,    1,  220,    2, 0x08,   17 /* Private */,
+      22,    0,  223,    2, 0x08,   19 /* Private */,
+      23,    0,  224,    2, 0x08,   20 /* Private */,
+      24,    0,  225,    2, 0x08,   21 /* Private */,
+      25,    0,  226,    2, 0x08,   22 /* Private */,
+      26,    0,  227,    2, 0x08,   23 /* Private */,
+      27,    1,  228,    2, 0x08,   24 /* Private */,
+      28,    1,  231,    2, 0x08,   26 /* Private */,
+      29,    0,  234,    2, 0x08,   28 /* Private */,
+      30,    0,  235,    2, 0x08,   29 /* Private */,
+      31,    0,  236,    2, 0x08,   30 /* Private */,
+      32,    0,  237,    2, 0x08,   31 /* Private */,
+      33,    0,  238,    2, 0x08,   32 /* Private */,
+      34,    0,  239,    2, 0x08,   33 /* Private */,
+      35,    0,  240,    2, 0x08,   34 /* Private */,
+      36,    0,  241,    2, 0x08,   35 /* Private */,
+      37,    0,  242,    2, 0x08,   36 /* Private */,
+      38,    0,  243,    2, 0x08,   37 /* Private */,
+      39,    0,  244,    2, 0x08,   38 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -216,6 +224,8 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,   21,
     QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -302,6 +312,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_btnGetPidTurnConfig_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_btnSetPidTurnConfig_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnGetMpuConfig_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnSetMpuConfig_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -342,6 +356,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 26: _t->on_btnSetPidNavConfig_clicked(); break;
         case 27: _t->on_btnGetPidTurnConfig_clicked(); break;
         case 28: _t->on_btnSetPidTurnConfig_clicked(); break;
+        case 29: _t->on_btnGetMpuConfig_clicked(); break;
+        case 30: _t->on_btnSetMpuConfig_clicked(); break;
         default: ;
         }
     }
@@ -366,13 +382,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 31)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 31;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 31)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 29;
+        _id -= 31;
     }
     return _id;
 }
