@@ -31,8 +31,8 @@ namespace Unerbus
         CMD_CALIBRATE_MPU = 0xA3,
         CMD_SET_PID_GAINS = 0x40,
         CMD_GET_PID_GAINS = 0x41,
-        CMD_SET_CONTROL_PARAMETERS = 0x42,
-        CMD_GET_CONTROL_PARAMETERS = 0x43,
+        CMD_SET_MAX_PWM_CORRECTION = 0x42,
+        CMD_GET_MAX_PWM_CORRECTION = 0x43,
         CMD_SET_MOTOR_BASE_SPEEDS = 0x44,
         CMD_GET_MOTOR_BASE_SPEEDS = 0x45,
         CMD_CALIBRATE_MOTORS = 0x46,
@@ -47,6 +47,10 @@ namespace Unerbus
         CMD_GET_MPU_CONFIG = 0xA8,
         CMD_SET_TURN_MIN_SPEED = 0x4C,
         CMD_GET_TURN_MIN_SPEED = 0x4D,
+        CMD_SET_WALL_THRESHOLDS = 0x60,
+        CMD_GET_WALL_THRESHOLDS = 0x61,
+        CMD_SET_WALL_TARGET_ADC = 0x62,
+        CMD_GET_WALL_TARGET_ADC = 0x63,
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

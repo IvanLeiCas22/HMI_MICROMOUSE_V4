@@ -245,9 +245,9 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updatePidNavUI(payload);
         break;
     }
-    case Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS:
+    case Unerbus::CommandId::CMD_GET_MAX_PWM_CORRECTION:
     {
-        updateControlParamsUI(payload);
+        updateMaxPwmCorrectionUI(payload);
         break;
     }
     case Unerbus::CommandId::CMD_GET_TURN_PID_GAINS:
@@ -276,6 +276,16 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updateMpuConfigUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_WALL_THRESHOLDS:
+    {
+        updateWallThresholdsUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_WALL_TARGET_ADC:
+    {
+        updateWallTargetAdcUI(payload);
+        break;
+    }
     default:
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
@@ -299,9 +309,11 @@ void MainWindow::populateCMDComboBox()
     ui->CMDComboBox->addItem("GET_LOCAL_IP_ADDRESS (0xE0)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_LOCAL_IP_ADDRESS));
     ui->CMDComboBox->addItem("SET_UART_BYPASS_CONTROL (0xDD)", static_cast<quint8>(Unerbus::CommandId::CMD_SET_UART_BYPASS_CONTROL));
     ui->CMDComboBox->addItem("GET_PID_GAINS (0x41)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_PID_GAINS));
-    ui->CMDComboBox->addItem("GET_CONTROL_PARAMETERS (0x43)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS));
+    ui->CMDComboBox->addItem("GET_MAX_PWM_CORRECTION (0x43)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_MAX_PWM_CORRECTION));
     ui->CMDComboBox->addItem("GET_MOTOR_BASE_SPEEDS (0x45)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_MOTOR_BASE_SPEEDS));
     ui->CMDComboBox->addItem("GET_TURN_PID_GAINS (0x49)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_TURN_PID_GAINS));
+    ui->CMDComboBox->addItem("GET_WALL_THRESHOLDS (0x61)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_WALL_THRESHOLDS));
+    ui->CMDComboBox->addItem("GET_WALL_TARGET_ADC (0x63)", static_cast<quint8>(Unerbus::CommandId::CMD_GET_WALL_TARGET_ADC));
 }
 
 void MainWindow::on_btnSendCMD_clicked()
@@ -827,9 +839,13 @@ void MainWindow::setupConfigPage()
 void MainWindow::on_btnGetPidNavConfig_clicked()
 {
     sendUnerbusCommand(Unerbus::CommandId::CMD_GET_PID_GAINS);
-    // Se pide el segundo grupo de parámetros con un pequeño retardo para no saturar el micro
+    // Se piden los otros grupos de parámetros con un pequeño retardo para no saturar el micro
     QTimer::singleShot(100, this, [this]()
-                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS); });
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MAX_PWM_CORRECTION); });
+    QTimer::singleShot(200, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_WALL_THRESHOLDS); });
+    QTimer::singleShot(300, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_WALL_TARGET_ADC); });
 }
 
 /**
@@ -843,22 +859,38 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
     QDataStream gainsStream(&gainsPayload, QIODevice::WriteOnly);
     gainsStream.setByteOrder(QDataStream::LittleEndian);
 
-    // Convertimos de flotante (UI) a entero (protocolo) multiplicando por 1000
     gainsStream << static_cast<quint16>(ui->editKpNav->text().toFloat() * 1000.0f);
     gainsStream << static_cast<quint16>(ui->editKiNav->text().toFloat() * 1000.0f);
     gainsStream << static_cast<quint16>(ui->editKdNav->text().toFloat() * 1000.0f);
     sendUnerbusCommand(Unerbus::CommandId::CMD_SET_PID_GAINS, gainsPayload);
 
-    // 2. Enviar Parámetros de Control (Setpoint, Corrección Máxima)
+    // 2. Enviar Corrección Máxima de PWM
     QTimer::singleShot(100, this, [this]()
                        {
-        QByteArray paramsPayload;
-        QDataStream paramsStream(&paramsPayload, QIODevice::WriteOnly);
-        paramsStream.setByteOrder(QDataStream::LittleEndian);
+                           QByteArray payload;
+                           QDataStream stream(&payload, QIODevice::WriteOnly);
+                           stream.setByteOrder(QDataStream::LittleEndian);
+                           stream << static_cast<quint16>(ui->editMaxPwmOffsetNav->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_MAX_PWM_CORRECTION, payload); });
 
-        paramsStream << static_cast<quint16>(ui->editSetpointNav->text().toUShort());
-        paramsStream << static_cast<quint16>(ui->editMaxPwmOffsetNav->text().toUShort());
-        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_CONTROL_PARAMETERS, paramsPayload); });
+    // 3. Enviar Umbrales de Pared (Frontal y Lateral)
+    QTimer::singleShot(200, this, [this]()
+                       {
+                           QByteArray payload;
+                           QDataStream stream(&payload, QIODevice::WriteOnly);
+                           stream.setByteOrder(QDataStream::LittleEndian);
+                           stream << static_cast<quint16>(ui->editSetpointFront->text().toUShort());
+                           stream << static_cast<quint16>(ui->editSetpointSides->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_THRESHOLDS, payload); });
+
+    // 4. Enviar ADC Objetivo de Pared
+    QTimer::singleShot(300, this, [this]()
+                       {
+                           QByteArray payload;
+                           QDataStream stream(&payload, QIODevice::WriteOnly);
+                           stream.setByteOrder(QDataStream::LittleEndian);
+                           stream << static_cast<quint16>(ui->editSetpointOneWall->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_TARGET_ADC, payload); });
 }
 
 /**
@@ -952,19 +984,20 @@ void MainWindow::updatePidNavUI(const QByteArray &payload)
 }
 
 /**
- * @brief Actualiza la UI con los parámetros de control (setpoint, etc.).
+ * @brief Actualiza la UI con la corrección máxima del PID de navegación.
+ * @param payload El payload del paquete CMD_GET_MAX_PWM_CORRECTION.
  */
-void MainWindow::updateControlParamsUI(const QByteArray &payload)
+void MainWindow::updateMaxPwmCorrectionUI(const QByteArray &payload)
 {
-    if (payload.size() < 4)
+    if (payload.size() < 2) // 1 valor * 2 bytes/valor
         return;
+
     QDataStream stream(payload);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    quint16 setpoint, max_correction;
-    stream >> setpoint >> max_correction;
+    quint16 max_correction;
+    stream >> max_correction;
 
-    ui->editSetpointNav->setText(QString::number(setpoint));
     ui->editMaxPwmOffsetNav->setText(QString::number(max_correction));
 }
 
@@ -1149,4 +1182,41 @@ void MainWindow::updateTurnMinSpeedUI(const QByteArray &payload)
     stream >> speed;
 
     ui->editMinTurnSpeed->setText(QString::number(speed));
+}
+
+/**
+ * @brief Actualiza la UI con los umbrales de pared (frontal y lateral).
+ * @param payload El payload del paquete CMD_GET_WALL_THRESHOLDS.
+ */
+void MainWindow::updateWallThresholdsUI(const QByteArray &payload)
+{
+    if (payload.size() < 4) // 2 valores * 2 bytes/valor
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 threshold_front, threshold_side;
+    stream >> threshold_front >> threshold_side;
+
+    ui->editSetpointFront->setText(QString::number(threshold_front));
+    ui->editSetpointSides->setText(QString::number(threshold_side));
+}
+
+/**
+ * @brief Actualiza la UI con el valor ADC objetivo para el seguimiento de pared.
+ * @param payload El payload del paquete CMD_GET_WALL_TARGET_ADC.
+ */
+void MainWindow::updateWallTargetAdcUI(const QByteArray &payload)
+{
+    if (payload.size() < 2) // 1 valor * 2 bytes/valor
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 target_adc;
+    stream >> target_adc;
+
+    ui->editSetpointOneWall->setText(QString::number(target_adc));
 }

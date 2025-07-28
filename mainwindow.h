@@ -107,12 +107,14 @@ private:
 
     void setupConfigPage();
     void updatePidNavUI(const QByteArray &payload);
-    void updateControlParamsUI(const QByteArray &payload);
     void updatePidTurnUI(const QByteArray &payload);
     void updateMotorBaseSpeedsUI(const QByteArray &payload);
     void updateTurnMaxSpeedUI(const QByteArray &payload);
     void updateTurnMinSpeedUI(const QByteArray &payload);
     void updateMpuConfigUI(const QByteArray &payload);
     void populateMpuConfigComboBoxes();
+    void updateWallThresholdsUI(const QByteArray &payload);
+    void updateWallTargetAdcUI(const QByteArray &payload);
+    void updateMaxPwmCorrectionUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H

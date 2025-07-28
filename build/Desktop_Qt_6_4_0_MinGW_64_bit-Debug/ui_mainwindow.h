@@ -165,16 +165,20 @@ public:
     QGroupBox *groupBox_4;
     QVBoxLayout *verticalLayout_15;
     QGridLayout *gridLayout_6;
-    QLineEdit *editKdNav;
-    QLineEdit *editMaxPwmOffsetNav;
-    QLabel *label_22;
+    QLabel *label_37;
     QLineEdit *editKiNav;
-    QLabel *label_20;
+    QLineEdit *editSetpointSides;
     QLineEdit *editKpNav;
-    QLabel *label_23;
-    QLineEdit *editSetpointNav;
     QLabel *label_16;
+    QLabel *label_22;
+    QLineEdit *editSetpointFront;
+    QLineEdit *editKdNav;
     QLabel *label_21;
+    QLabel *label_20;
+    QLabel *label_23;
+    QLabel *label_36;
+    QLineEdit *editSetpointOneWall;
+    QLineEdit *editMaxPwmOffsetNav;
     QHBoxLayout *horizontalLayout_18;
     QPushButton *btnGetPidNavConfig;
     QPushButton *btnSetPidNavConfig;
@@ -1099,55 +1103,75 @@ public:
         verticalLayout_15->setObjectName("verticalLayout_15");
         gridLayout_6 = new QGridLayout();
         gridLayout_6->setObjectName("gridLayout_6");
-        editKdNav = new QLineEdit(groupBox_4);
-        editKdNav->setObjectName("editKdNav");
+        label_37 = new QLabel(groupBox_4);
+        label_37->setObjectName("label_37");
 
-        gridLayout_6->addWidget(editKdNav, 2, 1, 1, 1);
-
-        editMaxPwmOffsetNav = new QLineEdit(groupBox_4);
-        editMaxPwmOffsetNav->setObjectName("editMaxPwmOffsetNav");
-
-        gridLayout_6->addWidget(editMaxPwmOffsetNav, 1, 4, 1, 1);
-
-        label_22 = new QLabel(groupBox_4);
-        label_22->setObjectName("label_22");
-
-        gridLayout_6->addWidget(label_22, 0, 2, 1, 1);
+        gridLayout_6->addWidget(label_37, 2, 2, 1, 1);
 
         editKiNav = new QLineEdit(groupBox_4);
         editKiNav->setObjectName("editKiNav");
 
         gridLayout_6->addWidget(editKiNav, 1, 1, 1, 1);
 
-        label_20 = new QLabel(groupBox_4);
-        label_20->setObjectName("label_20");
+        editSetpointSides = new QLineEdit(groupBox_4);
+        editSetpointSides->setObjectName("editSetpointSides");
 
-        gridLayout_6->addWidget(label_20, 1, 0, 1, 1);
+        gridLayout_6->addWidget(editSetpointSides, 1, 4, 1, 1);
 
         editKpNav = new QLineEdit(groupBox_4);
         editKpNav->setObjectName("editKpNav");
 
         gridLayout_6->addWidget(editKpNav, 0, 1, 1, 1);
 
-        label_23 = new QLabel(groupBox_4);
-        label_23->setObjectName("label_23");
-
-        gridLayout_6->addWidget(label_23, 1, 2, 1, 1);
-
-        editSetpointNav = new QLineEdit(groupBox_4);
-        editSetpointNav->setObjectName("editSetpointNav");
-
-        gridLayout_6->addWidget(editSetpointNav, 0, 4, 1, 1);
-
         label_16 = new QLabel(groupBox_4);
         label_16->setObjectName("label_16");
 
         gridLayout_6->addWidget(label_16, 0, 0, 1, 1);
 
+        label_22 = new QLabel(groupBox_4);
+        label_22->setObjectName("label_22");
+
+        gridLayout_6->addWidget(label_22, 0, 2, 1, 1);
+
+        editSetpointFront = new QLineEdit(groupBox_4);
+        editSetpointFront->setObjectName("editSetpointFront");
+
+        gridLayout_6->addWidget(editSetpointFront, 0, 4, 1, 1);
+
+        editKdNav = new QLineEdit(groupBox_4);
+        editKdNav->setObjectName("editKdNav");
+
+        gridLayout_6->addWidget(editKdNav, 2, 1, 1, 1);
+
         label_21 = new QLabel(groupBox_4);
         label_21->setObjectName("label_21");
 
         gridLayout_6->addWidget(label_21, 2, 0, 1, 1);
+
+        label_20 = new QLabel(groupBox_4);
+        label_20->setObjectName("label_20");
+
+        gridLayout_6->addWidget(label_20, 1, 0, 1, 1);
+
+        label_23 = new QLabel(groupBox_4);
+        label_23->setObjectName("label_23");
+
+        gridLayout_6->addWidget(label_23, 4, 2, 1, 1);
+
+        label_36 = new QLabel(groupBox_4);
+        label_36->setObjectName("label_36");
+
+        gridLayout_6->addWidget(label_36, 1, 2, 1, 1);
+
+        editSetpointOneWall = new QLineEdit(groupBox_4);
+        editSetpointOneWall->setObjectName("editSetpointOneWall");
+
+        gridLayout_6->addWidget(editSetpointOneWall, 2, 4, 1, 1);
+
+        editMaxPwmOffsetNav = new QLineEdit(groupBox_4);
+        editMaxPwmOffsetNav->setObjectName("editMaxPwmOffsetNav");
+
+        gridLayout_6->addWidget(editMaxPwmOffsetNav, 4, 4, 1, 1);
 
 
         verticalLayout_15->addLayout(gridLayout_6);
@@ -1685,40 +1709,44 @@ public:
         groupBox_6->setTitle(QCoreApplication::translate("MainWindow", "General", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Velocidades base", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "Motor derecho", nullptr));
-        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         label_26->setText(QCoreApplication::translate("MainWindow", "Motor izquierdo", nullptr));
-        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         btnGetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "PID navegaci\303\263n", nullptr));
-        editKdNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        label_22->setText(QCoreApplication::translate("MainWindow", "Setpoint:", nullptr));
+        label_37->setText(QCoreApplication::translate("MainWindow", "Setpoint una pared:", nullptr));
         editKiNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        label_20->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
+        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         editKpNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        label_23->setText(QCoreApplication::translate("MainWindow", "Max. PWM offset:", nullptr));
-        editSetpointNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
+        label_22->setText(QCoreApplication::translate("MainWindow", "Setpoint frontal:", nullptr));
+        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editKdNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_21->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
+        label_20->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
+        label_23->setText(QCoreApplication::translate("MainWindow", "Max. PWM offset:", nullptr));
+        label_36->setText(QCoreApplication::translate("MainWindow", "Setpoint lateral:", nullptr));
+        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         btnGetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "PID giro", nullptr));
         label_28->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_27->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_29->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
-        editKdTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editKdTurn->setText(QCoreApplication::translate("MainWindow", "0.7", nullptr));
         label_31->setText(QCoreApplication::translate("MainWindow", "Vel. max. giro:", nullptr));
-        editKpTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editKpTurn->setText(QCoreApplication::translate("MainWindow", "13", nullptr));
         editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
         label_35->setText(QCoreApplication::translate("MainWindow", "Vel. min. giro:", nullptr));
-        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "2275", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "Periodo TIM4 (ARR):", nullptr));
-        lineEditPwmPeriod->setText(QCoreApplication::translate("MainWindow", "5000", nullptr));
+        lineEditPwmPeriod->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
         btnConfigurePeriod->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBoxMpuConfig->setTitle(QCoreApplication::translate("MainWindow", "MPU", nullptr));
         label_32->setText(QCoreApplication::translate("MainWindow", "Acelerometro:", nullptr));

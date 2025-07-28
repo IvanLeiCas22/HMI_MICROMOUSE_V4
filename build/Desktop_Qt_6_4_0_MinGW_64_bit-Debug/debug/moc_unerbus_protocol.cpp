@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[70];
+    uint offsetsAndSizes[78];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -61,7 +61,11 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata31[19];
     char stringdata32[23];
     char stringdata33[23];
-    char stringdata34[11];
+    char stringdata34[24];
+    char stringdata35[24];
+    char stringdata36[24];
+    char stringdata37[24];
+    char stringdata38[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -85,8 +89,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(258, 17),  // "CMD_CALIBRATE_MPU"
         QT_MOC_LITERAL(276, 17),  // "CMD_SET_PID_GAINS"
         QT_MOC_LITERAL(294, 17),  // "CMD_GET_PID_GAINS"
-        QT_MOC_LITERAL(312, 26),  // "CMD_SET_CONTROL_PARAMETERS"
-        QT_MOC_LITERAL(339, 26),  // "CMD_GET_CONTROL_PARAMETERS"
+        QT_MOC_LITERAL(312, 26),  // "CMD_SET_MAX_PWM_CORRECTION"
+        QT_MOC_LITERAL(339, 26),  // "CMD_GET_MAX_PWM_CORRECTION"
         QT_MOC_LITERAL(366, 25),  // "CMD_SET_MOTOR_BASE_SPEEDS"
         QT_MOC_LITERAL(392, 25),  // "CMD_GET_MOTOR_BASE_SPEEDS"
         QT_MOC_LITERAL(418, 20),  // "CMD_CALIBRATE_MOTORS"
@@ -101,7 +105,11 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(605, 18),  // "CMD_GET_MPU_CONFIG"
         QT_MOC_LITERAL(624, 22),  // "CMD_SET_TURN_MIN_SPEED"
         QT_MOC_LITERAL(647, 22),  // "CMD_GET_TURN_MIN_SPEED"
-        QT_MOC_LITERAL(670, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(670, 23),  // "CMD_SET_WALL_THRESHOLDS"
+        QT_MOC_LITERAL(694, 23),  // "CMD_GET_WALL_THRESHOLDS"
+        QT_MOC_LITERAL(718, 23),  // "CMD_SET_WALL_TARGET_ADC"
+        QT_MOC_LITERAL(742, 23),  // "CMD_GET_WALL_TARGET_ADC"
+        QT_MOC_LITERAL(766, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -121,8 +129,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_CALIBRATE_MPU",
     "CMD_SET_PID_GAINS",
     "CMD_GET_PID_GAINS",
-    "CMD_SET_CONTROL_PARAMETERS",
-    "CMD_GET_CONTROL_PARAMETERS",
+    "CMD_SET_MAX_PWM_CORRECTION",
+    "CMD_GET_MAX_PWM_CORRECTION",
     "CMD_SET_MOTOR_BASE_SPEEDS",
     "CMD_GET_MOTOR_BASE_SPEEDS",
     "CMD_CALIBRATE_MOTORS",
@@ -137,6 +145,10 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_GET_MPU_CONFIG",
     "CMD_SET_TURN_MIN_SPEED",
     "CMD_GET_TURN_MIN_SPEED",
+    "CMD_SET_WALL_THRESHOLDS",
+    "CMD_GET_WALL_THRESHOLDS",
+    "CMD_SET_WALL_TARGET_ADC",
+    "CMD_GET_WALL_TARGET_ADC",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -156,7 +168,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   33,   19,
+       1,    1, 0x2,   37,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -175,8 +187,8 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       15, uint(Unerbus::CommandId::CMD_CALIBRATE_MPU),
       16, uint(Unerbus::CommandId::CMD_SET_PID_GAINS),
       17, uint(Unerbus::CommandId::CMD_GET_PID_GAINS),
-      18, uint(Unerbus::CommandId::CMD_SET_CONTROL_PARAMETERS),
-      19, uint(Unerbus::CommandId::CMD_GET_CONTROL_PARAMETERS),
+      18, uint(Unerbus::CommandId::CMD_SET_MAX_PWM_CORRECTION),
+      19, uint(Unerbus::CommandId::CMD_GET_MAX_PWM_CORRECTION),
       20, uint(Unerbus::CommandId::CMD_SET_MOTOR_BASE_SPEEDS),
       21, uint(Unerbus::CommandId::CMD_GET_MOTOR_BASE_SPEEDS),
       22, uint(Unerbus::CommandId::CMD_CALIBRATE_MOTORS),
@@ -191,7 +203,11 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       31, uint(Unerbus::CommandId::CMD_GET_MPU_CONFIG),
       32, uint(Unerbus::CommandId::CMD_SET_TURN_MIN_SPEED),
       33, uint(Unerbus::CommandId::CMD_GET_TURN_MIN_SPEED),
-      34, uint(Unerbus::CommandId::CMD_OTHERS),
+      34, uint(Unerbus::CommandId::CMD_SET_WALL_THRESHOLDS),
+      35, uint(Unerbus::CommandId::CMD_GET_WALL_THRESHOLDS),
+      36, uint(Unerbus::CommandId::CMD_SET_WALL_TARGET_ADC),
+      37, uint(Unerbus::CommandId::CMD_GET_WALL_TARGET_ADC),
+      38, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

@@ -1458,21 +1458,21 @@ QPushButton:checked {
              <item row="1" column="1">
               <widget class="QLineEdit" name="editKiNav">
                <property name="text">
-                <string>0</string>
+                <string>0.000</string>
                </property>
               </widget>
              </item>
              <item row="1" column="4">
               <widget class="QLineEdit" name="editSetpointSides">
                <property name="text">
-                <string>0</string>
+                <string>250</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="editKpNav">
                <property name="text">
-                <string>0</string>
+                <string>2.000</string>
                </property>
               </widget>
              </item>
@@ -1493,14 +1493,14 @@ QPushButton:checked {
              <item row="0" column="4">
               <widget class="QLineEdit" name="editSetpointFront">
                <property name="text">
-                <string>0</string>
+                <string>600</string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
               <widget class="QLineEdit" name="editKdNav">
                <property name="text">
-                <string>0</string>
+                <string>1.000</string>
                </property>
               </widget>
              </item>
@@ -1535,14 +1535,14 @@ QPushButton:checked {
              <item row="2" column="4">
               <widget class="QLineEdit" name="editSetpointOneWall">
                <property name="text">
-                <string>0</string>
+                <string>580</string>
                </property>
               </widget>
              </item>
              <item row="4" column="4">
               <widget class="QLineEdit" name="editMaxPwmOffsetNav">
                <property name="text">
-                <string>0</string>
+                <string>4000</string>
                </property>
               </widget>
              </item>
@@ -1643,7 +1643,7 @@ QPushButton:checked {
              <item row="1" column="3">
               <widget class="QLineEdit" name="editMinTurnSpeed">
                <property name="text">
-                <string>2275</string>
+                <string>2600</string>
                </property>
               </widget>
              </item>
