@@ -1632,7 +1632,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(2);
+        stackedScreens->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1716,19 +1716,19 @@ public:
         btnSetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "PID navegaci\303\263n", nullptr));
         label_37->setText(QCoreApplication::translate("MainWindow", "Setpoint una pared:", nullptr));
-        editKiNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editKpNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editKiNav->setText(QCoreApplication::translate("MainWindow", "0.000", nullptr));
+        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "250", nullptr));
+        editKpNav->setText(QCoreApplication::translate("MainWindow", "2.000", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "Setpoint frontal:", nullptr));
-        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editKdNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "600", nullptr));
+        editKdNav->setText(QCoreApplication::translate("MainWindow", "1.000", nullptr));
         label_21->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
         label_20->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_23->setText(QCoreApplication::translate("MainWindow", "Max. PWM offset:", nullptr));
         label_36->setText(QCoreApplication::translate("MainWindow", "Setpoint lateral:", nullptr));
-        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "580", nullptr));
+        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
         btnGetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "PID giro", nullptr));
@@ -1741,7 +1741,7 @@ public:
         editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
         label_35->setText(QCoreApplication::translate("MainWindow", "Vel. min. giro:", nullptr));
-        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "2275", nullptr));
+        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));
