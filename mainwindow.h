@@ -70,6 +70,8 @@ private slots:
     void on_btnSetPidTurnConfig_clicked();
     void on_btnGetMpuConfig_clicked();
     void on_btnSetMpuConfig_clicked();
+    void on_btnGetRobotStatus_clicked();
+    void on_btnSetRobotStatus_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -116,5 +118,8 @@ private:
     void updateWallThresholdsUI(const QByteArray &payload);
     void updateWallTargetAdcUI(const QByteArray &payload);
     void updateMaxPwmCorrectionUI(const QByteArray &payload);
+    void setupActivitiesTab();
+    void populateRobotStatusComboBoxes();
+    void updateRobotStatusUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H

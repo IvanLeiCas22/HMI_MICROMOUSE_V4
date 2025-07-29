@@ -250,6 +250,16 @@ public:
     QLabel *label_30;
     QLineEdit *editTurnAngle;
     QPushButton *btnSendTurnAngle;
+    QGroupBox *groupBox_2;
+    QVBoxLayout *verticalLayout_21;
+    QGridLayout *gridLayout_8;
+    QComboBox *comboRobotMode;
+    QLabel *label_38;
+    QLabel *label_39;
+    QComboBox *comboRobotAppState;
+    QHBoxLayout *horizontalLayout_22;
+    QPushButton *btnGetRobotStatus;
+    QPushButton *btnSetRobotStatus;
     QSpacerItem *verticalSpacer_4;
     QHBoxLayout *horizontalLayout_12;
     QCheckBox *chkAutoGetPWM;
@@ -262,7 +272,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 887);
+        MainWindow->resize(1000, 890);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -1589,6 +1599,64 @@ public:
 
         verticalLayout_12->addWidget(groupBoxGiro);
 
+        groupBox_2 = new QGroupBox(pageControl);
+        groupBox_2->setObjectName("groupBox_2");
+        groupBox_2->setFont(font7);
+        verticalLayout_21 = new QVBoxLayout(groupBox_2);
+        verticalLayout_21->setObjectName("verticalLayout_21");
+        gridLayout_8 = new QGridLayout();
+        gridLayout_8->setObjectName("gridLayout_8");
+        comboRobotMode = new QComboBox(groupBox_2);
+        comboRobotMode->setObjectName("comboRobotMode");
+        sizePolicy2.setHeightForWidth(comboRobotMode->sizePolicy().hasHeightForWidth());
+        comboRobotMode->setSizePolicy(sizePolicy2);
+        comboRobotMode->setFont(font);
+
+        gridLayout_8->addWidget(comboRobotMode, 0, 1, 1, 1);
+
+        label_38 = new QLabel(groupBox_2);
+        label_38->setObjectName("label_38");
+        label_38->setFont(font);
+
+        gridLayout_8->addWidget(label_38, 0, 0, 1, 1);
+
+        label_39 = new QLabel(groupBox_2);
+        label_39->setObjectName("label_39");
+        label_39->setFont(font);
+
+        gridLayout_8->addWidget(label_39, 1, 0, 1, 1);
+
+        comboRobotAppState = new QComboBox(groupBox_2);
+        comboRobotAppState->setObjectName("comboRobotAppState");
+        sizePolicy2.setHeightForWidth(comboRobotAppState->sizePolicy().hasHeightForWidth());
+        comboRobotAppState->setSizePolicy(sizePolicy2);
+        comboRobotAppState->setFont(font);
+
+        gridLayout_8->addWidget(comboRobotAppState, 1, 1, 1, 1);
+
+
+        verticalLayout_21->addLayout(gridLayout_8);
+
+        horizontalLayout_22 = new QHBoxLayout();
+        horizontalLayout_22->setObjectName("horizontalLayout_22");
+        btnGetRobotStatus = new QPushButton(groupBox_2);
+        btnGetRobotStatus->setObjectName("btnGetRobotStatus");
+        btnGetRobotStatus->setFont(font6);
+
+        horizontalLayout_22->addWidget(btnGetRobotStatus);
+
+        btnSetRobotStatus = new QPushButton(groupBox_2);
+        btnSetRobotStatus->setObjectName("btnSetRobotStatus");
+        btnSetRobotStatus->setFont(font6);
+
+        horizontalLayout_22->addWidget(btnSetRobotStatus);
+
+
+        verticalLayout_21->addLayout(horizontalLayout_22);
+
+
+        verticalLayout_12->addWidget(groupBox_2);
+
         verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_12->addItem(verticalSpacer_4);
@@ -1632,7 +1700,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(0);
+        stackedScreens->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1769,6 +1837,11 @@ public:
         label_30->setText(QCoreApplication::translate("MainWindow", "\303\201ngulo", nullptr));
         editTurnAngle->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         btnSendTurnAngle->setText(QCoreApplication::translate("MainWindow", "Girar", nullptr));
+        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Actividades", nullptr));
+        label_38->setText(QCoreApplication::translate("MainWindow", "Modo:", nullptr));
+        label_39->setText(QCoreApplication::translate("MainWindow", "Estado:", nullptr));
+        btnGetRobotStatus->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
+        btnSetRobotStatus->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         chkAutoGetPWM->setText(QCoreApplication::translate("MainWindow", "Obtenci\303\263n autom\303\241tica", nullptr));
         chkRealTimeSetPWM->setText(QCoreApplication::translate("MainWindow", "Configuraci\303\263n en tiempo real", nullptr));
     } // retranslateUi

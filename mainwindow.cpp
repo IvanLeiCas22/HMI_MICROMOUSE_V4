@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     populateCMDComboBox();
     setupControlPage(); // Configurar la página de control
     setupConfigPage();
+    setupActivitiesTab();
 
     QIntValidator *turnAngleValidator = new QIntValidator(-360, 360, this);
     ui->editTurnAngle->setValidator(turnAngleValidator);
@@ -126,6 +127,8 @@ void MainWindow::on_btnConnectSerie_clicked()
         // Solicitar período de PWM al conectar
         QTimer::singleShot(200, this, [this]()
                            { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_PWM_PERIOD); });
+        QTimer::singleShot(300, this, [this]()
+                           { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_ROBOT_STATUS); });
     }
     else
     {
@@ -286,6 +289,11 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updateWallTargetAdcUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_ROBOT_STATUS:
+    {
+        updateRobotStatusUI(payload);
+        break;
+    }
     default:
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
@@ -422,6 +430,9 @@ void MainWindow::onUDPReadyRead()
             // Solicitar período de PWM al conectar
             QTimer::singleShot(200, this, [this]()
                                { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_PWM_PERIOD); });
+            // Solicitar estado del robot al conectar
+            QTimer::singleShot(300, this, [this]()
+                               { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_ROBOT_STATUS); });
         }
 
         // Procesar el paquete como siempre
@@ -1219,4 +1230,90 @@ void MainWindow::updateWallTargetAdcUI(const QByteArray &payload)
     stream >> target_adc;
 
     ui->editSetpointOneWall->setText(QString::number(target_adc));
+}
+
+/**
+ * @brief Configura las conexiones de señales y slots para la pestaña de Actividades.
+ */
+void MainWindow::setupActivitiesTab()
+{
+    // Conectar botones
+    connect(ui->btnGetRobotStatus, &QPushButton::clicked, this, &MainWindow::on_btnGetRobotStatus_clicked);
+    connect(ui->btnSetRobotStatus, &QPushButton::clicked, this, &MainWindow::on_btnSetRobotStatus_clicked);
+
+    // Rellenar los ComboBox con los valores correspondientes
+    populateRobotStatusComboBoxes();
+}
+
+/**
+ * @brief Rellena los ComboBox de estado y modo del robot con valores fijos.
+ */
+void MainWindow::populateRobotStatusComboBoxes()
+{
+    // --- Estado de la Aplicación (AppState) ---
+    ui->comboRobotAppState->clear();
+    ui->comboRobotAppState->addItem("Menú", 0);      // APP_STATE_MENU
+    ui->comboRobotAppState->addItem("Corriendo", 1); // APP_STATE_RUNNING
+
+    // --- Modo de Operación (MenuMode) ---
+    ui->comboRobotMode->clear();
+    ui->comboRobotMode->addItem("Inactivo (Idle)", 0); // MENU_MODE_IDLE
+    ui->comboRobotMode->addItem("Buscar Celdas", 1);   // MENU_MODE_FIND_CELLS
+    ui->comboRobotMode->addItem("Ir a Punto B", 2);    // MENU_MODE_GO_TO_B
+}
+
+/**
+ * @brief Slot para el botón "Obtener Estado". Solicita el estado actual del robot.
+ */
+void MainWindow::on_btnGetRobotStatus_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_ROBOT_STATUS);
+}
+
+/**
+ * @brief Slot para el botón "Establecer Estado". Envía los nuevos estado y modo al robot.
+ */
+void MainWindow::on_btnSetRobotStatus_clicked()
+{
+    // 1. Enviar el nuevo AppState
+    QByteArray appStatePayload;
+    appStatePayload.append(static_cast<quint8>(ui->comboRobotAppState->currentData().toUInt()));
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_APP_STATE, appStatePayload);
+
+    // 2. Enviar el nuevo MenuMode con un pequeño retardo
+    QTimer::singleShot(100, this, [this]()
+                       {
+        QByteArray menuModePayload;
+        menuModePayload.append(static_cast<quint8>(ui->comboRobotMode->currentData().toUInt()));
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_MENU_MODE, menuModePayload); });
+
+    // 3. Solicitar de vuelta el estado para confirmar el cambio
+    QTimer::singleShot(200, this, &MainWindow::on_btnGetRobotStatus_clicked);
+}
+
+/**
+ * @brief Actualiza la UI con el estado y modo del robot recibidos.
+ * @param payload El payload del paquete CMD_GET_ROBOT_STATUS.
+ */
+void MainWindow::updateRobotStatusUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return; // Necesitamos 2 bytes: AppState y MenuMode
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint8 app_state, menu_mode;
+    stream >> app_state >> menu_mode;
+
+    // Buscar y seleccionar el item correspondiente en cada ComboBox
+    // Se bloquean las señales para evitar disparar eventos no deseados
+    ui->comboRobotAppState->blockSignals(true);
+    ui->comboRobotMode->blockSignals(true);
+
+    ui->comboRobotAppState->setCurrentIndex(ui->comboRobotAppState->findData(app_state));
+    ui->comboRobotMode->setCurrentIndex(ui->comboRobotMode->findData(menu_mode));
+
+    ui->comboRobotAppState->blockSignals(false);
+    ui->comboRobotMode->blockSignals(false);
 }
