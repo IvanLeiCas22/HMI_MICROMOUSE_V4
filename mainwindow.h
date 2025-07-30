@@ -72,6 +72,8 @@ private slots:
     void on_btnSetMpuConfig_clicked();
     void on_btnGetRobotStatus_clicked();
     void on_btnSetRobotStatus_clicked();
+    void on_btnGetCruiseParams_clicked();
+    void on_btnSetCruiseParams_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -121,5 +123,6 @@ private:
     void setupActivitiesTab();
     void populateRobotStatusComboBoxes();
     void updateRobotStatusUI(const QByteArray &payload);
+    void updateCruiseParamsUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H

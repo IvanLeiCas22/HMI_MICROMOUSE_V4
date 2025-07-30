@@ -162,6 +162,18 @@ public:
     QHBoxLayout *horizontalLayout_17;
     QPushButton *btnGetBaseMotorsSpeeds;
     QPushButton *btnSetBaseMotorsSpeeds;
+    QGroupBox *groupCruiseControl;
+    QVBoxLayout *verticalLayout_20;
+    QGridLayout *gridLayout_9;
+    QLabel *label_40;
+    QLineEdit *editCruiseSpeed;
+    QLabel *label_41;
+    QLineEdit *editAccelThreshold;
+    QLabel *label_42;
+    QLineEdit *editConfirmTicks;
+    QHBoxLayout *horizontalLayout_23;
+    QPushButton *btnGetCruiseParams;
+    QPushButton *btnSetCruiseParams;
     QGroupBox *groupBox_4;
     QVBoxLayout *verticalLayout_15;
     QGridLayout *gridLayout_6;
@@ -272,7 +284,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 890);
+        MainWindow->resize(1000, 1077);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -1107,6 +1119,63 @@ public:
 
         verticalLayout_11->addWidget(groupBox_6);
 
+        groupCruiseControl = new QGroupBox(pageConfig);
+        groupCruiseControl->setObjectName("groupCruiseControl");
+        verticalLayout_20 = new QVBoxLayout(groupCruiseControl);
+        verticalLayout_20->setObjectName("verticalLayout_20");
+        gridLayout_9 = new QGridLayout();
+        gridLayout_9->setObjectName("gridLayout_9");
+        label_40 = new QLabel(groupCruiseControl);
+        label_40->setObjectName("label_40");
+
+        gridLayout_9->addWidget(label_40, 0, 0, 1, 1);
+
+        editCruiseSpeed = new QLineEdit(groupCruiseControl);
+        editCruiseSpeed->setObjectName("editCruiseSpeed");
+
+        gridLayout_9->addWidget(editCruiseSpeed, 0, 1, 1, 1);
+
+        label_41 = new QLabel(groupCruiseControl);
+        label_41->setObjectName("label_41");
+
+        gridLayout_9->addWidget(label_41, 1, 0, 1, 1);
+
+        editAccelThreshold = new QLineEdit(groupCruiseControl);
+        editAccelThreshold->setObjectName("editAccelThreshold");
+
+        gridLayout_9->addWidget(editAccelThreshold, 1, 1, 1, 1);
+
+        label_42 = new QLabel(groupCruiseControl);
+        label_42->setObjectName("label_42");
+
+        gridLayout_9->addWidget(label_42, 2, 0, 1, 1);
+
+        editConfirmTicks = new QLineEdit(groupCruiseControl);
+        editConfirmTicks->setObjectName("editConfirmTicks");
+
+        gridLayout_9->addWidget(editConfirmTicks, 2, 1, 1, 1);
+
+
+        verticalLayout_20->addLayout(gridLayout_9);
+
+        horizontalLayout_23 = new QHBoxLayout();
+        horizontalLayout_23->setObjectName("horizontalLayout_23");
+        btnGetCruiseParams = new QPushButton(groupCruiseControl);
+        btnGetCruiseParams->setObjectName("btnGetCruiseParams");
+
+        horizontalLayout_23->addWidget(btnGetCruiseParams);
+
+        btnSetCruiseParams = new QPushButton(groupCruiseControl);
+        btnSetCruiseParams->setObjectName("btnSetCruiseParams");
+
+        horizontalLayout_23->addWidget(btnSetCruiseParams);
+
+
+        verticalLayout_20->addLayout(horizontalLayout_23);
+
+
+        verticalLayout_11->addWidget(groupCruiseControl);
+
         groupBox_4 = new QGroupBox(pageConfig);
         groupBox_4->setObjectName("groupBox_4");
         verticalLayout_15 = new QVBoxLayout(groupBox_4);
@@ -1700,7 +1769,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(3);
+        stackedScreens->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1782,6 +1851,15 @@ public:
         editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         btnGetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
+        groupCruiseControl->setTitle(QCoreApplication::translate("MainWindow", "Control de Crucero", nullptr));
+        label_40->setText(QCoreApplication::translate("MainWindow", "Velocidad Crucero (PWM):", nullptr));
+        editCruiseSpeed->setText(QCoreApplication::translate("MainWindow", "1800", nullptr));
+        label_41->setText(QCoreApplication::translate("MainWindow", "Umbral Aceleraci\303\263n (raw):", nullptr));
+        editAccelThreshold->setText(QCoreApplication::translate("MainWindow", "500", nullptr));
+        label_42->setText(QCoreApplication::translate("MainWindow", "Ticks Confirmaci\303\263n (x10ms):", nullptr));
+        editConfirmTicks->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
+        btnGetCruiseParams->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
+        btnSetCruiseParams->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "PID navegaci\303\263n", nullptr));
         label_37->setText(QCoreApplication::translate("MainWindow", "Setpoint una pared:", nullptr));
         editKiNav->setText(QCoreApplication::translate("MainWindow", "0.000", nullptr));

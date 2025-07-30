@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[88];
+    uint offsetsAndSizes[92];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -70,7 +70,9 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata40[18];
     char stringdata41[18];
     char stringdata42[21];
-    char stringdata43[11];
+    char stringdata43[22];
+    char stringdata44[22];
+    char stringdata45[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -119,7 +121,9 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(802, 17),  // "CMD_SET_MENU_MODE"
         QT_MOC_LITERAL(820, 17),  // "CMD_GET_MENU_MODE"
         QT_MOC_LITERAL(838, 20),  // "CMD_GET_ROBOT_STATUS"
-        QT_MOC_LITERAL(859, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(859, 21),  // "CMD_SET_CRUISE_PARAMS"
+        QT_MOC_LITERAL(881, 21),  // "CMD_GET_CRUISE_PARAMS"
+        QT_MOC_LITERAL(903, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -164,6 +168,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_SET_MENU_MODE",
     "CMD_GET_MENU_MODE",
     "CMD_GET_ROBOT_STATUS",
+    "CMD_SET_CRUISE_PARAMS",
+    "CMD_GET_CRUISE_PARAMS",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -183,7 +189,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   42,   19,
+       1,    1, 0x2,   44,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -227,7 +233,9 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       40, uint(Unerbus::CommandId::CMD_SET_MENU_MODE),
       41, uint(Unerbus::CommandId::CMD_GET_MENU_MODE),
       42, uint(Unerbus::CommandId::CMD_GET_ROBOT_STATUS),
-      43, uint(Unerbus::CommandId::CMD_OTHERS),
+      43, uint(Unerbus::CommandId::CMD_SET_CRUISE_PARAMS),
+      44, uint(Unerbus::CommandId::CMD_GET_CRUISE_PARAMS),
+      45, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

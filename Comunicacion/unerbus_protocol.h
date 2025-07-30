@@ -51,11 +51,13 @@ namespace Unerbus
         CMD_GET_WALL_THRESHOLDS = 0x61,
         CMD_SET_WALL_TARGET_ADC = 0x62,
         CMD_GET_WALL_TARGET_ADC = 0x63,
-        CMD_SET_APP_STATE = 0x70,    // Para cambiar entre MENU y RUNNING
-        CMD_GET_APP_STATE = 0x71,    // Para leer el estado de la app
-        CMD_SET_MENU_MODE = 0x72,    // Para seleccionar un modo de operación
-        CMD_GET_MENU_MODE = 0x73,    // Para leer el modo de operación actual
-        CMD_GET_ROBOT_STATUS = 0x74, // Para leer el estado completo (AppState y MenuMode)
+        CMD_SET_APP_STATE = 0x70,     // Para cambiar entre MENU y RUNNING
+        CMD_GET_APP_STATE = 0x71,     // Para leer el estado de la app
+        CMD_SET_MENU_MODE = 0x72,     // Para seleccionar un modo de operación
+        CMD_GET_MENU_MODE = 0x73,     // Para leer el modo de operación actual
+        CMD_GET_ROBOT_STATUS = 0x74,  // Para leer el estado completo (AppState y MenuMode)
+        CMD_SET_CRUISE_PARAMS = 0x4E, // Configurar velocidad crucero y umbral de aceleración
+        CMD_GET_CRUISE_PARAMS = 0x4F, // Leer velocidad crucero y umbral de aceleración
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)
