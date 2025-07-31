@@ -251,7 +251,6 @@ public:
     QHBoxLayout *horizontalLayout_21;
     QPushButton *btnGetMpuConfig;
     QPushButton *btnSetMpuConfig;
-    QPushButton *pushButton;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageControl;
     QVBoxLayout *verticalLayout_12;
@@ -308,7 +307,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 973);
+        MainWindow->resize(1000, 1178);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -1583,11 +1582,6 @@ public:
 
         verticalLayout_11->addWidget(groupBoxMpuConfig);
 
-        pushButton = new QPushButton(pageConfig);
-        pushButton->setObjectName("pushButton");
-
-        verticalLayout_11->addWidget(pushButton);
-
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_11->addItem(verticalSpacer_3);
@@ -1987,16 +1981,16 @@ public:
         groupBox_6->setTitle(QCoreApplication::translate("MainWindow", "General", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Velocidades base", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "Motor derecho", nullptr));
-        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
+        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
         label_26->setText(QCoreApplication::translate("MainWindow", "Motor izquierdo", nullptr));
-        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
+        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
         btnGetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupCruiseControl->setTitle(QCoreApplication::translate("MainWindow", "Control de Crucero", nullptr));
         label_40->setText(QCoreApplication::translate("MainWindow", "Velocidad Crucero (PWM):", nullptr));
-        editCruiseSpeed->setText(QCoreApplication::translate("MainWindow", "1800", nullptr));
+        editCruiseSpeed->setText(QCoreApplication::translate("MainWindow", "2400", nullptr));
         label_41->setText(QCoreApplication::translate("MainWindow", "Umbral Aceleraci\303\263n (raw):", nullptr));
-        editAccelThreshold->setText(QCoreApplication::translate("MainWindow", "500", nullptr));
+        editAccelThreshold->setText(QCoreApplication::translate("MainWindow", "1500", nullptr));
         label_42->setText(QCoreApplication::translate("MainWindow", "Ticks Confirmaci\303\263n (x10ms):", nullptr));
         editConfirmTicks->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
         btnGetCruiseParams->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
@@ -2004,50 +1998,50 @@ public:
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "PID navegaci\303\263n", nullptr));
         label_37->setText(QCoreApplication::translate("MainWindow", "Setpoint una pared:", nullptr));
         editKiNav->setText(QCoreApplication::translate("MainWindow", "0.000", nullptr));
-        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "250", nullptr));
-        editKpNav->setText(QCoreApplication::translate("MainWindow", "2.000", nullptr));
+        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "400", nullptr));
+        editKpNav->setText(QCoreApplication::translate("MainWindow", "4.000", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "Setpoint frontal:", nullptr));
-        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "600", nullptr));
-        editKdNav->setText(QCoreApplication::translate("MainWindow", "1.000", nullptr));
+        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "500", nullptr));
+        editKdNav->setText(QCoreApplication::translate("MainWindow", "0.800", nullptr));
         label_21->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
         label_20->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_23->setText(QCoreApplication::translate("MainWindow", "Max. PWM offset:", nullptr));
         label_36->setText(QCoreApplication::translate("MainWindow", "Setpoint lateral:", nullptr));
-        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "580", nullptr));
-        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
+        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "750", nullptr));
+        editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "2000", nullptr));
         btnGetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "PID giro", nullptr));
         label_28->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_27->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_29->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
-        editKdTurn->setText(QCoreApplication::translate("MainWindow", "0.7", nullptr));
+        editKdTurn->setText(QCoreApplication::translate("MainWindow", "0.6", nullptr));
         label_31->setText(QCoreApplication::translate("MainWindow", "Vel. max. giro:", nullptr));
-        editKpTurn->setText(QCoreApplication::translate("MainWindow", "13", nullptr));
+        editKpTurn->setText(QCoreApplication::translate("MainWindow", "9", nullptr));
         editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
         label_35->setText(QCoreApplication::translate("MainWindow", "Vel. min. giro:", nullptr));
-        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
+        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "3000", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_Braking->setTitle(QCoreApplication::translate("MainWindow", "PID Frenado", nullptr));
         label_kp_braking->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
-        editKpBraking->setText(QCoreApplication::translate("MainWindow", "10.000", nullptr));
+        editKpBraking->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
         label_ki_braking->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
-        editKiBraking->setText(QCoreApplication::translate("MainWindow", "0.100", nullptr));
+        editKiBraking->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_kd_braking->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
-        editKdBraking->setText(QCoreApplication::translate("MainWindow", "5.000", nullptr));
+        editKdBraking->setText(QCoreApplication::translate("MainWindow", "0.6", nullptr));
         label_stop_target->setText(QCoreApplication::translate("MainWindow", "Setpoint Distancia Parada:", nullptr));
-        editStopTargetAdc->setText(QCoreApplication::translate("MainWindow", "3800", nullptr));
+        editStopTargetAdc->setText(QCoreApplication::translate("MainWindow", "1700", nullptr));
         label_accel_stop->setText(QCoreApplication::translate("MainWindow", "Umbral Accel. Parada:", nullptr));
-        editAccelStopThreshold->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
+        editAccelStopThreshold->setText(QCoreApplication::translate("MainWindow", "2000", nullptr));
         label_braking_max_speed->setText(QCoreApplication::translate("MainWindow", "Velocidad M\303\241x. Frenado:", nullptr));
         editBrakingMaxSpeed->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
         label_braking_min_speed->setText(QCoreApplication::translate("MainWindow", "Velocidad M\303\255n. Frenado:", nullptr));
-        editBrakingMinSpeed->setText(QCoreApplication::translate("MainWindow", "2200", nullptr));
+        editBrakingMinSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         label_braking_dead_zone->setText(QCoreApplication::translate("MainWindow", "Zona Muerta Frenado:", nullptr));
-        editBrakingDeadZone->setText(QCoreApplication::translate("MainWindow", "50", nullptr));
+        editBrakingDeadZone->setText(QCoreApplication::translate("MainWindow", "500", nullptr));
         btnGetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));
@@ -2060,7 +2054,6 @@ public:
         label_34->setText(QCoreApplication::translate("MainWindow", "DLPF:", nullptr));
         btnGetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
         titleHome_2->setText(QCoreApplication::translate("MainWindow", "Control", nullptr));
         groupBoxPWM->setTitle(QCoreApplication::translate("MainWindow", "PWM", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Motor Derecho", nullptr));
