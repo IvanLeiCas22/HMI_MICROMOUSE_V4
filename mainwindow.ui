@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>1077</height>
+    <height>973</height>
    </rect>
   </property>
   <property name="font">
@@ -1364,154 +1364,158 @@ QPushButton:checked {
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_6">
-          <property name="title">
-           <string>General</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_17">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <layout class="QHBoxLayout" name="horizontalLayout_24">
+          <item>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="title">
+             <string>General</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_17">
              <item>
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>Velocidades base</string>
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <item>
+                <widget class="QLabel" name="label_24">
+                 <property name="text">
+                  <string>Velocidades base</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_16">
+               <item>
+                <widget class="QLabel" name="label_25">
+                 <property name="text">
+                  <string>Motor derecho</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="editRightMotorBaseSpeed">
+                 <property name="text">
+                  <string>2600</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>Motor izquierdo</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="editLeftMotorBaseSpeed">
+                 <property name="text">
+                  <string>2600</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_17">
+               <item>
+                <widget class="QPushButton" name="btnGetBaseMotorsSpeeds">
+                 <property name="text">
+                  <string>Obtener</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnSetBaseMotorsSpeeds">
+                 <property name="text">
+                  <string>Configurar</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-           <item>
-            <widget class="Line" name="line_10">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_16">
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupCruiseControl">
+            <property name="title">
+             <string>Control de Crucero</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_20">
              <item>
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>Motor derecho</string>
-               </property>
-              </widget>
+              <layout class="QGridLayout" name="gridLayout_9">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_40">
+                 <property name="text">
+                  <string>Velocidad Crucero (PWM):</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="editCruiseSpeed">
+                 <property name="text">
+                  <string>1800</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_41">
+                 <property name="text">
+                  <string>Umbral Aceleración (raw):</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="editAccelThreshold">
+                 <property name="text">
+                  <string>500</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_42">
+                 <property name="text">
+                  <string>Ticks Confirmación (x10ms):</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="editConfirmTicks">
+                 <property name="text">
+                  <string>2</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QLineEdit" name="editRightMotorBaseSpeed">
-               <property name="text">
-                <string>2600</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Motor izquierdo</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="editLeftMotorBaseSpeed">
-               <property name="text">
-                <string>2600</string>
-               </property>
-              </widget>
+              <layout class="QHBoxLayout" name="horizontalLayout_23">
+               <item>
+                <widget class="QPushButton" name="btnGetCruiseParams">
+                 <property name="text">
+                  <string>Obtener</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnSetCruiseParams">
+                 <property name="text">
+                  <string>Configurar</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_17">
-             <item>
-              <widget class="QPushButton" name="btnGetBaseMotorsSpeeds">
-               <property name="text">
-                <string>Obtener</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnSetBaseMotorsSpeeds">
-               <property name="text">
-                <string>Configurar</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupCruiseControl">
-          <property name="title">
-           <string>Control de Crucero</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_20">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_9">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_40">
-               <property name="text">
-                <string>Velocidad Crucero (PWM):</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="editCruiseSpeed">
-               <property name="text">
-                <string>1800</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_41">
-               <property name="text">
-                <string>Umbral Aceleración (raw):</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="editAccelThreshold">
-               <property name="text">
-                <string>500</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_42">
-               <property name="text">
-                <string>Ticks Confirmación (x10ms):</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="editConfirmTicks">
-               <property name="text">
-                <string>2</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_23">
-             <item>
-              <widget class="QPushButton" name="btnGetCruiseParams">
-               <property name="text">
-                <string>Obtener</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnSetCruiseParams">
-               <property name="text">
-                <string>Configurar</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox_4">
@@ -1744,6 +1748,121 @@ QPushButton:checked {
          </widget>
         </item>
         <item>
+         <widget class="QGroupBox" name="groupBox_Braking">
+          <property name="title">
+           <string>PID Frenado</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_Braking">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_Braking">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_kp_braking">
+               <property name="text">
+                <string>kp:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="editKpBraking">
+               <property name="text">
+                <string>10.000</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_ki_braking">
+               <property name="text">
+                <string>ki:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="editKiBraking">
+               <property name="text">
+                <string>0.100</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_kd_braking">
+               <property name="text">
+                <string>kd:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="editKdBraking">
+               <property name="text">
+                <string>5.000</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_stop_target">
+               <property name="text">
+                <string>Setpoint Distancia Parada:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="editStopTargetAdc">
+               <property name="text">
+                <string>3800</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_accel_stop">
+               <property name="text">
+                <string>Umbral Accel. Parada:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="editAccelStopThreshold">
+               <property name="text">
+                <string>100</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_braking_max_speed">
+               <property name="text">
+                <string>Velocidad Máx. Frenado:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="editBrakingMaxSpeed">
+               <property name="text">
+                <string>4000</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_Braking">
+             <item>
+              <widget class="QPushButton" name="btnGetPidBrakingConfig">
+               <property name="text">
+                <string>Obtener</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnSetPidBrakingConfig">
+               <property name="text">
+                <string>Configurar</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="groupBox_3">
           <property name="font">
            <font>
@@ -1874,6 +1993,13 @@ QPushButton:checked {
             </layout>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
          </widget>
         </item>
         <item>

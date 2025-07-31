@@ -58,6 +58,12 @@ namespace Unerbus
         CMD_GET_ROBOT_STATUS = 0x74,  // Para leer el estado completo (AppState y MenuMode)
         CMD_SET_CRUISE_PARAMS = 0x4E, // Configurar velocidad crucero y umbral de aceleración
         CMD_GET_CRUISE_PARAMS = 0x4F, // Leer velocidad crucero y umbral de aceleración
+        CMD_SET_BRAKING_PID_GAINS = 0x64,
+        CMD_GET_BRAKING_PID_GAINS = 0x65,
+        CMD_SET_BRAKING_PARAMS = 0x66,
+        CMD_GET_BRAKING_PARAMS = 0x67,
+        CMD_SET_BRAKING_MAX_SPEED = 0x68,
+        CMD_GET_BRAKING_MAX_SPEED = 0x69,
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[92];
+    uint offsetsAndSizes[104];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -72,7 +72,13 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata42[21];
     char stringdata43[22];
     char stringdata44[22];
-    char stringdata45[11];
+    char stringdata45[26];
+    char stringdata46[26];
+    char stringdata47[23];
+    char stringdata48[23];
+    char stringdata49[26];
+    char stringdata50[26];
+    char stringdata51[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -123,7 +129,13 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(838, 20),  // "CMD_GET_ROBOT_STATUS"
         QT_MOC_LITERAL(859, 21),  // "CMD_SET_CRUISE_PARAMS"
         QT_MOC_LITERAL(881, 21),  // "CMD_GET_CRUISE_PARAMS"
-        QT_MOC_LITERAL(903, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(903, 25),  // "CMD_SET_BRAKING_PID_GAINS"
+        QT_MOC_LITERAL(929, 25),  // "CMD_GET_BRAKING_PID_GAINS"
+        QT_MOC_LITERAL(955, 22),  // "CMD_SET_BRAKING_PARAMS"
+        QT_MOC_LITERAL(978, 22),  // "CMD_GET_BRAKING_PARAMS"
+        QT_MOC_LITERAL(1001, 25),  // "CMD_SET_BRAKING_MAX_SPEED"
+        QT_MOC_LITERAL(1027, 25),  // "CMD_GET_BRAKING_MAX_SPEED"
+        QT_MOC_LITERAL(1053, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -170,6 +182,12 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_GET_ROBOT_STATUS",
     "CMD_SET_CRUISE_PARAMS",
     "CMD_GET_CRUISE_PARAMS",
+    "CMD_SET_BRAKING_PID_GAINS",
+    "CMD_GET_BRAKING_PID_GAINS",
+    "CMD_SET_BRAKING_PARAMS",
+    "CMD_GET_BRAKING_PARAMS",
+    "CMD_SET_BRAKING_MAX_SPEED",
+    "CMD_GET_BRAKING_MAX_SPEED",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -189,7 +207,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   44,   19,
+       1,    1, 0x2,   50,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -235,7 +253,13 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       42, uint(Unerbus::CommandId::CMD_GET_ROBOT_STATUS),
       43, uint(Unerbus::CommandId::CMD_SET_CRUISE_PARAMS),
       44, uint(Unerbus::CommandId::CMD_GET_CRUISE_PARAMS),
-      45, uint(Unerbus::CommandId::CMD_OTHERS),
+      45, uint(Unerbus::CommandId::CMD_SET_BRAKING_PID_GAINS),
+      46, uint(Unerbus::CommandId::CMD_GET_BRAKING_PID_GAINS),
+      47, uint(Unerbus::CommandId::CMD_SET_BRAKING_PARAMS),
+      48, uint(Unerbus::CommandId::CMD_GET_BRAKING_PARAMS),
+      49, uint(Unerbus::CommandId::CMD_SET_BRAKING_MAX_SPEED),
+      50, uint(Unerbus::CommandId::CMD_GET_BRAKING_MAX_SPEED),
+      51, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

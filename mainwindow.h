@@ -74,6 +74,8 @@ private slots:
     void on_btnSetRobotStatus_clicked();
     void on_btnGetCruiseParams_clicked();
     void on_btnSetCruiseParams_clicked();
+    void on_btnGetPidBrakingConfig_clicked();
+    void on_btnSetPidBrakingConfig_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -124,5 +126,8 @@ private:
     void populateRobotStatusComboBoxes();
     void updateRobotStatusUI(const QByteArray &payload);
     void updateCruiseParamsUI(const QByteArray &payload);
+    void updatePidBrakingUI(const QByteArray &payload);
+    void updateBrakingParamsUI(const QByteArray &payload);
+    void updateBrakingMaxSpeedUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H

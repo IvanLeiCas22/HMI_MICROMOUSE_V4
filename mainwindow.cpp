@@ -299,6 +299,21 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updateCruiseParamsUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_BRAKING_PID_GAINS:
+    {
+        updatePidBrakingUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_BRAKING_PARAMS:
+    {
+        updateBrakingParamsUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_BRAKING_MAX_SPEED:
+    {
+        updateBrakingMaxSpeedUI(payload);
+        break;
+    }
     default:
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
@@ -1365,4 +1380,101 @@ void MainWindow::updateCruiseParamsUI(const QByteArray &payload)
     ui->editCruiseSpeed->setText(QString::number(cruise_speed));
     ui->editAccelThreshold->setText(QString::number(accel_threshold));
     ui->editConfirmTicks->setText(QString::number(confirm_ticks));
+}
+
+/**
+ * @brief Solicita todos los parámetros de configuración del PID de frenado.
+ */
+void MainWindow::on_btnGetPidBrakingConfig_clicked()
+{
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_PID_GAINS);
+    QTimer::singleShot(100, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_PARAMS); });
+    QTimer::singleShot(200, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_MAX_SPEED); });
+}
+
+/**
+ * @brief Envía todos los parámetros de configuración del PID de frenado.
+ */
+void MainWindow::on_btnSetPidBrakingConfig_clicked()
+{
+    // 1. Enviar Ganancias (Kp, Ki, Kd)
+    QByteArray gainsPayload;
+    QDataStream gainsStream(&gainsPayload, QIODevice::WriteOnly);
+    gainsStream.setByteOrder(QDataStream::LittleEndian);
+    gainsStream << static_cast<quint16>(ui->editKpBraking->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKiBraking->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKdBraking->text().toFloat() * 1000.0f);
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_PID_GAINS, gainsPayload);
+
+    // 2. Enviar Parámetros de Frenado (Target ADC y Umbral Accel)
+    QTimer::singleShot(100, this, [this]()
+                       {
+        QByteArray paramsPayload;
+        QDataStream paramsStream(&paramsPayload, QIODevice::WriteOnly);
+        paramsStream.setByteOrder(QDataStream::LittleEndian);
+        paramsStream << static_cast<quint16>(ui->editStopTargetAdc->text().toUShort());
+        paramsStream << static_cast<quint16>(ui->editAccelStopThreshold->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_PARAMS, paramsPayload); });
+
+    // 3. Enviar Velocidad Máxima de Frenado
+    QTimer::singleShot(200, this, [this]()
+                       {
+        QByteArray speedPayload;
+        QDataStream speedStream(&speedPayload, QIODevice::WriteOnly);
+        speedStream.setByteOrder(QDataStream::LittleEndian);
+        speedStream << static_cast<quint16>(ui->editBrakingMaxSpeed->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_MAX_SPEED, speedPayload); });
+}
+
+/**
+ * @brief Actualiza la UI con las ganancias del PID de frenado.
+ */
+void MainWindow::updatePidBrakingUI(const QByteArray &payload)
+{
+    if (payload.size() < 6)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 kp_int, ki_int, kd_int;
+    stream >> kp_int >> ki_int >> kd_int;
+
+    ui->editKpBraking->setText(QString::number(kp_int / 1000.0, 'f', 3));
+    ui->editKiBraking->setText(QString::number(ki_int / 1000.0, 'f', 3));
+    ui->editKdBraking->setText(QString::number(kd_int / 1000.0, 'f', 3));
+}
+
+/**
+ * @brief Actualiza la UI con los parámetros de frenado.
+ */
+void MainWindow::updateBrakingParamsUI(const QByteArray &payload)
+{
+    if (payload.size() < 4)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 stop_target, accel_threshold;
+    stream >> stop_target >> accel_threshold;
+
+    ui->editStopTargetAdc->setText(QString::number(stop_target));
+    ui->editAccelStopThreshold->setText(QString::number(accel_threshold));
+}
+
+/**
+ * @brief Actualiza la UI con la velocidad máxima de frenado.
+ */
+void MainWindow::updateBrakingMaxSpeedUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 max_speed;
+    stream >> max_speed;
+
+    ui->editBrakingMaxSpeed->setText(QString::number(max_speed));
 }

@@ -149,6 +149,7 @@ public:
     QWidget *pageConfig;
     QVBoxLayout *verticalLayout_11;
     QLabel *titleConfig;
+    QHBoxLayout *horizontalLayout_24;
     QGroupBox *groupBox_6;
     QVBoxLayout *verticalLayout_17;
     QHBoxLayout *horizontalLayout_14;
@@ -210,6 +211,24 @@ public:
     QHBoxLayout *horizontalLayout_15;
     QPushButton *btnGetPidTurnConfig;
     QPushButton *btnSetPidTurnConfig;
+    QGroupBox *groupBox_Braking;
+    QVBoxLayout *verticalLayout_Braking;
+    QGridLayout *gridLayout_Braking;
+    QLabel *label_kp_braking;
+    QLineEdit *editKpBraking;
+    QLabel *label_ki_braking;
+    QLineEdit *editKiBraking;
+    QLabel *label_kd_braking;
+    QLineEdit *editKdBraking;
+    QLabel *label_stop_target;
+    QLineEdit *editStopTargetAdc;
+    QLabel *label_accel_stop;
+    QLineEdit *editAccelStopThreshold;
+    QLabel *label_braking_max_speed;
+    QLineEdit *editBrakingMaxSpeed;
+    QHBoxLayout *horizontalLayout_Braking;
+    QPushButton *btnGetPidBrakingConfig;
+    QPushButton *btnSetPidBrakingConfig;
     QGroupBox *groupBox_3;
     QVBoxLayout *verticalLayout_14;
     QHBoxLayout *horizontalLayout_13;
@@ -228,6 +247,7 @@ public:
     QHBoxLayout *horizontalLayout_21;
     QPushButton *btnGetMpuConfig;
     QPushButton *btnSetMpuConfig;
+    QPushButton *pushButton;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageControl;
     QVBoxLayout *verticalLayout_12;
@@ -284,7 +304,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 1077);
+        MainWindow->resize(1000, 973);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -1055,6 +1075,8 @@ public:
 
         verticalLayout_11->addWidget(titleConfig);
 
+        horizontalLayout_24 = new QHBoxLayout();
+        horizontalLayout_24->setObjectName("horizontalLayout_24");
         groupBox_6 = new QGroupBox(pageConfig);
         groupBox_6->setObjectName("groupBox_6");
         verticalLayout_17 = new QVBoxLayout(groupBox_6);
@@ -1117,7 +1139,7 @@ public:
         verticalLayout_17->addLayout(horizontalLayout_17);
 
 
-        verticalLayout_11->addWidget(groupBox_6);
+        horizontalLayout_24->addWidget(groupBox_6);
 
         groupCruiseControl = new QGroupBox(pageConfig);
         groupCruiseControl->setObjectName("groupCruiseControl");
@@ -1174,7 +1196,10 @@ public:
         verticalLayout_20->addLayout(horizontalLayout_23);
 
 
-        verticalLayout_11->addWidget(groupCruiseControl);
+        horizontalLayout_24->addWidget(groupCruiseControl);
+
+
+        verticalLayout_11->addLayout(horizontalLayout_24);
 
         groupBox_4 = new QGroupBox(pageConfig);
         groupBox_4->setObjectName("groupBox_4");
@@ -1350,6 +1375,93 @@ public:
 
         verticalLayout_11->addWidget(groupBox_5);
 
+        groupBox_Braking = new QGroupBox(pageConfig);
+        groupBox_Braking->setObjectName("groupBox_Braking");
+        verticalLayout_Braking = new QVBoxLayout(groupBox_Braking);
+        verticalLayout_Braking->setObjectName("verticalLayout_Braking");
+        gridLayout_Braking = new QGridLayout();
+        gridLayout_Braking->setObjectName("gridLayout_Braking");
+        label_kp_braking = new QLabel(groupBox_Braking);
+        label_kp_braking->setObjectName("label_kp_braking");
+
+        gridLayout_Braking->addWidget(label_kp_braking, 0, 0, 1, 1);
+
+        editKpBraking = new QLineEdit(groupBox_Braking);
+        editKpBraking->setObjectName("editKpBraking");
+
+        gridLayout_Braking->addWidget(editKpBraking, 0, 1, 1, 1);
+
+        label_ki_braking = new QLabel(groupBox_Braking);
+        label_ki_braking->setObjectName("label_ki_braking");
+
+        gridLayout_Braking->addWidget(label_ki_braking, 1, 0, 1, 1);
+
+        editKiBraking = new QLineEdit(groupBox_Braking);
+        editKiBraking->setObjectName("editKiBraking");
+
+        gridLayout_Braking->addWidget(editKiBraking, 1, 1, 1, 1);
+
+        label_kd_braking = new QLabel(groupBox_Braking);
+        label_kd_braking->setObjectName("label_kd_braking");
+
+        gridLayout_Braking->addWidget(label_kd_braking, 2, 0, 1, 1);
+
+        editKdBraking = new QLineEdit(groupBox_Braking);
+        editKdBraking->setObjectName("editKdBraking");
+
+        gridLayout_Braking->addWidget(editKdBraking, 2, 1, 1, 1);
+
+        label_stop_target = new QLabel(groupBox_Braking);
+        label_stop_target->setObjectName("label_stop_target");
+
+        gridLayout_Braking->addWidget(label_stop_target, 0, 2, 1, 1);
+
+        editStopTargetAdc = new QLineEdit(groupBox_Braking);
+        editStopTargetAdc->setObjectName("editStopTargetAdc");
+
+        gridLayout_Braking->addWidget(editStopTargetAdc, 0, 3, 1, 1);
+
+        label_accel_stop = new QLabel(groupBox_Braking);
+        label_accel_stop->setObjectName("label_accel_stop");
+
+        gridLayout_Braking->addWidget(label_accel_stop, 1, 2, 1, 1);
+
+        editAccelStopThreshold = new QLineEdit(groupBox_Braking);
+        editAccelStopThreshold->setObjectName("editAccelStopThreshold");
+
+        gridLayout_Braking->addWidget(editAccelStopThreshold, 1, 3, 1, 1);
+
+        label_braking_max_speed = new QLabel(groupBox_Braking);
+        label_braking_max_speed->setObjectName("label_braking_max_speed");
+
+        gridLayout_Braking->addWidget(label_braking_max_speed, 2, 2, 1, 1);
+
+        editBrakingMaxSpeed = new QLineEdit(groupBox_Braking);
+        editBrakingMaxSpeed->setObjectName("editBrakingMaxSpeed");
+
+        gridLayout_Braking->addWidget(editBrakingMaxSpeed, 2, 3, 1, 1);
+
+
+        verticalLayout_Braking->addLayout(gridLayout_Braking);
+
+        horizontalLayout_Braking = new QHBoxLayout();
+        horizontalLayout_Braking->setObjectName("horizontalLayout_Braking");
+        btnGetPidBrakingConfig = new QPushButton(groupBox_Braking);
+        btnGetPidBrakingConfig->setObjectName("btnGetPidBrakingConfig");
+
+        horizontalLayout_Braking->addWidget(btnGetPidBrakingConfig);
+
+        btnSetPidBrakingConfig = new QPushButton(groupBox_Braking);
+        btnSetPidBrakingConfig->setObjectName("btnSetPidBrakingConfig");
+
+        horizontalLayout_Braking->addWidget(btnSetPidBrakingConfig);
+
+
+        verticalLayout_Braking->addLayout(horizontalLayout_Braking);
+
+
+        verticalLayout_11->addWidget(groupBox_Braking);
+
         groupBox_3 = new QGroupBox(pageConfig);
         groupBox_3->setObjectName("groupBox_3");
         groupBox_3->setFont(font);
@@ -1446,6 +1558,11 @@ public:
 
 
         verticalLayout_11->addWidget(groupBoxMpuConfig);
+
+        pushButton = new QPushButton(pageConfig);
+        pushButton->setObjectName("pushButton");
+
+        verticalLayout_11->addWidget(pushButton);
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -1890,6 +2007,21 @@ public:
         editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "2600", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
+        groupBox_Braking->setTitle(QCoreApplication::translate("MainWindow", "PID Frenado", nullptr));
+        label_kp_braking->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
+        editKpBraking->setText(QCoreApplication::translate("MainWindow", "10.000", nullptr));
+        label_ki_braking->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
+        editKiBraking->setText(QCoreApplication::translate("MainWindow", "0.100", nullptr));
+        label_kd_braking->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
+        editKdBraking->setText(QCoreApplication::translate("MainWindow", "5.000", nullptr));
+        label_stop_target->setText(QCoreApplication::translate("MainWindow", "Setpoint Distancia Parada:", nullptr));
+        editStopTargetAdc->setText(QCoreApplication::translate("MainWindow", "3800", nullptr));
+        label_accel_stop->setText(QCoreApplication::translate("MainWindow", "Umbral Accel. Parada:", nullptr));
+        editAccelStopThreshold->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
+        label_braking_max_speed->setText(QCoreApplication::translate("MainWindow", "Velocidad M\303\241x. Frenado:", nullptr));
+        editBrakingMaxSpeed->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
+        btnGetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
+        btnSetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "Periodo TIM4 (ARR):", nullptr));
         lineEditPwmPeriod->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
@@ -1900,6 +2032,7 @@ public:
         label_34->setText(QCoreApplication::translate("MainWindow", "DLPF:", nullptr));
         btnGetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetMpuConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
         titleHome_2->setText(QCoreApplication::translate("MainWindow", "Control", nullptr));
         groupBoxPWM->setTitle(QCoreApplication::translate("MainWindow", "PWM", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Motor Derecho", nullptr));
