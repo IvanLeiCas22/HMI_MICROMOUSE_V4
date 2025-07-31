@@ -226,6 +226,10 @@ public:
     QLineEdit *editAccelStopThreshold;
     QLabel *label_braking_max_speed;
     QLineEdit *editBrakingMaxSpeed;
+    QLabel *label_braking_min_speed;
+    QLineEdit *editBrakingMinSpeed;
+    QLabel *label_braking_dead_zone;
+    QLineEdit *editBrakingDeadZone;
     QHBoxLayout *horizontalLayout_Braking;
     QPushButton *btnGetPidBrakingConfig;
     QPushButton *btnSetPidBrakingConfig;
@@ -1441,6 +1445,26 @@ public:
 
         gridLayout_Braking->addWidget(editBrakingMaxSpeed, 2, 3, 1, 1);
 
+        label_braking_min_speed = new QLabel(groupBox_Braking);
+        label_braking_min_speed->setObjectName("label_braking_min_speed");
+
+        gridLayout_Braking->addWidget(label_braking_min_speed, 3, 0, 1, 1);
+
+        editBrakingMinSpeed = new QLineEdit(groupBox_Braking);
+        editBrakingMinSpeed->setObjectName("editBrakingMinSpeed");
+
+        gridLayout_Braking->addWidget(editBrakingMinSpeed, 3, 1, 1, 1);
+
+        label_braking_dead_zone = new QLabel(groupBox_Braking);
+        label_braking_dead_zone->setObjectName("label_braking_dead_zone");
+
+        gridLayout_Braking->addWidget(label_braking_dead_zone, 3, 2, 1, 1);
+
+        editBrakingDeadZone = new QLineEdit(groupBox_Braking);
+        editBrakingDeadZone->setObjectName("editBrakingDeadZone");
+
+        gridLayout_Braking->addWidget(editBrakingDeadZone, 3, 3, 1, 1);
+
 
         verticalLayout_Braking->addLayout(gridLayout_Braking);
 
@@ -2020,6 +2044,10 @@ public:
         editAccelStopThreshold->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
         label_braking_max_speed->setText(QCoreApplication::translate("MainWindow", "Velocidad M\303\241x. Frenado:", nullptr));
         editBrakingMaxSpeed->setText(QCoreApplication::translate("MainWindow", "4000", nullptr));
+        label_braking_min_speed->setText(QCoreApplication::translate("MainWindow", "Velocidad M\303\255n. Frenado:", nullptr));
+        editBrakingMinSpeed->setText(QCoreApplication::translate("MainWindow", "2200", nullptr));
+        label_braking_dead_zone->setText(QCoreApplication::translate("MainWindow", "Zona Muerta Frenado:", nullptr));
+        editBrakingDeadZone->setText(QCoreApplication::translate("MainWindow", "50", nullptr));
         btnGetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidBrakingConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Configuraci\303\263n PWM", nullptr));

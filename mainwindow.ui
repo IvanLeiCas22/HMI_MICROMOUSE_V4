@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>973</height>
+    <height>1178</height>
    </rect>
   </property>
   <property name="font">
@@ -1839,6 +1839,34 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_braking_min_speed">
+               <property name="text">
+                <string>Velocidad Mín. Frenado:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="editBrakingMinSpeed">
+               <property name="text">
+                <string>2200</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_braking_dead_zone">
+               <property name="text">
+                <string>Zona Muerta Frenado:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="editBrakingDeadZone">
+               <property name="text">
+                <string>50</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -1993,13 +2021,6 @@ QPushButton:checked {
             </layout>
            </item>
           </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
          </widget>
         </item>
         <item>

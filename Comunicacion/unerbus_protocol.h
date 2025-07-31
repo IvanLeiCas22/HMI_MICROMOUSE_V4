@@ -64,6 +64,10 @@ namespace Unerbus
         CMD_GET_BRAKING_PARAMS = 0x67,
         CMD_SET_BRAKING_MAX_SPEED = 0x68,
         CMD_GET_BRAKING_MAX_SPEED = 0x69,
+        CMD_SET_BRAKING_MIN_SPEED = 0x6A, // Para configurar la velocidad mínima de frenado
+        CMD_GET_BRAKING_MIN_SPEED = 0x6B, // Para leer la velocidad mínima de frenado
+        CMD_SET_BRAKING_DEAD_ZONE = 0x6C, // Para configurar la zona muerta de frenado
+        CMD_GET_BRAKING_DEAD_ZONE = 0x6D, // Para leer la zona muerta de frenado
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

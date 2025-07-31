@@ -314,6 +314,16 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updateBrakingMaxSpeedUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_BRAKING_MIN_SPEED:
+    {
+        updateBrakingMinSpeedUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_BRAKING_DEAD_ZONE:
+    {
+        updateBrakingDeadZoneUI(payload);
+        break;
+    }
     default:
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
@@ -1392,6 +1402,10 @@ void MainWindow::on_btnGetPidBrakingConfig_clicked()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_PARAMS); });
     QTimer::singleShot(200, this, [this]()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_MAX_SPEED); });
+    QTimer::singleShot(300, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_MIN_SPEED); });
+    QTimer::singleShot(400, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_BRAKING_DEAD_ZONE); });
 }
 
 /**
@@ -1426,6 +1440,24 @@ void MainWindow::on_btnSetPidBrakingConfig_clicked()
         speedStream.setByteOrder(QDataStream::LittleEndian);
         speedStream << static_cast<quint16>(ui->editBrakingMaxSpeed->text().toUShort());
         sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_MAX_SPEED, speedPayload); });
+
+    // 4. Enviar Velocidad Mínima de Frenado
+    QTimer::singleShot(300, this, [this]()
+                       {
+        QByteArray payload;
+        QDataStream stream(&payload, QIODevice::WriteOnly);
+        stream.setByteOrder(QDataStream::LittleEndian);
+        stream << static_cast<quint16>(ui->editBrakingMinSpeed->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_MIN_SPEED, payload); });
+
+    // 5. Enviar Zona Muerta de Frenado
+    QTimer::singleShot(400, this, [this]()
+                       {
+        QByteArray payload;
+        QDataStream stream(&payload, QIODevice::WriteOnly);
+        stream.setByteOrder(QDataStream::LittleEndian);
+        stream << static_cast<quint16>(ui->editBrakingDeadZone->text().toUShort());
+        sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_DEAD_ZONE, payload); });
 }
 
 /**
@@ -1477,4 +1509,36 @@ void MainWindow::updateBrakingMaxSpeedUI(const QByteArray &payload)
     stream >> max_speed;
 
     ui->editBrakingMaxSpeed->setText(QString::number(max_speed));
+}
+
+/**
+ * @brief Actualiza la UI con la velocidad mínima de frenado.
+ */
+void MainWindow::updateBrakingMinSpeedUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 min_speed;
+    stream >> min_speed;
+
+    ui->editBrakingMinSpeed->setText(QString::number(min_speed));
+}
+
+/**
+ * @brief Actualiza la UI con la zona muerta de frenado.
+ */
+void MainWindow::updateBrakingDeadZoneUI(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 dead_zone;
+    stream >> dead_zone;
+
+    ui->editBrakingDeadZone->setText(QString::number(dead_zone));
 }

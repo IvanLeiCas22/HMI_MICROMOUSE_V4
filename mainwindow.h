@@ -129,5 +129,7 @@ private:
     void updatePidBrakingUI(const QByteArray &payload);
     void updateBrakingParamsUI(const QByteArray &payload);
     void updateBrakingMaxSpeedUI(const QByteArray &payload);
+    void updateBrakingMinSpeedUI(const QByteArray &payload);
+    void updateBrakingDeadZoneUI(const QByteArray &payload);
 };
 #endif // MAINWINDOW_H

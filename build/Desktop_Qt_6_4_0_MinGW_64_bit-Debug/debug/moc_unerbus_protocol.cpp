@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[104];
+    uint offsetsAndSizes[112];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -78,7 +78,11 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata48[23];
     char stringdata49[26];
     char stringdata50[26];
-    char stringdata51[11];
+    char stringdata51[26];
+    char stringdata52[26];
+    char stringdata53[26];
+    char stringdata54[26];
+    char stringdata55[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -135,7 +139,11 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(978, 22),  // "CMD_GET_BRAKING_PARAMS"
         QT_MOC_LITERAL(1001, 25),  // "CMD_SET_BRAKING_MAX_SPEED"
         QT_MOC_LITERAL(1027, 25),  // "CMD_GET_BRAKING_MAX_SPEED"
-        QT_MOC_LITERAL(1053, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(1053, 25),  // "CMD_SET_BRAKING_MIN_SPEED"
+        QT_MOC_LITERAL(1079, 25),  // "CMD_GET_BRAKING_MIN_SPEED"
+        QT_MOC_LITERAL(1105, 25),  // "CMD_SET_BRAKING_DEAD_ZONE"
+        QT_MOC_LITERAL(1131, 25),  // "CMD_GET_BRAKING_DEAD_ZONE"
+        QT_MOC_LITERAL(1157, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -188,6 +196,10 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_GET_BRAKING_PARAMS",
     "CMD_SET_BRAKING_MAX_SPEED",
     "CMD_GET_BRAKING_MAX_SPEED",
+    "CMD_SET_BRAKING_MIN_SPEED",
+    "CMD_GET_BRAKING_MIN_SPEED",
+    "CMD_SET_BRAKING_DEAD_ZONE",
+    "CMD_GET_BRAKING_DEAD_ZONE",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -207,7 +219,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   50,   19,
+       1,    1, 0x2,   54,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -259,7 +271,11 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       48, uint(Unerbus::CommandId::CMD_GET_BRAKING_PARAMS),
       49, uint(Unerbus::CommandId::CMD_SET_BRAKING_MAX_SPEED),
       50, uint(Unerbus::CommandId::CMD_GET_BRAKING_MAX_SPEED),
-      51, uint(Unerbus::CommandId::CMD_OTHERS),
+      51, uint(Unerbus::CommandId::CMD_SET_BRAKING_MIN_SPEED),
+      52, uint(Unerbus::CommandId::CMD_GET_BRAKING_MIN_SPEED),
+      53, uint(Unerbus::CommandId::CMD_SET_BRAKING_DEAD_ZONE),
+      54, uint(Unerbus::CommandId::CMD_GET_BRAKING_DEAD_ZONE),
+      55, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };
