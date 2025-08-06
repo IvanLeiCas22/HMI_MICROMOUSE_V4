@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[112];
+    uint offsetsAndSizes[118];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -82,7 +82,10 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata52[26];
     char stringdata53[26];
     char stringdata54[26];
-    char stringdata55[11];
+    char stringdata55[18];
+    char stringdata56[27];
+    char stringdata57[27];
+    char stringdata58[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -143,7 +146,10 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(1079, 25),  // "CMD_GET_BRAKING_MIN_SPEED"
         QT_MOC_LITERAL(1105, 25),  // "CMD_SET_BRAKING_DEAD_ZONE"
         QT_MOC_LITERAL(1131, 25),  // "CMD_GET_BRAKING_DEAD_ZONE"
-        QT_MOC_LITERAL(1157, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(1157, 17),  // "CMD_GET_YAW_ANGLE"
+        QT_MOC_LITERAL(1175, 26),  // "CMD_GET_SMOOTH_TURN_CONFIG"
+        QT_MOC_LITERAL(1202, 26),  // "CMD_SET_SMOOTH_TURN_CONFIG"
+        QT_MOC_LITERAL(1229, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -200,6 +206,9 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_GET_BRAKING_MIN_SPEED",
     "CMD_SET_BRAKING_DEAD_ZONE",
     "CMD_GET_BRAKING_DEAD_ZONE",
+    "CMD_GET_YAW_ANGLE",
+    "CMD_GET_SMOOTH_TURN_CONFIG",
+    "CMD_SET_SMOOTH_TURN_CONFIG",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -219,7 +228,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   54,   19,
+       1,    1, 0x2,   57,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -275,7 +284,10 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       52, uint(Unerbus::CommandId::CMD_GET_BRAKING_MIN_SPEED),
       53, uint(Unerbus::CommandId::CMD_SET_BRAKING_DEAD_ZONE),
       54, uint(Unerbus::CommandId::CMD_GET_BRAKING_DEAD_ZONE),
-      55, uint(Unerbus::CommandId::CMD_OTHERS),
+      55, uint(Unerbus::CommandId::CMD_GET_YAW_ANGLE),
+      56, uint(Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG),
+      57, uint(Unerbus::CommandId::CMD_SET_SMOOTH_TURN_CONFIG),
+      58, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

@@ -68,6 +68,9 @@ namespace Unerbus
         CMD_GET_BRAKING_MIN_SPEED = 0x6B, // Para leer la velocidad mínima de frenado
         CMD_SET_BRAKING_DEAD_ZONE = 0x6C, // Para configurar la zona muerta de frenado
         CMD_GET_BRAKING_DEAD_ZONE = 0x6D, // Para leer la zona muerta de frenado
+        CMD_GET_YAW_ANGLE = 0x75,         // Para leer el ángulo de guiñada actual
+        CMD_GET_SMOOTH_TURN_CONFIG = 0x80, // Para leer la configuración de giro suave
+        CMD_SET_SMOOTH_TURN_CONFIG = 0x81, // Para configurar el giro suave
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

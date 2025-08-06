@@ -324,6 +324,16 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updateBrakingDeadZoneUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_YAW_ANGLE:
+    {
+        updateYawAngleUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG:
+    {
+        updateSmoothTurnSpeedsUI(payload);
+        break;
+    }
     default:
         qDebug() << "Comando desconocido:" << Qt::hex << command;
         break;
@@ -503,6 +513,7 @@ void MainWindow::requestSensorData()
 {
     sendUnerbusCommand(Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES);
     sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MPU_DATA);
+    sendUnerbusCommand(Unerbus::CommandId::CMD_GET_YAW_ANGLE);
 }
 
 /**
@@ -900,9 +911,9 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
     QDataStream gainsStream(&gainsPayload, QIODevice::WriteOnly);
     gainsStream.setByteOrder(QDataStream::LittleEndian);
 
-    gainsStream << static_cast<quint16>(ui->editKpNav->text().toFloat() * 1000.0f);
-    gainsStream << static_cast<quint16>(ui->editKiNav->text().toFloat() * 1000.0f);
-    gainsStream << static_cast<quint16>(ui->editKdNav->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKpNav->text().toFloat() * 100.0f);
+    gainsStream << static_cast<quint16>(ui->editKiNav->text().toFloat() * 100.0f);
+    gainsStream << static_cast<quint16>(ui->editKdNav->text().toFloat() * 100.0f);
     sendUnerbusCommand(Unerbus::CommandId::CMD_SET_PID_GAINS, gainsPayload);
 
     // 2. Enviar Corrección Máxima de PWM
@@ -922,6 +933,7 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
                            stream.setByteOrder(QDataStream::LittleEndian);
                            stream << static_cast<quint16>(ui->editSetpointFront->text().toUShort());
                            stream << static_cast<quint16>(ui->editSetpointSides->text().toUShort());
+                           stream << static_cast<quint16>(ui->editSetpointDiagonal->text().toUShort());
                            sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_THRESHOLDS, payload); });
 
     // 4. Enviar ADC Objetivo de Pared
@@ -945,6 +957,8 @@ void MainWindow::on_btnGetPidTurnConfig_clicked()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_MAX_SPEED); });
     QTimer::singleShot(200, this, [this]()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_MIN_SPEED); });
+    QTimer::singleShot(300, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG); });
 }
 
 /**
@@ -980,6 +994,15 @@ void MainWindow::on_btnSetPidTurnConfig_clicked()
         minSpeedStream.setByteOrder(QDataStream::LittleEndian);
         minSpeedStream << static_cast<quint16>(ui->editMinTurnSpeed->text().toUShort());
         sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_MIN_SPEED, minSpeedPayload); });
+
+    QTimer::singleShot(300, this, [this]()
+                       {
+                           QByteArray smoothTurnSpeedsPayload;
+                           QDataStream smoothTurnSpeedsStream(&smoothTurnSpeedsPayload, QIODevice::WriteOnly);
+                           smoothTurnSpeedsStream.setByteOrder(QDataStream::LittleEndian);
+                           smoothTurnSpeedsStream << static_cast<quint16>(ui->editFasterMotorSmooth->text().toUShort())
+                                                  << static_cast<quint16>(ui->editSlowerMotorSmooth->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_SMOOTH_TURN_CONFIG, smoothTurnSpeedsPayload); });
 }
 
 /**
@@ -1019,9 +1042,9 @@ void MainWindow::updatePidNavUI(const QByteArray &payload)
     stream >> kp_int >> ki_int >> kd_int;
 
     // Convertimos de entero (protocolo) a flotante (UI) dividiendo por 1000
-    ui->editKpNav->setText(QString::number(kp_int / 1000.0, 'f', 3));
-    ui->editKiNav->setText(QString::number(ki_int / 1000.0, 'f', 3));
-    ui->editKdNav->setText(QString::number(kd_int / 1000.0, 'f', 3));
+    ui->editKpNav->setText(QString::number(kp_int / 100.0, 'f', 2));
+    ui->editKiNav->setText(QString::number(ki_int / 100.0, 'f', 2));
+    ui->editKdNav->setText(QString::number(kd_int / 100.0, 'f', 2));
 }
 
 /**
@@ -1237,11 +1260,12 @@ void MainWindow::updateWallThresholdsUI(const QByteArray &payload)
     QDataStream stream(payload);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    quint16 threshold_front, threshold_side;
-    stream >> threshold_front >> threshold_side;
+    quint16 threshold_front, threshold_side, threshold_diagonal;
+    stream >> threshold_front >> threshold_side >> threshold_diagonal;
 
     ui->editSetpointFront->setText(QString::number(threshold_front));
     ui->editSetpointSides->setText(QString::number(threshold_side));
+    ui->editSetpointDiagonal->setText(QString::number(threshold_diagonal));
 }
 
 /**
@@ -1417,9 +1441,9 @@ void MainWindow::on_btnSetPidBrakingConfig_clicked()
     QByteArray gainsPayload;
     QDataStream gainsStream(&gainsPayload, QIODevice::WriteOnly);
     gainsStream.setByteOrder(QDataStream::LittleEndian);
-    gainsStream << static_cast<quint16>(ui->editKpBraking->text().toFloat() * 1000.0f);
-    gainsStream << static_cast<quint16>(ui->editKiBraking->text().toFloat() * 1000.0f);
-    gainsStream << static_cast<quint16>(ui->editKdBraking->text().toFloat() * 1000.0f);
+    gainsStream << static_cast<quint16>(ui->editKpBraking->text().toFloat() * 100.0f);
+    gainsStream << static_cast<quint16>(ui->editKiBraking->text().toFloat() * 100.0f);
+    gainsStream << static_cast<quint16>(ui->editKdBraking->text().toFloat() * 100.0f);
     sendUnerbusCommand(Unerbus::CommandId::CMD_SET_BRAKING_PID_GAINS, gainsPayload);
 
     // 2. Enviar Parámetros de Frenado (Target ADC y Umbral Accel)
@@ -1473,9 +1497,9 @@ void MainWindow::updatePidBrakingUI(const QByteArray &payload)
     quint16 kp_int, ki_int, kd_int;
     stream >> kp_int >> ki_int >> kd_int;
 
-    ui->editKpBraking->setText(QString::number(kp_int / 1000.0, 'f', 3));
-    ui->editKiBraking->setText(QString::number(ki_int / 1000.0, 'f', 3));
-    ui->editKdBraking->setText(QString::number(kd_int / 1000.0, 'f', 3));
+    ui->editKpBraking->setText(QString::number(kp_int / 100.0, 'f', 2));
+    ui->editKiBraking->setText(QString::number(ki_int / 100.0, 'f', 2));
+    ui->editKdBraking->setText(QString::number(kd_int / 100.0, 'f', 2));
 }
 
 /**
@@ -1541,4 +1565,33 @@ void MainWindow::updateBrakingDeadZoneUI(const QByteArray &payload)
     stream >> dead_zone;
 
     ui->editBrakingDeadZone->setText(QString::number(dead_zone));
+}
+
+void MainWindow::updateYawAngleUI(const QByteArray &payload)
+{
+    if (payload.size() < 4)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    qint32 yaw;
+    stream >> yaw;
+
+    ui->editYaw->setText(QString::number(yaw));
+}
+
+void MainWindow::updateSmoothTurnSpeedsUI(const QByteArray &payload)
+{
+    if (payload.size() < 4)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 faster_motor_smooth_turn_speed, slower_motor_smooth_turn_speed;
+    stream >> faster_motor_smooth_turn_speed >> slower_motor_smooth_turn_speed;
+
+    ui->editFasterMotorSmooth->setText(QString::number(faster_motor_smooth_turn_speed));
+    ui->editSlowerMotorSmooth->setText(QString::number(slower_motor_smooth_turn_speed));
 }
