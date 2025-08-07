@@ -258,6 +258,16 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
         updatePidTurnUI(payload);
         break;
     }
+    case Unerbus::CommandId::CMD_GET_TURN_VELOCITY_PID_GAINS:
+    {
+        updateTurnSpeedPID(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_TURN_TARGET_DPS:
+    {
+        updateTurnTargetDps(payload);
+        break;
+    }
     case Unerbus::CommandId::CMD_GET_TURN_MAX_SPEED:
     {
         updateTurnMaxSpeedUI(payload);
@@ -332,6 +342,11 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload)
     case Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG:
     {
         updateSmoothTurnSpeedsUI(payload);
+        break;
+    }
+    case Unerbus::CommandId::CMD_GET_DELAY_TICKS:
+    {
+        updateDelayTicksUI(payload);
         break;
     }
     default:
@@ -898,6 +913,8 @@ void MainWindow::on_btnGetPidNavConfig_clicked()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_WALL_THRESHOLDS); });
     QTimer::singleShot(300, this, [this]()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_WALL_TARGET_ADC); });
+    QTimer::singleShot(400, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_DELAY_TICKS); });
 }
 
 /**
@@ -934,6 +951,7 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
                            stream << static_cast<quint16>(ui->editSetpointFront->text().toUShort());
                            stream << static_cast<quint16>(ui->editSetpointSides->text().toUShort());
                            stream << static_cast<quint16>(ui->editSetpointDiagonal->text().toUShort());
+                           stream << static_cast<quint16>(ui->editSetpointDiagSmoothTurn->text().toUShort());
                            sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_THRESHOLDS, payload); });
 
     // 4. Enviar ADC Objetivo de Pared
@@ -944,6 +962,13 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
                            stream.setByteOrder(QDataStream::LittleEndian);
                            stream << static_cast<quint16>(ui->editSetpointOneWall->text().toUShort());
                            sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_TARGET_ADC, payload); });
+    QTimer::singleShot(400, this, [this]()
+                       {
+                           QByteArray payload;
+                           QDataStream stream(&payload, QIODevice::WriteOnly);
+                           stream.setByteOrder(QDataStream::LittleEndian);
+                           stream << static_cast<quint8>(ui->editWallFadeTicks->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_DELAY_TICKS, payload); });
 }
 
 /**
@@ -959,6 +984,10 @@ void MainWindow::on_btnGetPidTurnConfig_clicked()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_MIN_SPEED); });
     QTimer::singleShot(300, this, [this]()
                        { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG); });
+    QTimer::singleShot(400, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_VELOCITY_PID_GAINS); });
+    QTimer::singleShot(500, this, [this]()
+                       { sendUnerbusCommand(Unerbus::CommandId::CMD_GET_TURN_TARGET_DPS); });
 }
 
 /**
@@ -1003,6 +1032,24 @@ void MainWindow::on_btnSetPidTurnConfig_clicked()
                            smoothTurnSpeedsStream << static_cast<quint16>(ui->editFasterMotorSmooth->text().toUShort())
                                                   << static_cast<quint16>(ui->editSlowerMotorSmooth->text().toUShort());
                            sendUnerbusCommand(Unerbus::CommandId::CMD_SET_SMOOTH_TURN_CONFIG, smoothTurnSpeedsPayload); });
+
+    QTimer::singleShot(400, this, [this]()
+                       {
+                           QByteArray constantsPayload;
+                           QDataStream constantsStream(&constantsPayload, QIODevice::WriteOnly);
+                           constantsStream.setByteOrder(QDataStream::LittleEndian);
+                           constantsStream << static_cast<quint16>(ui->editKpSmoothTurn->text().toFloat() * 100.0f);
+                           constantsStream << static_cast<quint16>(ui->editKiSmoothTurn->text().toFloat() * 100.0f);
+                           constantsStream << static_cast<quint16>(ui->editKdSmoothTurn->text().toFloat() * 100.0f);
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_VELOCITY_PID_GAINS, constantsPayload); });
+
+    QTimer::singleShot(500, this, [this]()
+                       {
+                           QByteArray speedsPayload;
+                           QDataStream speedsStream(&speedsPayload, QIODevice::WriteOnly);
+                           speedsStream.setByteOrder(QDataStream::LittleEndian);
+                           speedsStream << static_cast<quint16>(ui->editTurnAngularSpeed->text().toUShort());
+                           sendUnerbusCommand(Unerbus::CommandId::CMD_SET_TURN_TARGET_DPS, speedsPayload); });
 }
 
 /**
@@ -1254,18 +1301,19 @@ void MainWindow::updateTurnMinSpeedUI(const QByteArray &payload)
  */
 void MainWindow::updateWallThresholdsUI(const QByteArray &payload)
 {
-    if (payload.size() < 4) // 2 valores * 2 bytes/valor
+    if (payload.size() < 8) // 4 valores * 2 bytes/valor
         return;
 
     QDataStream stream(payload);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    quint16 threshold_front, threshold_side, threshold_diagonal;
-    stream >> threshold_front >> threshold_side >> threshold_diagonal;
+    quint16 threshold_front, threshold_side, threshold_diagonal, threshold_diagonal_turn;
+    stream >> threshold_front >> threshold_side >> threshold_diagonal >> threshold_diagonal_turn;
 
     ui->editSetpointFront->setText(QString::number(threshold_front));
     ui->editSetpointSides->setText(QString::number(threshold_side));
     ui->editSetpointDiagonal->setText(QString::number(threshold_diagonal));
+    ui->editSetpointDiagSmoothTurn->setText(QString::number(threshold_diagonal_turn));
 }
 
 /**
@@ -1594,4 +1642,48 @@ void MainWindow::updateSmoothTurnSpeedsUI(const QByteArray &payload)
 
     ui->editFasterMotorSmooth->setText(QString::number(faster_motor_smooth_turn_speed));
     ui->editSlowerMotorSmooth->setText(QString::number(slower_motor_smooth_turn_speed));
+}
+
+void MainWindow::updateTurnSpeedPID(const QByteArray &payload)
+{
+    if (payload.size() < 6)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    qint16 kp, ki, kd;
+    stream >> kp >> ki >> kd;
+
+    ui->editKpSmoothTurn->setText(QString::number(kp / 100.0, 'f', 2));
+    ui->editKiSmoothTurn->setText(QString::number(ki / 100.0, 'f', 2));
+    ui->editKdSmoothTurn->setText(QString::number(kd / 100.0, 'f', 2));
+}
+
+void MainWindow::updateTurnTargetDps(const QByteArray &payload)
+{
+    if (payload.size() < 2)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint16 angular_speed;
+    stream >> angular_speed;
+
+    ui->editTurnAngularSpeed->setText(QString::number(angular_speed));
+}
+
+void MainWindow::updateDelayTicksUI(const QByteArray &payload)
+{
+    if (payload.size() < 1)
+        return;
+
+    QDataStream stream(payload);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    quint8 delayTicks;
+    stream >> delayTicks;
+
+    ui->editWallFadeTicks->setText(QString::number(delayTicks));
 }

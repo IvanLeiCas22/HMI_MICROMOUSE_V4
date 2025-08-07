@@ -1326,6 +1326,90 @@ QPushButton:checked {
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxMpuConfig">
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
+             <property name="title">
+              <string>Configuración</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_19">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_20">
+                <item>
+                 <widget class="QLabel" name="label_32">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Acelerometro:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboAccelConfig"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_33">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Giroscopio:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboGyroConfig"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_34">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>DLPF:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboDlpfConfig"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_21">
+                <item>
+                 <widget class="QPushButton" name="btnGetMpuConfig">
+                  <property name="text">
+                   <string>Obtener</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnSetMpuConfig">
+                  <property name="text">
+                   <string>Configurar</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -1598,13 +1682,6 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
-             <item row="5" column="4">
-              <widget class="QLineEdit" name="editMaxPwmOffsetNav">
-               <property name="text">
-                <string>4000</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="editKpNav">
                <property name="text">
@@ -1630,13 +1707,6 @@ QPushButton:checked {
               <widget class="QLineEdit" name="editSetpointSides">
                <property name="text">
                 <string>100</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="2">
-              <widget class="QLabel" name="label_23">
-               <property name="text">
-                <string>Max. PWM offset:</string>
                </property>
               </widget>
              </item>
@@ -1682,6 +1752,48 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Max. PWM offset:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="editMaxPwmOffsetNav">
+               <property name="text">
+                <string>4000</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="label_47">
+               <property name="text">
+                <string>Setpoint diagonal giro:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="4">
+              <widget class="QLineEdit" name="editSetpointDiagSmoothTurn">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_52">
+               <property name="text">
+                <string>Fade pared ticks:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="editWallFadeTicks">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -1717,6 +1829,20 @@ QPushButton:checked {
               <widget class="QLineEdit" name="editKdTurn">
                <property name="text">
                 <string>0.6</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="editFasterMotorSmooth">
+               <property name="text">
+                <string>7000</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="text">
+                <string>ki smooth:</string>
                </property>
               </widget>
              </item>
@@ -1769,6 +1895,20 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="editSlowerMotorSmooth">
+               <property name="text">
+                <string>2500</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_48">
+               <property name="text">
+                <string>kp smooth:</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="2">
               <widget class="QLabel" name="label_45">
                <property name="text">
@@ -1797,17 +1937,33 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
-             <item row="2" column="3">
-              <widget class="QLineEdit" name="editFasterMotorSmooth">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_50">
                <property name="text">
-                <string>7000</string>
+                <string>kd smooth:</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="3">
-              <widget class="QLineEdit" name="editSlowerMotorSmooth">
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="editKpSmoothTurn"/>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="editKiSmoothTurn"/>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="editKdSmoothTurn"/>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="label_51">
                <property name="text">
-                <string>2500</string>
+                <string>Vel angular giro:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLineEdit" name="editTurnAngularSpeed">
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>
@@ -2021,85 +2177,6 @@ QPushButton:checked {
                  <pointsize>11</pointsize>
                 </font>
                </property>
-               <property name="text">
-                <string>Configurar</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBoxMpuConfig">
-          <property name="title">
-           <string>MPU</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_19">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_20">
-             <item>
-              <widget class="QLabel" name="label_32">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Acelerometro:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboAccelConfig"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_33">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Giroscopio:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboGyroConfig"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_34">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>DLPF:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboDlpfConfig"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_21">
-             <item>
-              <widget class="QPushButton" name="btnGetMpuConfig">
-               <property name="text">
-                <string>Obtener</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnSetMpuConfig">
                <property name="text">
                 <string>Configurar</string>
                </property>

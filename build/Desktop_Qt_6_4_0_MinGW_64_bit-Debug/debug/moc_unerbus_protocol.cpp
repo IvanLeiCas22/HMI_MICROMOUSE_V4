@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Unerbus_t {
-    uint offsetsAndSizes[118];
+    uint offsetsAndSizes[130];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -85,7 +85,13 @@ struct qt_meta_stringdata_Unerbus_t {
     char stringdata55[18];
     char stringdata56[27];
     char stringdata57[27];
-    char stringdata58[11];
+    char stringdata58[32];
+    char stringdata59[32];
+    char stringdata60[24];
+    char stringdata61[24];
+    char stringdata62[20];
+    char stringdata63[20];
+    char stringdata64[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Unerbus_t::offsetsAndSizes) + ofs), len 
@@ -149,7 +155,13 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
         QT_MOC_LITERAL(1157, 17),  // "CMD_GET_YAW_ANGLE"
         QT_MOC_LITERAL(1175, 26),  // "CMD_GET_SMOOTH_TURN_CONFIG"
         QT_MOC_LITERAL(1202, 26),  // "CMD_SET_SMOOTH_TURN_CONFIG"
-        QT_MOC_LITERAL(1229, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(1229, 31),  // "CMD_SET_TURN_VELOCITY_PID_GAINS"
+        QT_MOC_LITERAL(1261, 31),  // "CMD_GET_TURN_VELOCITY_PID_GAINS"
+        QT_MOC_LITERAL(1293, 23),  // "CMD_SET_TURN_TARGET_DPS"
+        QT_MOC_LITERAL(1317, 23),  // "CMD_GET_TURN_TARGET_DPS"
+        QT_MOC_LITERAL(1341, 19),  // "CMD_GET_DELAY_TICKS"
+        QT_MOC_LITERAL(1361, 19),  // "CMD_SET_DELAY_TICKS"
+        QT_MOC_LITERAL(1381, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -209,6 +221,12 @@ Q_CONSTINIT static const qt_meta_stringdata_Unerbus_t qt_meta_stringdata_Unerbus
     "CMD_GET_YAW_ANGLE",
     "CMD_GET_SMOOTH_TURN_CONFIG",
     "CMD_SET_SMOOTH_TURN_CONFIG",
+    "CMD_SET_TURN_VELOCITY_PID_GAINS",
+    "CMD_GET_TURN_VELOCITY_PID_GAINS",
+    "CMD_SET_TURN_TARGET_DPS",
+    "CMD_GET_TURN_TARGET_DPS",
+    "CMD_GET_DELAY_TICKS",
+    "CMD_SET_DELAY_TICKS",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -228,7 +246,7 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   57,   19,
+       1,    1, 0x2,   63,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -287,7 +305,13 @@ Q_CONSTINIT static const uint qt_meta_data_Unerbus[] = {
       55, uint(Unerbus::CommandId::CMD_GET_YAW_ANGLE),
       56, uint(Unerbus::CommandId::CMD_GET_SMOOTH_TURN_CONFIG),
       57, uint(Unerbus::CommandId::CMD_SET_SMOOTH_TURN_CONFIG),
-      58, uint(Unerbus::CommandId::CMD_OTHERS),
+      58, uint(Unerbus::CommandId::CMD_SET_TURN_VELOCITY_PID_GAINS),
+      59, uint(Unerbus::CommandId::CMD_GET_TURN_VELOCITY_PID_GAINS),
+      60, uint(Unerbus::CommandId::CMD_SET_TURN_TARGET_DPS),
+      61, uint(Unerbus::CommandId::CMD_GET_TURN_TARGET_DPS),
+      62, uint(Unerbus::CommandId::CMD_GET_DELAY_TICKS),
+      63, uint(Unerbus::CommandId::CMD_SET_DELAY_TICKS),
+      64, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

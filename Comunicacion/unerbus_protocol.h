@@ -71,6 +71,12 @@ namespace Unerbus
         CMD_GET_YAW_ANGLE = 0x75,         // Para leer el ángulo de guiñada actual
         CMD_GET_SMOOTH_TURN_CONFIG = 0x80, // Para leer la configuración de giro suave
         CMD_SET_SMOOTH_TURN_CONFIG = 0x81, // Para configurar el giro suave
+        CMD_SET_TURN_VELOCITY_PID_GAINS = 0x82, // Configurar Kp, Ki, Kd del PID de velocidad de giro
+        CMD_GET_TURN_VELOCITY_PID_GAINS = 0x83, // Leer Kp, Ki, Kd del PID de velocidad de giro
+        CMD_SET_TURN_TARGET_DPS = 0x84,         // Configurar la velocidad angular objetivo para giros
+        CMD_GET_TURN_TARGET_DPS = 0x85,         // Leer la velocidad angular objetivo
+        CMD_GET_DELAY_TICKS = 0X90,             // Leer el número de ticks de retardo
+        CMD_SET_DELAY_TICKS = 0X91,             // Configurar el número de ticks de retardo
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)
