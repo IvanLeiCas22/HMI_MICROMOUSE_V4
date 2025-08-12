@@ -1530,7 +1530,7 @@ QPushButton:checked {
                <item>
                 <widget class="QLineEdit" name="editRightMotorBaseSpeed">
                  <property name="text">
-                  <string>4000</string>
+                  <string>3400</string>
                  </property>
                 </widget>
                </item>
@@ -1544,7 +1544,7 @@ QPushButton:checked {
                <item>
                 <widget class="QLineEdit" name="editLeftMotorBaseSpeed">
                  <property name="text">
-                  <string>4500</string>
+                  <string>3000</string>
                  </property>
                 </widget>
                </item>
@@ -1603,7 +1603,7 @@ QPushButton:checked {
                <item row="1" column="1">
                 <widget class="QLineEdit" name="editAccelThreshold">
                  <property name="text">
-                  <string>1500</string>
+                  <string>2000</string>
                  </property>
                 </widget>
                </item>
@@ -1617,7 +1617,7 @@ QPushButton:checked {
                <item row="2" column="1">
                 <widget class="QLineEdit" name="editConfirmTicks">
                  <property name="text">
-                  <string>2</string>
+                  <string>0</string>
                  </property>
                 </widget>
                </item>
@@ -1671,21 +1671,21 @@ QPushButton:checked {
              <item row="3" column="4">
               <widget class="QLineEdit" name="editSetpointOneWall">
                <property name="text">
-                <string>5</string>
+                <string>65</string>
                </property>
               </widget>
              </item>
              <item row="0" column="4">
               <widget class="QLineEdit" name="editSetpointFront">
                <property name="text">
-                <string>70</string>
+                <string>75</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="editKpNav">
                <property name="text">
-                <string>4.000</string>
+                <string>80</string>
                </property>
               </widget>
              </item>
@@ -1720,7 +1720,7 @@ QPushButton:checked {
              <item row="1" column="4">
               <widget class="QLineEdit" name="editSetpointDiagonal">
                <property name="text">
-                <string>130</string>
+                <string>135</string>
                </property>
               </widget>
              </item>
@@ -1748,7 +1748,7 @@ QPushButton:checked {
              <item row="2" column="1">
               <widget class="QLineEdit" name="editKdNav">
                <property name="text">
-                <string>0.800</string>
+                <string>30</string>
                </property>
               </widget>
              </item>
@@ -1762,7 +1762,7 @@ QPushButton:checked {
              <item row="5" column="1">
               <widget class="QLineEdit" name="editMaxPwmOffsetNav">
                <property name="text">
-                <string>4000</string>
+                <string>5000</string>
                </property>
               </widget>
              </item>
@@ -1776,7 +1776,7 @@ QPushButton:checked {
              <item row="5" column="4">
               <widget class="QLineEdit" name="editSetpointDiagSmoothTurn">
                <property name="text">
-                <string/>
+                <string>100</string>
                </property>
               </widget>
              </item>
@@ -1790,7 +1790,7 @@ QPushButton:checked {
              <item row="3" column="1">
               <widget class="QLineEdit" name="editWallFadeTicks">
                <property name="text">
-                <string/>
+                <string>3</string>
                </property>
               </widget>
              </item>
@@ -1828,14 +1828,14 @@ QPushButton:checked {
              <item row="2" column="1">
               <widget class="QLineEdit" name="editKdTurn">
                <property name="text">
-                <string>0.6</string>
+                <string>6</string>
                </property>
               </widget>
              </item>
              <item row="2" column="3">
               <widget class="QLineEdit" name="editFasterMotorSmooth">
                <property name="text">
-                <string>7000</string>
+                <string>6000</string>
                </property>
               </widget>
              </item>
@@ -1856,7 +1856,7 @@ QPushButton:checked {
              <item row="1" column="3">
               <widget class="QLineEdit" name="editMinTurnSpeed">
                <property name="text">
-                <string>4000</string>
+                <string>2600</string>
                </property>
               </widget>
              </item>
@@ -1891,14 +1891,14 @@ QPushButton:checked {
              <item row="0" column="1">
               <widget class="QLineEdit" name="editKpTurn">
                <property name="text">
-                <string>9</string>
+                <string>60</string>
                </property>
               </widget>
              </item>
              <item row="3" column="3">
               <widget class="QLineEdit" name="editSlowerMotorSmooth">
                <property name="text">
-                <string>2500</string>
+                <string>2000</string>
                </property>
               </widget>
              </item>
@@ -1945,13 +1945,25 @@ QPushButton:checked {
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QLineEdit" name="editKpSmoothTurn"/>
+              <widget class="QLineEdit" name="editKpSmoothTurn">
+               <property name="text">
+                <string>100</string>
+               </property>
+              </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLineEdit" name="editKiSmoothTurn"/>
+              <widget class="QLineEdit" name="editKiSmoothTurn">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QLineEdit" name="editKdSmoothTurn"/>
+              <widget class="QLineEdit" name="editKdSmoothTurn">
+               <property name="text">
+                <string>0.5</string>
+               </property>
+              </widget>
              </item>
              <item row="4" column="2">
               <widget class="QLabel" name="label_51">
@@ -1963,7 +1975,7 @@ QPushButton:checked {
              <item row="4" column="3">
               <widget class="QLineEdit" name="editTurnAngularSpeed">
                <property name="text">
-                <string/>
+                <string>250</string>
                </property>
               </widget>
              </item>
@@ -2008,7 +2020,7 @@ QPushButton:checked {
              <item row="0" column="1">
               <widget class="QLineEdit" name="editKpBraking">
                <property name="text">
-                <string>3</string>
+                <string>4</string>
                </property>
               </widget>
              </item>
@@ -2078,7 +2090,7 @@ QPushButton:checked {
              <item row="2" column="3">
               <widget class="QLineEdit" name="editBrakingMaxSpeed">
                <property name="text">
-                <string>4000</string>
+                <string>2800</string>
                </property>
               </widget>
              </item>
@@ -2092,7 +2104,7 @@ QPushButton:checked {
              <item row="3" column="1">
               <widget class="QLineEdit" name="editBrakingMinSpeed">
                <property name="text">
-                <string>3000</string>
+                <string>2000</string>
                </property>
               </widget>
              </item>
