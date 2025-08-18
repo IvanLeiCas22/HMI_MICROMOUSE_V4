@@ -961,6 +961,7 @@ void MainWindow::on_btnSetPidNavConfig_clicked()
                            QDataStream stream(&payload, QIODevice::WriteOnly);
                            stream.setByteOrder(QDataStream::LittleEndian);
                            stream << static_cast<quint16>(ui->editSetpointOneWall->text().toUShort());
+                           stream << static_cast<quint16>(ui->editSetpointTapeDetection->text().toUShort());
                            sendUnerbusCommand(Unerbus::CommandId::CMD_SET_WALL_TARGET_ADC, payload); });
     QTimer::singleShot(400, this, [this]()
                        {
@@ -1328,10 +1329,11 @@ void MainWindow::updateWallTargetAdcUI(const QByteArray &payload)
     QDataStream stream(payload);
     stream.setByteOrder(QDataStream::LittleEndian);
 
-    quint16 target_adc;
-    stream >> target_adc;
+    quint16 setpoint_one_wall, setpoint_tape_detected;
+    stream >> setpoint_one_wall >> setpoint_tape_detected;
 
-    ui->editSetpointOneWall->setText(QString::number(target_adc));
+    ui->editSetpointOneWall->setText(QString::number(setpoint_one_wall));
+    ui->editSetpointTapeDetection->setText(QString::number(setpoint_tape_detected));
 }
 
 /**
