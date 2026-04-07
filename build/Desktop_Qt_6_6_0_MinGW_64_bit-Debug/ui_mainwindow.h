@@ -14,6 +14,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -24,6 +25,7 @@
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
@@ -47,6 +49,7 @@ public:
     QPushButton *btnSensors;
     QPushButton *btnConfig;
     QPushButton *btnControl;
+    QPushButton *btnLabyrinth;
     QSpacerItem *verticalSpacer;
     QStackedWidget *stackedScreens;
     QWidget *pageHome;
@@ -322,6 +325,43 @@ public:
     QCheckBox *chkAutoGetPWM;
     QCheckBox *chkRealTimeSetPWM;
     QSpacerItem *horizontalSpacer;
+    QWidget *pageLaberinth;
+    QVBoxLayout *verticalLayout_24;
+    QLabel *titleLabyrinth;
+    QHBoxLayout *horizontalLayout_3;
+    QGraphicsView *mazeView;
+    QVBoxLayout *mazePanel;
+    QGroupBox *manualControls;
+    QVBoxLayout *verticalLayout_23;
+    QGroupBox *groupBox_8;
+    QHBoxLayout *horizontalLayout_8;
+    QPushButton *btnSimTurnL;
+    QPushButton *btnSimFwd;
+    QPushButton *btnSimTurnR;
+    QGroupBox *groupBox_9;
+    QHBoxLayout *horizontalLayout_25;
+    QPushButton *btnSimWallLeft;
+    QPushButton *btnSimWallFront;
+    QPushButton *btnSimWallRight;
+    QGroupBox *groupBox_10;
+    QVBoxLayout *verticalLayout_25;
+    QPushButton *btnSimReset;
+    QGroupBox *groupBox_11;
+    QHBoxLayout *horizontalLayout_26;
+    QPushButton *btnRotMapL;
+    QPushButton *btnRotMapR;
+    QGroupBox *groupBox_7;
+    QVBoxLayout *verticalLayout_26;
+    QRadioButton *radioPointerNormal;
+    QRadioButton *radioPointerStart;
+    QRadioButton *radioPointerGoal;
+    QGroupBox *groupBox_12;
+    QVBoxLayout *verticalLayout_22;
+    QHBoxLayout *horizontalLayout_28;
+    QRadioButton *radioBtnRealView;
+    QRadioButton *radioBtnRobotView;
+    QPushButton *btnToggleAutonomous;
+    QSpacerItem *verticalSpacer_5;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -329,7 +369,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1000, 1178);
+        MainWindow->resize(1000, 1195);
         QFont font;
         font.setPointSize(11);
         MainWindow->setFont(font);
@@ -475,6 +515,30 @@ public:
         btnControl->setCheckable(true);
 
         verticalLayout->addWidget(btnControl);
+
+        btnLabyrinth = new QPushButton(navigationFrame);
+        btnLabyrinth->setObjectName("btnLabyrinth");
+        btnLabyrinth->setMinimumSize(QSize(0, 50));
+        btnLabyrinth->setFont(font3);
+        btnLabyrinth->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"  background-color: #2d3a4b;\n"
+"  color: white;\n"
+"  border-radius: 4px;\n"
+"  padding: 10px;\n"
+"  font-weight: bold;\n"
+"  text-align: left;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: rgb(174, 188, 191);\n"
+"}\n"
+"\n"
+"QPushButton:checked {\n"
+"  background-color: rgb(28, 39, 54);\n"
+"}"));
+        btnLabyrinth->setCheckable(true);
+
+        verticalLayout->addWidget(btnLabyrinth);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -2033,6 +2097,192 @@ public:
         verticalLayout_12->addLayout(horizontalLayout_12);
 
         stackedScreens->addWidget(pageControl);
+        pageLaberinth = new QWidget();
+        pageLaberinth->setObjectName("pageLaberinth");
+        verticalLayout_24 = new QVBoxLayout(pageLaberinth);
+        verticalLayout_24->setObjectName("verticalLayout_24");
+        titleLabyrinth = new QLabel(pageLaberinth);
+        titleLabyrinth->setObjectName("titleLabyrinth");
+        sizePolicy1.setHeightForWidth(titleLabyrinth->sizePolicy().hasHeightForWidth());
+        titleLabyrinth->setSizePolicy(sizePolicy1);
+        titleLabyrinth->setFont(font4);
+        titleLabyrinth->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_24->addWidget(titleLabyrinth);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        horizontalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
+        mazeView = new QGraphicsView(pageLaberinth);
+        mazeView->setObjectName("mazeView");
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(mazeView->sizePolicy().hasHeightForWidth());
+        mazeView->setSizePolicy(sizePolicy5);
+
+        horizontalLayout_3->addWidget(mazeView);
+
+        mazePanel = new QVBoxLayout();
+        mazePanel->setObjectName("mazePanel");
+        manualControls = new QGroupBox(pageLaberinth);
+        manualControls->setObjectName("manualControls");
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(manualControls->sizePolicy().hasHeightForWidth());
+        manualControls->setSizePolicy(sizePolicy6);
+        verticalLayout_23 = new QVBoxLayout(manualControls);
+        verticalLayout_23->setObjectName("verticalLayout_23");
+        groupBox_8 = new QGroupBox(manualControls);
+        groupBox_8->setObjectName("groupBox_8");
+        sizePolicy6.setHeightForWidth(groupBox_8->sizePolicy().hasHeightForWidth());
+        groupBox_8->setSizePolicy(sizePolicy6);
+        horizontalLayout_8 = new QHBoxLayout(groupBox_8);
+        horizontalLayout_8->setObjectName("horizontalLayout_8");
+        btnSimTurnL = new QPushButton(groupBox_8);
+        btnSimTurnL->setObjectName("btnSimTurnL");
+        sizePolicy1.setHeightForWidth(btnSimTurnL->sizePolicy().hasHeightForWidth());
+        btnSimTurnL->setSizePolicy(sizePolicy1);
+        btnSimTurnL->setMinimumSize(QSize(0, 0));
+
+        horizontalLayout_8->addWidget(btnSimTurnL);
+
+        btnSimFwd = new QPushButton(groupBox_8);
+        btnSimFwd->setObjectName("btnSimFwd");
+
+        horizontalLayout_8->addWidget(btnSimFwd);
+
+        btnSimTurnR = new QPushButton(groupBox_8);
+        btnSimTurnR->setObjectName("btnSimTurnR");
+
+        horizontalLayout_8->addWidget(btnSimTurnR);
+
+
+        verticalLayout_23->addWidget(groupBox_8);
+
+        groupBox_9 = new QGroupBox(manualControls);
+        groupBox_9->setObjectName("groupBox_9");
+        sizePolicy3.setHeightForWidth(groupBox_9->sizePolicy().hasHeightForWidth());
+        groupBox_9->setSizePolicy(sizePolicy3);
+        horizontalLayout_25 = new QHBoxLayout(groupBox_9);
+        horizontalLayout_25->setObjectName("horizontalLayout_25");
+        btnSimWallLeft = new QPushButton(groupBox_9);
+        btnSimWallLeft->setObjectName("btnSimWallLeft");
+
+        horizontalLayout_25->addWidget(btnSimWallLeft);
+
+        btnSimWallFront = new QPushButton(groupBox_9);
+        btnSimWallFront->setObjectName("btnSimWallFront");
+
+        horizontalLayout_25->addWidget(btnSimWallFront);
+
+        btnSimWallRight = new QPushButton(groupBox_9);
+        btnSimWallRight->setObjectName("btnSimWallRight");
+
+        horizontalLayout_25->addWidget(btnSimWallRight);
+
+
+        verticalLayout_23->addWidget(groupBox_9);
+
+        groupBox_10 = new QGroupBox(manualControls);
+        groupBox_10->setObjectName("groupBox_10");
+        sizePolicy6.setHeightForWidth(groupBox_10->sizePolicy().hasHeightForWidth());
+        groupBox_10->setSizePolicy(sizePolicy6);
+        verticalLayout_25 = new QVBoxLayout(groupBox_10);
+        verticalLayout_25->setObjectName("verticalLayout_25");
+        btnSimReset = new QPushButton(groupBox_10);
+        btnSimReset->setObjectName("btnSimReset");
+
+        verticalLayout_25->addWidget(btnSimReset);
+
+
+        verticalLayout_23->addWidget(groupBox_10);
+
+        groupBox_11 = new QGroupBox(manualControls);
+        groupBox_11->setObjectName("groupBox_11");
+        horizontalLayout_26 = new QHBoxLayout(groupBox_11);
+        horizontalLayout_26->setObjectName("horizontalLayout_26");
+        btnRotMapL = new QPushButton(groupBox_11);
+        btnRotMapL->setObjectName("btnRotMapL");
+
+        horizontalLayout_26->addWidget(btnRotMapL);
+
+        btnRotMapR = new QPushButton(groupBox_11);
+        btnRotMapR->setObjectName("btnRotMapR");
+
+        horizontalLayout_26->addWidget(btnRotMapR);
+
+
+        verticalLayout_23->addWidget(groupBox_11);
+
+        groupBox_7 = new QGroupBox(manualControls);
+        groupBox_7->setObjectName("groupBox_7");
+        verticalLayout_26 = new QVBoxLayout(groupBox_7);
+        verticalLayout_26->setObjectName("verticalLayout_26");
+        radioPointerNormal = new QRadioButton(groupBox_7);
+        radioPointerNormal->setObjectName("radioPointerNormal");
+        radioPointerNormal->setChecked(true);
+
+        verticalLayout_26->addWidget(radioPointerNormal);
+
+        radioPointerStart = new QRadioButton(groupBox_7);
+        radioPointerStart->setObjectName("radioPointerStart");
+
+        verticalLayout_26->addWidget(radioPointerStart);
+
+        radioPointerGoal = new QRadioButton(groupBox_7);
+        radioPointerGoal->setObjectName("radioPointerGoal");
+
+        verticalLayout_26->addWidget(radioPointerGoal);
+
+
+        verticalLayout_23->addWidget(groupBox_7);
+
+
+        mazePanel->addWidget(manualControls);
+
+        groupBox_12 = new QGroupBox(pageLaberinth);
+        groupBox_12->setObjectName("groupBox_12");
+        verticalLayout_22 = new QVBoxLayout(groupBox_12);
+        verticalLayout_22->setObjectName("verticalLayout_22");
+        horizontalLayout_28 = new QHBoxLayout();
+        horizontalLayout_28->setObjectName("horizontalLayout_28");
+        radioBtnRealView = new QRadioButton(groupBox_12);
+        radioBtnRealView->setObjectName("radioBtnRealView");
+        radioBtnRealView->setChecked(true);
+
+        horizontalLayout_28->addWidget(radioBtnRealView);
+
+        radioBtnRobotView = new QRadioButton(groupBox_12);
+        radioBtnRobotView->setObjectName("radioBtnRobotView");
+
+        horizontalLayout_28->addWidget(radioBtnRobotView);
+
+
+        verticalLayout_22->addLayout(horizontalLayout_28);
+
+        btnToggleAutonomous = new QPushButton(groupBox_12);
+        btnToggleAutonomous->setObjectName("btnToggleAutonomous");
+
+        verticalLayout_22->addWidget(btnToggleAutonomous);
+
+
+        mazePanel->addWidget(groupBox_12);
+
+        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        mazePanel->addItem(verticalSpacer_5);
+
+
+        horizontalLayout_3->addLayout(mazePanel);
+
+        horizontalLayout_3->setStretch(0, 8);
+        horizontalLayout_3->setStretch(1, 1);
+
+        verticalLayout_24->addLayout(horizontalLayout_3);
+
+        stackedScreens->addWidget(pageLaberinth);
 
         horizontalLayout->addWidget(stackedScreens);
 
@@ -2047,7 +2297,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(2);
+        stackedScreens->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -2061,6 +2311,7 @@ public:
         btnSensors->setText(QCoreApplication::translate("MainWindow", "Sensores", nullptr));
         btnConfig->setText(QCoreApplication::translate("MainWindow", "Configuraci\303\263n", nullptr));
         btnControl->setText(QCoreApplication::translate("MainWindow", "Control", nullptr));
+        btnLabyrinth->setText(QCoreApplication::translate("MainWindow", "Laberinto", nullptr));
         titleHome->setText(QCoreApplication::translate("MainWindow", "Inicio", nullptr));
         groupConnection->setTitle(QCoreApplication::translate("MainWindow", "Conexi\303\263n", nullptr));
         groupSerie->setTitle(QCoreApplication::translate("MainWindow", "Serie", nullptr));
@@ -2240,6 +2491,29 @@ public:
         btnSetRobotStatus->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         chkAutoGetPWM->setText(QCoreApplication::translate("MainWindow", "Obtenci\303\263n autom\303\241tica", nullptr));
         chkRealTimeSetPWM->setText(QCoreApplication::translate("MainWindow", "Configuraci\303\263n en tiempo real", nullptr));
+        titleLabyrinth->setText(QCoreApplication::translate("MainWindow", "Laberinto", nullptr));
+        manualControls->setTitle(QCoreApplication::translate("MainWindow", "Controles manuales", nullptr));
+        groupBox_8->setTitle(QCoreApplication::translate("MainWindow", "Movimiento", nullptr));
+        btnSimTurnL->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
+        btnSimFwd->setText(QCoreApplication::translate("MainWindow", "Avance", nullptr));
+        btnSimTurnR->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
+        groupBox_9->setTitle(QCoreApplication::translate("MainWindow", "Paredes", nullptr));
+        btnSimWallLeft->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
+        btnSimWallFront->setText(QCoreApplication::translate("MainWindow", "Frontal", nullptr));
+        btnSimWallRight->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
+        groupBox_10->setTitle(QCoreApplication::translate("MainWindow", "Utilidades", nullptr));
+        btnSimReset->setText(QCoreApplication::translate("MainWindow", "Reset laberinto", nullptr));
+        groupBox_11->setTitle(QCoreApplication::translate("MainWindow", "Rotar mapa", nullptr));
+        btnRotMapL->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
+        btnRotMapR->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
+        groupBox_7->setTitle(QCoreApplication::translate("MainWindow", "Casillas especiales", nullptr));
+        radioPointerNormal->setText(QCoreApplication::translate("MainWindow", "Normal", nullptr));
+        radioPointerStart->setText(QCoreApplication::translate("MainWindow", "Fijar inicio", nullptr));
+        radioPointerGoal->setText(QCoreApplication::translate("MainWindow", "Fijar destino", nullptr));
+        groupBox_12->setTitle(QCoreApplication::translate("MainWindow", "Simulaci\303\263n", nullptr));
+        radioBtnRealView->setText(QCoreApplication::translate("MainWindow", "M\303\272ndo f\303\255sico", nullptr));
+        radioBtnRobotView->setText(QCoreApplication::translate("MainWindow", "Memoria robot", nullptr));
+        btnToggleAutonomous->setText(QCoreApplication::translate("MainWindow", "Iniciar simulaci\303\263n", nullptr));
     } // retranslateUi
 
 };
