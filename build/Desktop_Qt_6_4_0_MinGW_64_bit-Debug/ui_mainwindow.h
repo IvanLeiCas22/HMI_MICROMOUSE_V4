@@ -355,6 +355,12 @@ public:
     QRadioButton *radioPointerNormal;
     QRadioButton *radioPointerStart;
     QRadioButton *radioPointerGoal;
+    QGroupBox *groupBox_12;
+    QVBoxLayout *verticalLayout_22;
+    QHBoxLayout *horizontalLayout_28;
+    QRadioButton *radioBtnRealView;
+    QRadioButton *radioBtnRobotView;
+    QPushButton *btnToggleAutonomous;
     QSpacerItem *verticalSpacer_5;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -2236,6 +2242,34 @@ public:
 
         mazePanel->addWidget(manualControls);
 
+        groupBox_12 = new QGroupBox(pageLaberinth);
+        groupBox_12->setObjectName("groupBox_12");
+        verticalLayout_22 = new QVBoxLayout(groupBox_12);
+        verticalLayout_22->setObjectName("verticalLayout_22");
+        horizontalLayout_28 = new QHBoxLayout();
+        horizontalLayout_28->setObjectName("horizontalLayout_28");
+        radioBtnRealView = new QRadioButton(groupBox_12);
+        radioBtnRealView->setObjectName("radioBtnRealView");
+        radioBtnRealView->setChecked(true);
+
+        horizontalLayout_28->addWidget(radioBtnRealView);
+
+        radioBtnRobotView = new QRadioButton(groupBox_12);
+        radioBtnRobotView->setObjectName("radioBtnRobotView");
+
+        horizontalLayout_28->addWidget(radioBtnRobotView);
+
+
+        verticalLayout_22->addLayout(horizontalLayout_28);
+
+        btnToggleAutonomous = new QPushButton(groupBox_12);
+        btnToggleAutonomous->setObjectName("btnToggleAutonomous");
+
+        verticalLayout_22->addWidget(btnToggleAutonomous);
+
+
+        mazePanel->addWidget(groupBox_12);
+
         verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         mazePanel->addItem(verticalSpacer_5);
@@ -2476,6 +2510,10 @@ public:
         radioPointerNormal->setText(QCoreApplication::translate("MainWindow", "Normal", nullptr));
         radioPointerStart->setText(QCoreApplication::translate("MainWindow", "Fijar inicio", nullptr));
         radioPointerGoal->setText(QCoreApplication::translate("MainWindow", "Fijar destino", nullptr));
+        groupBox_12->setTitle(QCoreApplication::translate("MainWindow", "Simulaci\303\263n", nullptr));
+        radioBtnRealView->setText(QCoreApplication::translate("MainWindow", "M\303\272ndo f\303\255sico", nullptr));
+        radioBtnRobotView->setText(QCoreApplication::translate("MainWindow", "Memoria robot", nullptr));
+        btnToggleAutonomous->setText(QCoreApplication::translate("MainWindow", "Iniciar simulaci\303\263n", nullptr));
     } // retranslateUi
 
 };
