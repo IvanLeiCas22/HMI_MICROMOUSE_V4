@@ -118,6 +118,8 @@ private slots:
 
   void on_btnRotMapR_clicked();
 
+  void on_btnToggleAutonomous_clicked();
+
   private:
   Ui::MainWindow *ui;
   QButtonGroup *navigationButtonGroup; // Nuevo miembro para agrupar los botones
@@ -145,8 +147,12 @@ private slots:
   // --- Variables LABERINTO ---
   // Puntero maestro del lienzo
   QGraphicsScene *mazeScene;
-  // Variables de estado del simulador
-  uint8_t sim_maze_map[MAZE_WIDTH][MAZE_HEIGHT];
+  // Matrices de Mapas Duales
+  uint8_t real_maze_map[MAZE_WIDTH][MAZE_HEIGHT]; // El Universo (15x15)
+  uint8_t sim_maze_map[MAZE_WIDTH][MAZE_HEIGHT];  // La memoria del Robot
+  // Motor de Autonomía
+  QTimer *autonomousTimer;
+  // Coordenadas
   uint8_t current_x;
   uint8_t current_y;
   Heading current_heading;
@@ -160,6 +166,7 @@ private slots:
   // Variables de Meta e Inicio
   int start_x, start_y;
   int goal_x, goal_y;
+  bool is_returning = false;
   // Memoria BFS Estática (Compatible con STM32 - Empaquetado)
   uint8_t best_path[225]; // Almacena (X << 4) | Y
   uint8_t path_length;
@@ -185,7 +192,8 @@ private slots:
   // --- Funciones LABERINTO ---
   // Función que hará toda la magia de iluminar las paredes
   void drawMaze();
-  void calculateFastestPath();
+  void calculateFastestPath(int sx, int sy, int gx, int gy);
+  void autonomousTick();
 
   // --- Funciones dispatch comunicaciones ---
   void setupConfigPage();
