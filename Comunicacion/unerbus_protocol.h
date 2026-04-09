@@ -77,6 +77,7 @@ namespace Unerbus
         CMD_GET_TURN_TARGET_DPS = 0x85,         // Leer la velocidad angular objetivo
         CMD_GET_DELAY_TICKS = 0X90,             // Leer el número de ticks de retardo
         CMD_SET_DELAY_TICKS = 0X91,             // Configurar el número de ticks de retardo
+        CMD_UPDATE_MAZE_CELL = 0x92,            // (STM32 -> Qt) Enviar actualización de info de celda
         CMD_OTHERS
     };
     Q_ENUM_NS(CommandId)

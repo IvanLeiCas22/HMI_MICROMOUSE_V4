@@ -278,6 +278,27 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
     break;
   }
 
+  case Unerbus::CommandId::CMD_UPDATE_MAZE_CELL: {
+    if (payload.size() >= 4) {
+      quint8 x, y, walls, heading;
+      stream >> x >> y >> walls >> heading;
+
+      qDebug() << "Actualización de laberinto en X:" << x << "Y:" << y << "Walls:" << Qt::bin << walls << "Heading:" << heading;
+
+      if (x < MAZE_WIDTH && y < MAZE_HEIGHT) {
+        sim_maze_map[x][y] = walls;
+        // Sincronizamos la posición y heading del cuadradito verde con la del robot real
+        current_x = x;
+        current_y = y;
+        current_heading = static_cast<Heading>(heading); // Ajuste al enum de Qt
+
+        // Refrescar entorno gráfico para que aparezca la pared y la ruta óptima
+        drawMaze();
+      }
+    }
+    break;
+  }
+
   case Unerbus::CommandId::CMD_GET_MOTOR_PWM: {
     updatePwmUI(payload);
     break;
