@@ -2998,6 +2998,29 @@ QPushButton:checked {
                 </widget>
                </item>
                <item>
+                <widget class="QGroupBox" name="groupBox_13">
+                 <property name="title">
+                  <string>Guardar/cargar mapa</string>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_27">
+                  <item>
+                   <widget class="QPushButton" name="btnSaveMaze">
+                    <property name="text">
+                     <string>Guardar</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnLoadMaze">
+                    <property name="text">
+                     <string>Cargar</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
                 <widget class="QGroupBox" name="groupBox_7">
                  <property name="title">
                   <string>Casillas especiales</string>
@@ -3024,6 +3047,13 @@ QPushButton:checked {
                    <widget class="QRadioButton" name="radioPointerGoal">
                     <property name="text">
                      <string>Fijar destino</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radioPointerSpecial">
+                    <property name="text">
+                     <string>Fijar especiales</string>
                     </property>
                    </widget>
                   </item>

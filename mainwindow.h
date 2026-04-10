@@ -11,23 +11,20 @@
 #include <QtNetwork/QUdpSocket>
 #include <QtSerialPort/QSerialPort>     // Incluir para QSerialPort
 #include <QtSerialPort/QSerialPortInfo> // Incluir para QSerialPortInfo
-
+#include <QMessageBox>
+#include <QFileDialog>
 
 // --- CONSTANTES DEL LABERINTO ---
-#define MAZE_WIDTH      15
-#define MAZE_HEIGHT     15
-#define WALL_NORTH      0x01
-#define WALL_SOUTH      0x02
-#define WALL_EAST       0x04
-#define WALL_WEST       0x08
-#define CELL_VISITED    0x10
+#define MAZE_WIDTH 15
+#define MAZE_HEIGHT 15
+#define WALL_NORTH 0x01
+#define WALL_SOUTH 0x02
+#define WALL_EAST 0x04
+#define WALL_WEST 0x08
+#define CELL_VISITED 0x10
+#define CELL_SPECIAL 0x20
 
-enum Heading {
-    HEADING_NORTH = 0,
-    HEADING_EAST,
-    HEADING_SOUTH,
-    HEADING_WEST
-};
+enum Heading { HEADING_NORTH = 0, HEADING_EAST, HEADING_SOUTH, HEADING_WEST };
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -101,7 +98,6 @@ private slots:
   // --- Slots para la página del laberinto ---
   void on_btnSimTurnL_clicked();
 
-
   void on_btnSimFwd_clicked();
 
   void on_btnSimTurnR_clicked();
@@ -119,6 +115,10 @@ private slots:
   void on_btnRotMapR_clicked();
 
   void on_btnToggleAutonomous_clicked();
+
+  void on_btnSaveMaze_clicked();
+
+  void on_btnLoadMaze_clicked();
 
   private:
   Ui::MainWindow *ui;
@@ -156,17 +156,23 @@ private slots:
   uint8_t current_x;
   uint8_t current_y;
   Heading current_heading;
-  // Matriz de mapeo: Fila = Orientación Actual, Columna = Pared Frente(0), Der(1), Izq(2)
+  // Matriz de mapeo: Fila = Orientación Actual, Columna = Pared Frente(0),
+  // Der(1), Izq(2)
   const uint8_t sim_wall_lut[4][3] = {
-      {WALL_NORTH, WALL_EAST,  WALL_WEST }, // Si el robot mira al NORTH
-      {WALL_EAST,  WALL_SOUTH, WALL_NORTH}, // Si el robot mira al EAST
-      {WALL_SOUTH, WALL_WEST,  WALL_EAST }, // Si el robot mira al SOUTH
-      {WALL_WEST,  WALL_NORTH, WALL_SOUTH}  // Si el robot mira al WEST
+      {WALL_NORTH, WALL_EAST, WALL_WEST},  // Si el robot mira al NORTH
+      {WALL_EAST, WALL_SOUTH, WALL_NORTH}, // Si el robot mira al EAST
+      {WALL_SOUTH, WALL_WEST, WALL_EAST},  // Si el robot mira al SOUTH
+      {WALL_WEST, WALL_NORTH, WALL_SOUTH}  // Si el robot mira al WEST
   };
   // Variables de Meta e Inicio
   int start_x, start_y;
   int goal_x, goal_y;
   bool is_returning = false;
+  int special_cells_found = 0;
+  bool is_mode_b = false; // False = MODO A (Explorar). True = MODO B (Speedrun)
+  int tsp_targets[3][2];
+  bool tsp_solved = false;
+  int current_tsp_index = 0;
   // Memoria BFS Estática (Compatible con STM32 - Empaquetado)
   uint8_t best_path[225]; // Almacena (X << 4) | Y
   uint8_t path_length;
@@ -193,6 +199,7 @@ private slots:
   // Función que hará toda la magia de iluminar las paredes
   void drawMaze();
   void calculateFastestPath(int sx, int sy, int gx, int gy);
+  int getFloodFillDistance(int sx, int sy, int gx, int gy);
   void autonomousTick();
 
   // --- Funciones dispatch comunicaciones ---
@@ -222,7 +229,7 @@ private slots:
   void updateTurnTargetDps(const QByteArray &payload);
   void updateDelayTicksUI(const QByteArray &payload);
 
-  protected:
+protected:
   // Filtro maestro de cualquier evento del ratón
   bool eventFilter(QObject *watched, QEvent *event) override;
 };

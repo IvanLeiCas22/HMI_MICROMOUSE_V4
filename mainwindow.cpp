@@ -12,7 +12,6 @@
 #include <QPen>
 #include <QTextBlock>
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
       serialPort(new QSerialPort(this)), m_parser(new UnerbusParser(this)),
@@ -97,16 +96,18 @@ MainWindow::MainWindow(QWidget *parent)
   // 4. Marcamos la celda en la que empezamos como "Visitada"
   sim_maze_map[current_x][current_y] |= CELL_VISITED;
 
-  // 5. Ordenamos pintar el mapa por primera vez
-  drawMaze();
-
-  // 6. Preparar corazón autonómico
+  // 5. Preparar corazón autonómico
   autonomousTimer = new QTimer(this);
   connect(autonomousTimer, &QTimer::timeout, this, &MainWindow::autonomousTick);
 
   // Conectar radio buttons al repintado
-  connect(ui->radioBtnRealView, &QRadioButton::clicked, this, &MainWindow::drawMaze);
-  connect(ui->radioBtnRobotView, &QRadioButton::clicked, this, &MainWindow::drawMaze);
+  connect(ui->radioBtnRealView, &QRadioButton::clicked, this,
+          &MainWindow::drawMaze);
+  connect(ui->radioBtnRobotView, &QRadioButton::clicked, this,
+          &MainWindow::drawMaze);
+
+  // 6. Ordenamos pintar el mapa por primera vez
+  drawMaze();
 }
 
 MainWindow::~MainWindow() {
@@ -283,11 +284,13 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
       quint8 x, y, walls, heading;
       stream >> x >> y >> walls >> heading;
 
-      qDebug() << "Actualización de laberinto en X:" << x << "Y:" << y << "Walls:" << Qt::bin << walls << "Heading:" << heading;
+      qDebug() << "Actualización de laberinto en X:" << x << "Y:" << y
+               << "Walls:" << Qt::bin << walls << "Heading:" << heading;
 
       if (x < MAZE_WIDTH && y < MAZE_HEIGHT) {
         sim_maze_map[x][y] = walls;
-        // Sincronizamos la posición y heading del cuadradito verde con la del robot real
+        // Sincronizamos la posición y heading del cuadradito verde con la del
+        // robot real
         current_x = x;
         current_y = y;
         current_heading = static_cast<Heading>(heading); // Ajuste al enum de Qt
@@ -952,9 +955,13 @@ void MainWindow::on_btnConfigurePeriod_clicked() {
 
 void MainWindow::drawMaze() {
   mazeScene->clear();
-  int current_target_x = is_returning ? start_x : goal_x;
-  int current_target_y = is_returning ? start_y : goal_y;
-  calculateFastestPath(current_x, current_y, current_target_x, current_target_y);
+
+  if (!autonomousTimer->isActive()) {
+    int current_target_x = is_returning ? start_x : goal_x;
+    int current_target_y = is_returning ? start_y : goal_y;
+    calculateFastestPath(current_x, current_y, current_target_x,
+                         current_target_y);
+  }
 
   int cellSize = 50; // Cada celda medirá 50x50 píxeles
 
@@ -1010,9 +1017,9 @@ void MainWindow::drawMaze() {
       uint8_t current_map_cell = 0;
 
       if (ui->radioBtnRealView->isChecked()) {
-          current_map_cell = real_maze_map[x][y];
+        current_map_cell = real_maze_map[x][y];
       } else {
-          current_map_cell = sim_maze_map[x][y];
+        current_map_cell = sim_maze_map[x][y];
       }
 
       // === Colores Especiales de Baldosa ===
@@ -1025,6 +1032,10 @@ void MainWindow::drawMaze() {
       // ¿Es celda Objetivo?
       else if (x == goal_x && y == goal_y) {
         cellBgColor = QColor(150, 20, 20); // Rojo sólido oscuro
+      }
+      // ¿Es celda Especial?
+      else if (current_map_cell & CELL_SPECIAL) {
+        cellBgColor = QColor(255, 215, 0); // Dorado
       }
       // ¿Al menos está visitada?
       else if (current_map_cell & CELL_VISITED) {
@@ -1086,25 +1097,29 @@ void MainWindow::drawMaze() {
 
         // --- Pared Norte ---
         if (cellData & WALL_NORTH) {
-          QGraphicsLineItem* w = mazeScene->addLine(px, py, px + cellSize, py, wallPen);
+          QGraphicsLineItem *w =
+              mazeScene->addLine(px, py, px + cellSize, py, wallPen);
           w->setZValue(8);
         }
 
         // --- Pared Sur ---
         if (cellData & WALL_SOUTH) {
-          QGraphicsLineItem* w = mazeScene->addLine(px, py + cellSize, px + cellSize, py + cellSize, wallPen);
+          QGraphicsLineItem *w = mazeScene->addLine(
+              px, py + cellSize, px + cellSize, py + cellSize, wallPen);
           w->setZValue(8);
         }
 
         // --- Pared Este ---
         if (cellData & WALL_EAST) {
-          QGraphicsLineItem* w = mazeScene->addLine(px + cellSize, py, px + cellSize, py + cellSize, wallPen);
+          QGraphicsLineItem *w = mazeScene->addLine(
+              px + cellSize, py, px + cellSize, py + cellSize, wallPen);
           w->setZValue(8);
         }
 
         // --- Pared Oeste ---
         if (cellData & WALL_WEST) {
-          QGraphicsLineItem* w = mazeScene->addLine(px, py, px, py + cellSize, wallPen);
+          QGraphicsLineItem *w =
+              mazeScene->addLine(px, py, px, py + cellSize, wallPen);
           w->setZValue(8);
         }
       }
@@ -1264,6 +1279,37 @@ void MainWindow::calculateFastestPath(int sx, int sy, int gx, int gy) {
     best_path[path_length] = (sx << 4) | sy;
     path_length++;
   }
+}
+
+int MainWindow::getFloodFillDistance(int sx, int sy, int gx, int gy) {
+    uint8_t dist[MAZE_WIDTH][MAZE_HEIGHT];
+    memset(dist, 255, sizeof(dist));
+    uint8_t q[225];
+    int h = 0, t = 0;
+    q[t++] = (sx << 4) | sy;
+    dist[sx][sy] = 0;
+    while (h < t) {
+        int px = q[h] >> 4;
+        int py = q[h] & 0x0F;
+        h++;
+        if (px == gx && py == gy)
+            return dist[px][py];
+        int d = dist[px][py];
+        int cell = sim_maze_map[px][py];
+        if (!(cell & WALL_NORTH) && py > 0 && dist[px][py - 1] == 255) {
+            dist[px][py - 1] = d + 1; q[t++] = (px << 4) | (py - 1);
+        }
+        if (!(cell & WALL_SOUTH) && py < MAZE_HEIGHT - 1 && dist[px][py + 1] == 255) {
+            dist[px][py + 1] = d + 1; q[t++] = (px << 4) | (py + 1);
+        }
+        if (!(cell & WALL_EAST) && px < MAZE_WIDTH - 1 && dist[px + 1][py] == 255) {
+            dist[px + 1][py] = d + 1; q[t++] = ((px + 1) << 4) | py;
+        }
+        if (!(cell & WALL_WEST) && px > 0 && dist[px - 1][py] == 255) {
+            dist[px - 1][py] = d + 1; q[t++] = ((px - 1) << 4) | py;
+        }
+    }
+    return 9999; // Inalcanzable
 }
 
 /**
@@ -2134,9 +2180,10 @@ void MainWindow::on_btnSimFwd_clicked() {
   if (current_y >= MAZE_HEIGHT)
     current_y = MAZE_HEIGHT - 1;
 
-  // Si NO estamos en modo desarrollador (Mundo físico), grabamos el avance en la memoria.
+  // Si NO estamos en modo desarrollador (Mundo físico), grabamos el avance en
+  // la memoria.
   if (autonomousTimer->isActive()) {
-      sim_maze_map[current_x][current_y] |= CELL_VISITED;
+    sim_maze_map[current_x][current_y] |= CELL_VISITED;
   }
 
   // Repintamos la escena
@@ -2198,9 +2245,12 @@ void MainWindow::on_btnSimWallRight_clicked() {
 }
 
 void MainWindow::on_btnSimReset_clicked() {
-  if (autonomousTimer->isActive()) autonomousTimer->stop();
+  if (autonomousTimer->isActive())
+    autonomousTimer->stop();
   memset(sim_maze_map, 0, sizeof(sim_maze_map));
-  memset(real_maze_map, 0, sizeof(real_maze_map)); // Ahora Creador y Robot pierden la memoria juntos
+  memset(
+      real_maze_map, 0,
+      sizeof(real_maze_map)); // Ahora Creador y Robot pierden la memoria juntos
   current_x = 7;
   current_y = 7;
   current_heading = HEADING_NORTH;
@@ -2256,6 +2306,14 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
           drawMaze(); // Repintamos la escena de inmediato
           return true;
         }
+        // O estaba apretado el radio botón de "Fijar Especiales"?
+        else if (ui->radioPointerSpecial->isChecked()) {
+          // El operador ^= alterna (toggle). Un clic la pone, otro clic la
+          // quita.
+          real_maze_map[cell_x][cell_y] ^= CELL_SPECIAL;
+          drawMaze();
+          return true;
+        }
       }
     }
   }
@@ -2275,73 +2333,314 @@ void MainWindow::on_btnRotMapR_clicked() {
   ui->mazeView->rotate(90);
 }
 
-void MainWindow::autonomousTick()
-{
-    // === 1. SENSE (Los ojos infrarrojos del robot leen el piso donde está parado) ===
-    // Escaneamos secretamente el "Mundo Real"
-    uint8_t current_real_walls = real_maze_map[current_x][current_y] & (WALL_NORTH | WALL_SOUTH | WALL_EAST | WALL_WEST);
+void MainWindow::autonomousTick() {
+  // === 1. ACT (Movemos las ruedas) ===
+  if (path_length > 1) {
+    uint8_t next_cell = best_path[path_length - 2];
+    uint8_t next_x = next_cell >> 4;
+    uint8_t next_y = next_cell & 0x0F;
 
-    // Inyectamos el descubrimiento a la memoria de la placa y marcamos que estuvimos aquí
-    sim_maze_map[current_x][current_y] |= current_real_walls | CELL_VISITED;
-    // Simetría sensorial obligatoria: para que cuando querramos retroceder, recordemos las paredes traseras
-    if (current_real_walls & WALL_NORTH && current_y > 0) sim_maze_map[current_x][current_y - 1] |= WALL_SOUTH;
-    if (current_real_walls & WALL_SOUTH && current_y < MAZE_HEIGHT - 1) sim_maze_map[current_x][current_y + 1] |= WALL_NORTH;
-    if (current_real_walls & WALL_EAST && current_x < MAZE_WIDTH - 1) sim_maze_map[current_x + 1][current_y] |= WALL_WEST;
-    if (current_real_walls & WALL_WEST && current_x > 0) sim_maze_map[current_x - 1][current_y] |= WALL_EAST;
-    
-    int current_target_x = is_returning ? start_x : goal_x;
-    int current_target_y = is_returning ? start_y : goal_y;
-    
-    // === 2. THINK (El Flood Fill se corre desde LOS ZAPATOS del autito hacia la meta) ===
-    calculateFastestPath(current_x, current_y, current_target_x, current_target_y);
-    
-    // Control de seguridad: Frenar o volver al llegar a la meta
-    if (current_x == current_target_x && current_y == current_target_y) { 
-        if (!is_returning) {
-            is_returning = true; // Empieza el viaje de regreso a casa
-        } else {
-            autonomousTimer->stop(); // Ya fuimos y volvimos
+    // Girar
+    if (next_y < current_y)
+      current_heading = HEADING_NORTH;
+    else if (next_y > current_y)
+      current_heading = HEADING_SOUTH;
+    else if (next_x > current_x)
+      current_heading = HEADING_EAST;
+    else if (next_x < current_x)
+      current_heading = HEADING_WEST;
+
+    // Mover 1 bloque
+    current_x = next_x;
+    current_y = next_y;
+  }
+
+  // === 2. SENSE (Los ojos infrarrojos leen el piso físico) ===
+  uint8_t current_real_walls =
+      real_maze_map[current_x][current_y] &
+      (WALL_NORTH | WALL_SOUTH | WALL_EAST | WALL_WEST);
+  // Inyectamos las paredes a la memoria RAM
+  sim_maze_map[current_x][current_y] |= current_real_walls | CELL_VISITED;
+  // Simetría sensorial para cuando querramos retroceder
+  if (current_real_walls & WALL_NORTH && current_y > 0)
+    sim_maze_map[current_x][current_y - 1] |= WALL_SOUTH;
+  if (current_real_walls & WALL_SOUTH && current_y < MAZE_HEIGHT - 1)
+    sim_maze_map[current_x][current_y + 1] |= WALL_NORTH;
+  if (current_real_walls & WALL_EAST && current_x < MAZE_WIDTH - 1)
+    sim_maze_map[current_x + 1][current_y] |= WALL_WEST;
+  if (current_real_walls & WALL_WEST && current_x > 0)
+    sim_maze_map[current_x - 1][current_y] |= WALL_EAST;
+  // --- NUEVO: ¿Pisamos una celda con Cinta Especial? ---
+  if (real_maze_map[current_x][current_y] & CELL_SPECIAL) {
+    if (!(sim_maze_map[current_x][current_y] & CELL_SPECIAL)) {
+      sim_maze_map[current_x][current_y] |= CELL_SPECIAL; // Grabar el hallazgo
+      special_cells_found++;
+      qDebug() << "Célula especial encontrada! Llevamos:" << special_cells_found
+               << "de 3";
+    }
+  }
+  // === 3. THINK (A dónde ir) ===
+  int current_target_x = start_x;
+  int current_target_y = start_y;
+  if (!is_mode_b) {
+    // MODO A: Explorar hasta hallar las 3 cintas
+    if (special_cells_found < 3) {
+      bool found_unvisited = false;
+      int closest_dist = 9999;
+
+      // Búsqueda de Frontera Orgánica:
+      for (int x = 0; x < MAZE_WIDTH; x++) {
+        for (int y = 0; y < MAZE_HEIGHT; y++) {
+          // Solo nos interesan celdas sin visitar...
+          if (!(sim_maze_map[x][y] & CELL_VISITED)) {
+
+            // ... y que estén ADYACENTES a nuestro mapa ya descubierto SIN
+            // paredes bloqueando
+            bool is_frontier = false;
+            if (x > 0 && (sim_maze_map[x - 1][y] & CELL_VISITED) &&
+                !(sim_maze_map[x][y] & WALL_WEST))
+              is_frontier = true;
+            if (x < MAZE_WIDTH - 1 && (sim_maze_map[x + 1][y] & CELL_VISITED) &&
+                !(sim_maze_map[x][y] & WALL_EAST))
+              is_frontier = true;
+            if (y > 0 && (sim_maze_map[x][y - 1] & CELL_VISITED) &&
+                !(sim_maze_map[x][y] & WALL_NORTH))
+              is_frontier = true;
+            if (y < MAZE_HEIGHT - 1 &&
+                (sim_maze_map[x][y + 1] & CELL_VISITED) &&
+                !(sim_maze_map[x][y] & WALL_SOUTH))
+              is_frontier = true;
+
+            if (is_frontier) {
+              // De todas las opciones de expansión, elegimos la MÁS CERCANA a
+              // nosotros (Distancia Manhattan)
+              int dist = abs(x - current_x) + abs(y - current_y);
+              if (dist < closest_dist) {
+                closest_dist = dist;
+                current_target_x = x;
+                current_target_y = y;
+                found_unvisited = true;
+              }
+            }
+          }
         }
-        return; 
+      }
+
+      // Si por error de diseño se quedó encerrado sin frontera antes de hallar
+      // 3, evitamos que crashee
+      if (!found_unvisited) {
+        autonomousTimer->stop();
+        drawMaze();
+        qDebug() << "ALERTA: El robot se quedó encerrado y no hay adónde ir.";
+        return;
+      }
+    } else {
+      // YA TENEMOS LAS 3! Retornamos al inicio (start_x, start_y)
+      current_target_x = start_x;
+      current_target_y = start_y;
+
+      if (current_x == start_x && current_y == start_y) {
+        qDebug() << "MODO A FINALIZADO. Volvió a casa tras hallar las cintas.";
+        is_mode_b = true;        // Pasamos el robot a Estado de Carreras
+        autonomousTimer->stop(); // Frenamos el autito!
+        drawMaze();
+        return;
+      }
     }
-    
-    // === 3. ACT (El puente H manda PWM a los motores para mover las ruedas) ===
-    // best_path[path_length - 1] es donde estamos ahora. path_length - 2 es hacia donde hay que pisar.
-    if (path_length > 1) {
-        uint8_t next_cell = best_path[path_length - 2];
-        uint8_t next_x = next_cell >> 4;
-        uint8_t next_y = next_cell & 0x0F;
-        // Simulador visual: Girar el auto para mirar hacia la nueva dirección
-        if (next_y < current_y) current_heading = HEADING_NORTH;
-        else if (next_y > current_y) current_heading = HEADING_SOUTH;
-        else if (next_x > current_x) current_heading = HEADING_EAST;
-        else if (next_x < current_x) current_heading = HEADING_WEST;
-        // Simulador de Motores: Transladar el chasís 1 bloque entero
-        current_x = next_x;
-        current_y = next_y;
+
+    // En Modo A, calculamos la ruta paso a paso evadiendo las paredes nuevas
+    calculateFastestPath(current_x, current_y, current_target_x,
+                         current_target_y);
+    if (path_length <= 1 &&
+        (current_x != current_target_x || current_y != current_target_y)) {
+      // La meta asignada es inalcanzable (está fuera del 8x6 o encerrada entre
+      // paredes).
+      // La engañamos marcándola como "visitada" para que el ciclo For la ignore
+      // la próxima vez.
+      sim_maze_map[current_target_x][current_target_y] |= CELL_VISITED;
     }
-    // Refrescamos pantalla para ver al robot dar el salto mágico
-    drawMaze();
+  } else {
+    // ---> MODO B: TSP SPEED_RUN <---
+    // PASO 1: Evaluar la mejor ruta si aún no lo ha hecho
+    if (!tsp_solved) {
+      // Extraemos dónde están las 3 cintas en la memoria RAM
+      int sc[3][2];
+      int idx = 0;
+      for (int x = 0; x < MAZE_WIDTH; x++) {
+        for (int y = 0; y < MAZE_HEIGHT; y++) {
+          if (sim_maze_map[x][y] & CELL_SPECIAL) {
+            if (idx < 3) {
+              sc[idx][0] = x;
+              sc[idx][1] = y;
+              idx++;
+            }
+          }
+        }
+      }
+
+      if (idx == 3) {
+        // Las 6 combinaciones (permutaciones) de visitas posibles
+        int min_dist = 99999;
+        int best_p[3] = {0, 1, 2};
+        int perms[6][3] = {{0, 1, 2}, {0, 2, 1}, {1, 0, 2},
+                           {1, 2, 0}, {2, 0, 1}, {2, 1, 0}};
+
+        // Agente Viajero (Evaluamos las 6 rutas sumando los 3 tramos)
+        for (int i = 0; i < 6; i++) {
+          int d1 = getFloodFillDistance(start_x, start_y, sc[perms[i][0]][0],
+                               sc[perms[i][0]][1]);
+          int d2 = getFloodFillDistance(sc[perms[i][0]][0], sc[perms[i][0]][1],
+                               sc[perms[i][1]][0], sc[perms[i][1]][1]);
+          int d3 = getFloodFillDistance(sc[perms[i][1]][0], sc[perms[i][1]][1],
+                               sc[perms[i][2]][0], sc[perms[i][2]][1]);
+          int totalCost = d1 + d2 + d3;
+
+          if (totalCost < min_dist) {
+            min_dist = totalCost;
+            best_p[0] = perms[i][0];
+            best_p[1] = perms[i][1];
+            best_p[2] = perms[i][2];
+          }
+        }
+
+        // Guardar el cronograma de vuelos ganador
+        tsp_targets[0][0] = sc[best_p[0]][0];
+        tsp_targets[0][1] = sc[best_p[0]][1];
+        tsp_targets[1][0] = sc[best_p[1]][0];
+        tsp_targets[1][1] = sc[best_p[1]][1];
+        tsp_targets[2][0] = sc[best_p[2]][0];
+        tsp_targets[2][1] = sc[best_p[2]][1];
+        tsp_solved = true;
+        current_tsp_index = 0;
+        qDebug() << "Ruta TSP Calculada. Distancia Óptima:" << min_dist;
+      } else {
+        qDebug() << "ERROR: Alguna cinta se perdió.";
+        autonomousTimer->stop();
+        return;
+      }
+    }
+    // PASO 2: Ejecutar el cronograma de vuelos
+    if (tsp_solved && current_tsp_index < 3) {
+      current_target_x = tsp_targets[current_tsp_index][0];
+      current_target_y = tsp_targets[current_tsp_index][1];
+
+      if (current_x == current_target_x && current_y == current_target_y) {
+        current_tsp_index++;
+        if (current_tsp_index >= 3) {
+          qDebug()
+              << "¡MISION CUMPLIDA! El Micromouse se detiene en la 3ra marca.";
+          autonomousTimer->stop();
+          drawMaze();
+          return;
+        } else {
+          // Cargar el radar con el siguiente objetivo
+          current_target_x = tsp_targets[current_tsp_index][0];
+          current_target_y = tsp_targets[current_tsp_index][1];
+        }
+      }
+    }
+
+    // Pilotar usando nuestro propio sistema de trazado hacia el actual waypoint
+    calculateFastestPath(current_x, current_y, current_target_x,
+                         current_target_y);
+  }
+
+  // === 4. Draw ===
+  calculateFastestPath(current_x, current_y, current_target_x,
+                       current_target_y);
+  drawMaze();
 }
 
-void MainWindow::on_btnToggleAutonomous_clicked()
-{
-    if (autonomousTimer->isActive()) {
-        autonomousTimer->stop();
-    } else {
-        // Teletransportar a la línea de largada (A) antes de comenzar
-        if (start_x != -1) {
-            current_x = start_x;
-            current_y = start_y;
-            current_heading = HEADING_NORTH;
-            is_returning = false;
-            
-            // Conservamos sim_maze_map intacto para que la próxima vuelta sea un Speed Run
-            // usando la inteligencia matemática recolectada. Solo "Reset" borra la memoria.
-            
-            drawMaze(); 
+void MainWindow::on_btnToggleAutonomous_clicked() {
+  if (autonomousTimer->isActive()) {
+    autonomousTimer->stop();
+  } else {
+    // Teletransportar a la línea de largada (A) antes de comenzar
+    if (start_x != -1) {
+      current_x = start_x;
+      current_y = start_y;
+      current_heading = HEADING_NORTH;
+      is_returning = false;
+
+      // El robot revisa su propia memoria para ver cuántas cintas recuerda
+      special_cells_found = 0;
+      for (int x = 0; x < MAZE_WIDTH; x++) {
+        for (int y = 0; y < MAZE_HEIGHT; y++) {
+          if (sim_maze_map[x][y] & CELL_SPECIAL) {
+            special_cells_found++;
+          }
         }
-        autonomousTimer->start(500); // Corre a 500ms por paso
+      }
+      if (special_cells_found >= 3) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(
+            this, "Modo B Listo",
+            "El robot memorizó la ubicación de las 3 cintas.\n¿Deseas iniciar "
+            "la Carrera de Velocidad (Modo B)?\n\nPresiona [No] para formatear "
+            "la memoria y volver a Explorar (Modo A).",
+            QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+          is_mode_b = true;
+          tsp_solved = false;    // Obligamos al TSP a re-calcular las 6 rutas
+          current_tsp_index = 0; // Reseteamos el listado de visitas a 0
+          qDebug() << "INICIANDO SPEED RUN (Modo B)!";
+        } else {
+          memset(sim_maze_map, 0, sizeof(sim_maze_map)); // Amnesia total
+          special_cells_found = 0;
+          is_mode_b = false;
+          qDebug() << "INICIANDO EXPLORACIÓN (Modo A). Memoria borrada.";
+        }
+      } else {
+        is_mode_b = false;
+        qDebug() << "INICIANDO EXPLORACIÓN (Modo A). Buscando cintas...";
+      }
+
+      drawMaze();
+    }
+    autonomousTimer->start(500); // Corre a 500ms por paso
+  }
+}
+
+void MainWindow::on_btnSaveMaze_clicked()
+{
+    QString path = QFileDialog::getSaveFileName(this, "Guardar Mapa", "", "Maze Files (*.maze)");
+    if (path.isEmpty()) return;
+
+    QFile file(path);
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(reinterpret_cast<char*>(&start_x), sizeof(int));
+        file.write(reinterpret_cast<char*>(&start_y), sizeof(int));
+        file.write(reinterpret_cast<char*>(&goal_x), sizeof(int));
+        file.write(reinterpret_cast<char*>(&goal_y), sizeof(int));
+        file.write(reinterpret_cast<char*>(real_maze_map), sizeof(real_maze_map));
+        file.close();
+    }
+}
+
+
+void MainWindow::on_btnLoadMaze_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Cargar Mapa", "", "Maze Files (*.maze)");
+    if (path.isEmpty()) return;
+
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly)) {
+        file.read(reinterpret_cast<char*>(&start_x), sizeof(int));
+        file.read(reinterpret_cast<char*>(&start_y), sizeof(int));
+        file.read(reinterpret_cast<char*>(&goal_x), sizeof(int));
+        file.read(reinterpret_cast<char*>(&goal_y), sizeof(int));
+        file.read(reinterpret_cast<char*>(real_maze_map), sizeof(real_maze_map));
+        file.close();
+
+        // Resetear estado del robot
+        memset(sim_maze_map, 0, sizeof(sim_maze_map));
+        current_x = start_x;
+        current_y = start_y;
+        current_heading = HEADING_NORTH;
+        special_cells_found = 0;
+        is_mode_b = false;
+
+        drawMaze();
     }
 }
 

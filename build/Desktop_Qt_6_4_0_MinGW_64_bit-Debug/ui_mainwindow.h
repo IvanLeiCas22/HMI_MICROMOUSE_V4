@@ -350,11 +350,16 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QPushButton *btnRotMapL;
     QPushButton *btnRotMapR;
+    QGroupBox *groupBox_13;
+    QHBoxLayout *horizontalLayout_27;
+    QPushButton *btnSaveMaze;
+    QPushButton *btnLoadMaze;
     QGroupBox *groupBox_7;
     QVBoxLayout *verticalLayout_26;
     QRadioButton *radioPointerNormal;
     QRadioButton *radioPointerStart;
     QRadioButton *radioPointerGoal;
+    QRadioButton *radioPointerSpecial;
     QGroupBox *groupBox_12;
     QVBoxLayout *verticalLayout_22;
     QHBoxLayout *horizontalLayout_28;
@@ -2216,6 +2221,23 @@ public:
 
         verticalLayout_23->addWidget(groupBox_11);
 
+        groupBox_13 = new QGroupBox(manualControls);
+        groupBox_13->setObjectName("groupBox_13");
+        horizontalLayout_27 = new QHBoxLayout(groupBox_13);
+        horizontalLayout_27->setObjectName("horizontalLayout_27");
+        btnSaveMaze = new QPushButton(groupBox_13);
+        btnSaveMaze->setObjectName("btnSaveMaze");
+
+        horizontalLayout_27->addWidget(btnSaveMaze);
+
+        btnLoadMaze = new QPushButton(groupBox_13);
+        btnLoadMaze->setObjectName("btnLoadMaze");
+
+        horizontalLayout_27->addWidget(btnLoadMaze);
+
+
+        verticalLayout_23->addWidget(groupBox_13);
+
         groupBox_7 = new QGroupBox(manualControls);
         groupBox_7->setObjectName("groupBox_7");
         verticalLayout_26 = new QVBoxLayout(groupBox_7);
@@ -2235,6 +2257,11 @@ public:
         radioPointerGoal->setObjectName("radioPointerGoal");
 
         verticalLayout_26->addWidget(radioPointerGoal);
+
+        radioPointerSpecial = new QRadioButton(groupBox_7);
+        radioPointerSpecial->setObjectName("radioPointerSpecial");
+
+        verticalLayout_26->addWidget(radioPointerSpecial);
 
 
         verticalLayout_23->addWidget(groupBox_7);
@@ -2506,10 +2533,14 @@ public:
         groupBox_11->setTitle(QCoreApplication::translate("MainWindow", "Rotar mapa", nullptr));
         btnRotMapL->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
         btnRotMapR->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
+        groupBox_13->setTitle(QCoreApplication::translate("MainWindow", "Guardar/cargar mapa", nullptr));
+        btnSaveMaze->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
+        btnLoadMaze->setText(QCoreApplication::translate("MainWindow", "Cargar", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("MainWindow", "Casillas especiales", nullptr));
         radioPointerNormal->setText(QCoreApplication::translate("MainWindow", "Normal", nullptr));
         radioPointerStart->setText(QCoreApplication::translate("MainWindow", "Fijar inicio", nullptr));
         radioPointerGoal->setText(QCoreApplication::translate("MainWindow", "Fijar destino", nullptr));
+        radioPointerSpecial->setText(QCoreApplication::translate("MainWindow", "Fijar especiales", nullptr));
         groupBox_12->setTitle(QCoreApplication::translate("MainWindow", "Simulaci\303\263n", nullptr));
         radioBtnRealView->setText(QCoreApplication::translate("MainWindow", "M\303\272ndo f\303\255sico", nullptr));
         radioBtnRobotView->setText(QCoreApplication::translate("MainWindow", "Memoria robot", nullptr));
