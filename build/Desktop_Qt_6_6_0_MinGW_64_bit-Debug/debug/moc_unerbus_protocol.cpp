@@ -102,11 +102,12 @@ static constexpr auto qt_meta_stringdata_CLASSUnerbusENDCLASS = QtMocHelpers::st
     "CMD_GET_TURN_TARGET_DPS",
     "CMD_GET_DELAY_TICKS",
     "CMD_SET_DELAY_TICKS",
+    "CMD_UPDATE_MAZE_CELL",
     "CMD_OTHERS"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSUnerbusENDCLASS_t {
-    uint offsetsAndSizes[130];
+    uint offsetsAndSizes[132];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[8];
@@ -171,7 +172,8 @@ struct qt_meta_stringdata_CLASSUnerbusENDCLASS_t {
     char stringdata61[24];
     char stringdata62[20];
     char stringdata63[20];
-    char stringdata64[11];
+    char stringdata64[21];
+    char stringdata65[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSUnerbusENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -241,7 +243,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUnerbusENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(1317, 23),  // "CMD_GET_TURN_TARGET_DPS"
         QT_MOC_LITERAL(1341, 19),  // "CMD_GET_DELAY_TICKS"
         QT_MOC_LITERAL(1361, 19),  // "CMD_SET_DELAY_TICKS"
-        QT_MOC_LITERAL(1381, 10)   // "CMD_OTHERS"
+        QT_MOC_LITERAL(1381, 20),  // "CMD_UPDATE_MAZE_CELL"
+        QT_MOC_LITERAL(1402, 10)   // "CMD_OTHERS"
     },
     "Unerbus",
     "CommandId",
@@ -307,6 +310,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUnerbusENDCLASS_t qt_meta_strin
     "CMD_GET_TURN_TARGET_DPS",
     "CMD_GET_DELAY_TICKS",
     "CMD_SET_DELAY_TICKS",
+    "CMD_UPDATE_MAZE_CELL",
     "CMD_OTHERS"
 };
 #undef QT_MOC_LITERAL
@@ -327,7 +331,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUnerbusENDCLASS[] = {
        0,       // signalCount
 
  // enums: name, alias, flags, count, data
-       1,    1, 0x2,   63,   19,
+       1,    1, 0x2,   64,   19,
 
  // enum data: key, value
        2, uint(Unerbus::CommandId::CMD_ACK),
@@ -392,7 +396,8 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUnerbusENDCLASS[] = {
       61, uint(Unerbus::CommandId::CMD_GET_TURN_TARGET_DPS),
       62, uint(Unerbus::CommandId::CMD_GET_DELAY_TICKS),
       63, uint(Unerbus::CommandId::CMD_SET_DELAY_TICKS),
-      64, uint(Unerbus::CommandId::CMD_OTHERS),
+      64, uint(Unerbus::CommandId::CMD_UPDATE_MAZE_CELL),
+      65, uint(Unerbus::CommandId::CMD_OTHERS),
 
        0        // eod
 };

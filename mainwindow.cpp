@@ -281,18 +281,22 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
 
   case Unerbus::CommandId::CMD_UPDATE_MAZE_CELL: {
     if (payload.size() >= 4) {
-      quint8 x, y, walls, heading;
-      stream >> x >> y >> walls >> heading;
+      quint8 x, y_stm, walls, heading;
+      stream >> x >> y_stm >> walls >> heading;
 
-      qDebug() << "Actualización de laberinto en X:" << x << "Y:" << y
-               << "Walls:" << Qt::bin << walls << "Heading:" << heading;
+      const int y_qt = (MAZE_HEIGHT - 1) - static_cast<int>(y_stm);
 
-      if (x < MAZE_WIDTH && y < MAZE_HEIGHT) {
-        sim_maze_map[x][y] = walls;
+      qDebug() << "Actualización de laberinto STM32 X:" << x << "Y:" << y_stm
+               << "-> Qt Y:" << y_qt << "Walls:" << Qt::bin << walls
+               << "Heading:" << heading;
+
+      if (x < MAZE_WIDTH && y_stm < MAZE_HEIGHT && y_qt >= 0 &&
+          y_qt < MAZE_HEIGHT) {
+        sim_maze_map[x][y_qt] = walls;
         // Sincronizamos la posición y heading del cuadradito verde con la del
         // robot real
         current_x = x;
-        current_y = y;
+        current_y = static_cast<uint8_t>(y_qt);
         current_heading = static_cast<Heading>(heading); // Ajuste al enum de Qt
 
         // Refrescar entorno gráfico para que aparezca la pared y la ruta óptima
@@ -2161,24 +2165,31 @@ void MainWindow::on_btnSimTurnL_clicked() {
 }
 
 void MainWindow::on_btnSimFwd_clicked() {
+  int next_x = static_cast<int>(current_x);
+  int next_y = static_cast<int>(current_y);
+
   // Calculamos hacia dónde caminamos
   if (current_heading == HEADING_NORTH)
-    current_y--;
+    next_y--;
   else if (current_heading == HEADING_SOUTH)
-    current_y++;
+    next_y++;
   else if (current_heading == HEADING_EAST)
-    current_x++;
+    next_x++;
   else if (current_heading == HEADING_WEST)
-    current_x--;
-  // Evitamos salirnos y provocar un error de memoria "Segmentation Fault"
-  if (current_x < 0)
-    current_x = 0;
-  if (current_x >= MAZE_WIDTH)
-    current_x = MAZE_WIDTH - 1;
-  if (current_y < 0)
-    current_y = 0;
-  if (current_y >= MAZE_HEIGHT)
-    current_y = MAZE_HEIGHT - 1;
+    next_x--;
+
+  // Evitamos salirnos y provocar un acceso fuera de rango
+  if (next_x < 0)
+    next_x = 0;
+  if (next_x >= MAZE_WIDTH)
+    next_x = MAZE_WIDTH - 1;
+  if (next_y < 0)
+    next_y = 0;
+  if (next_y >= MAZE_HEIGHT)
+    next_y = MAZE_HEIGHT - 1;
+
+  current_x = static_cast<uint8_t>(next_x);
+  current_y = static_cast<uint8_t>(next_y);
 
   // Si NO estamos en modo desarrollador (Mundo físico), grabamos el avance en
   // la memoria.

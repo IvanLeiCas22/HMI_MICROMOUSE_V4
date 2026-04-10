@@ -350,11 +350,16 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QPushButton *btnRotMapL;
     QPushButton *btnRotMapR;
+    QGroupBox *groupBox_13;
+    QHBoxLayout *horizontalLayout_27;
+    QPushButton *btnSaveMaze;
+    QPushButton *btnLoadMaze;
     QGroupBox *groupBox_7;
     QVBoxLayout *verticalLayout_26;
     QRadioButton *radioPointerNormal;
     QRadioButton *radioPointerStart;
     QRadioButton *radioPointerGoal;
+    QRadioButton *radioPointerSpecial;
     QGroupBox *groupBox_12;
     QVBoxLayout *verticalLayout_22;
     QHBoxLayout *horizontalLayout_28;
@@ -2216,6 +2221,23 @@ public:
 
         verticalLayout_23->addWidget(groupBox_11);
 
+        groupBox_13 = new QGroupBox(manualControls);
+        groupBox_13->setObjectName("groupBox_13");
+        horizontalLayout_27 = new QHBoxLayout(groupBox_13);
+        horizontalLayout_27->setObjectName("horizontalLayout_27");
+        btnSaveMaze = new QPushButton(groupBox_13);
+        btnSaveMaze->setObjectName("btnSaveMaze");
+
+        horizontalLayout_27->addWidget(btnSaveMaze);
+
+        btnLoadMaze = new QPushButton(groupBox_13);
+        btnLoadMaze->setObjectName("btnLoadMaze");
+
+        horizontalLayout_27->addWidget(btnLoadMaze);
+
+
+        verticalLayout_23->addWidget(groupBox_13);
+
         groupBox_7 = new QGroupBox(manualControls);
         groupBox_7->setObjectName("groupBox_7");
         verticalLayout_26 = new QVBoxLayout(groupBox_7);
@@ -2235,6 +2257,11 @@ public:
         radioPointerGoal->setObjectName("radioPointerGoal");
 
         verticalLayout_26->addWidget(radioPointerGoal);
+
+        radioPointerSpecial = new QRadioButton(groupBox_7);
+        radioPointerSpecial->setObjectName("radioPointerSpecial");
+
+        verticalLayout_26->addWidget(radioPointerSpecial);
 
 
         verticalLayout_23->addWidget(groupBox_7);
@@ -2297,7 +2324,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedScreens->setCurrentIndex(4);
+        stackedScreens->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -2382,9 +2409,9 @@ public:
         groupBox_6->setTitle(QCoreApplication::translate("MainWindow", "General", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Velocidades base", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "Motor derecho", nullptr));
-        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "3400", nullptr));
+        editRightMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "4800", nullptr));
         label_26->setText(QCoreApplication::translate("MainWindow", "Motor izquierdo", nullptr));
-        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "3000", nullptr));
+        editLeftMotorBaseSpeed->setText(QCoreApplication::translate("MainWindow", "4400", nullptr));
         btnGetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetBaseMotorsSpeeds->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupCruiseControl->setTitle(QCoreApplication::translate("MainWindow", "Kick start", nullptr));
@@ -2399,51 +2426,51 @@ public:
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "PID navegaci\303\263n", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_37->setText(QCoreApplication::translate("MainWindow", "Setpoint una pared:", nullptr));
-        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "65", nullptr));
-        editWallFadeTicks->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
+        editSetpointOneWall->setText(QCoreApplication::translate("MainWindow", "43", nullptr));
+        editWallFadeTicks->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "Setpoint frontal:", nullptr));
         editMaxPwmOffsetNav->setText(QCoreApplication::translate("MainWindow", "5000", nullptr));
-        editKpNav->setText(QCoreApplication::translate("MainWindow", "80", nullptr));
+        editKpNav->setText(QCoreApplication::translate("MainWindow", "70", nullptr));
         label_20->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_47->setText(QCoreApplication::translate("MainWindow", "Setpoint diagonal giro:", nullptr));
-        editSetpointDiagonal->setText(QCoreApplication::translate("MainWindow", "135", nullptr));
+        editSetpointDiagonal->setText(QCoreApplication::translate("MainWindow", "90", nullptr));
         label_23->setText(QCoreApplication::translate("MainWindow", "Max. PWM offset:", nullptr));
-        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
+        editSetpointSides->setText(QCoreApplication::translate("MainWindow", "90", nullptr));
         label_53->setText(QCoreApplication::translate("MainWindow", "Setpoint ADC detecci\303\263n cinta:", nullptr));
-        editSetpointDiagSmoothTurn->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
-        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "75", nullptr));
+        editSetpointDiagSmoothTurn->setText(QCoreApplication::translate("MainWindow", "60", nullptr));
+        editSetpointFront->setText(QCoreApplication::translate("MainWindow", "120", nullptr));
         label_21->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
         editKdNav->setText(QCoreApplication::translate("MainWindow", "30", nullptr));
-        editKiNav->setText(QCoreApplication::translate("MainWindow", "0.000", nullptr));
+        editKiNav->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_52->setText(QCoreApplication::translate("MainWindow", "Fade pared ticks:", nullptr));
         label_36->setText(QCoreApplication::translate("MainWindow", "Setpoint lateral:", nullptr));
         label_44->setText(QCoreApplication::translate("MainWindow", "Setpoint diagonal:", nullptr));
-        editSetpointTapeDetection->setText(QCoreApplication::translate("MainWindow", "1500", nullptr));
+        editSetpointTapeDetection->setText(QCoreApplication::translate("MainWindow", "2000", nullptr));
         btnGetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidNavConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "PID giro", nullptr));
-        editKdTurn->setText(QCoreApplication::translate("MainWindow", "6", nullptr));
-        editFasterMotorSmooth->setText(QCoreApplication::translate("MainWindow", "6000", nullptr));
+        editKdTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        editFasterMotorSmooth->setText(QCoreApplication::translate("MainWindow", "6500", nullptr));
         label_49->setText(QCoreApplication::translate("MainWindow", "ki smooth:", nullptr));
-        editKiTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "360", nullptr));
-        editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "10000", nullptr));
+        editKiTurn->setText(QCoreApplication::translate("MainWindow", "40", nullptr));
+        editMinTurnSpeed->setText(QCoreApplication::translate("MainWindow", "330", nullptr));
+        editMaxTurnSpeed->setText(QCoreApplication::translate("MainWindow", "9999", nullptr));
         label_31->setText(QCoreApplication::translate("MainWindow", "Max. PWM", nullptr));
         label_27->setText(QCoreApplication::translate("MainWindow", "kp:", nullptr));
         label_29->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
         editKpTurn->setText(QCoreApplication::translate("MainWindow", "60", nullptr));
-        editSlowerMotorSmooth->setText(QCoreApplication::translate("MainWindow", "2000", nullptr));
+        editSlowerMotorSmooth->setText(QCoreApplication::translate("MainWindow", "2500", nullptr));
         label_48->setText(QCoreApplication::translate("MainWindow", "kp smooth:", nullptr));
         label_45->setText(QCoreApplication::translate("MainWindow", "Suave PWM r\303\241pido:", nullptr));
         label_28->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         label_35->setText(QCoreApplication::translate("MainWindow", "Giro pivot DPS:", nullptr));
         label_46->setText(QCoreApplication::translate("MainWindow", "Suave PWM lento:", nullptr));
         label_50->setText(QCoreApplication::translate("MainWindow", "kd smooth:", nullptr));
-        editKpSmoothTurn->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
-        editKiSmoothTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        editKdSmoothTurn->setText(QCoreApplication::translate("MainWindow", "0.5", nullptr));
+        editKpSmoothTurn->setText(QCoreApplication::translate("MainWindow", "60", nullptr));
+        editKiSmoothTurn->setText(QCoreApplication::translate("MainWindow", "40", nullptr));
+        editKdSmoothTurn->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_51->setText(QCoreApplication::translate("MainWindow", "Giro suave DPS:", nullptr));
-        editTurnAngularSpeed->setText(QCoreApplication::translate("MainWindow", "250", nullptr));
+        editTurnAngularSpeed->setText(QCoreApplication::translate("MainWindow", "280", nullptr));
         btnGetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Obtener", nullptr));
         btnSetPidTurnConfig->setText(QCoreApplication::translate("MainWindow", "Configurar", nullptr));
         groupBox_Braking->setTitle(QCoreApplication::translate("MainWindow", "PID Frenado", nullptr));
@@ -2506,10 +2533,14 @@ public:
         groupBox_11->setTitle(QCoreApplication::translate("MainWindow", "Rotar mapa", nullptr));
         btnRotMapL->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
         btnRotMapR->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
+        groupBox_13->setTitle(QCoreApplication::translate("MainWindow", "Guardar/cargar mapa", nullptr));
+        btnSaveMaze->setText(QCoreApplication::translate("MainWindow", "Guardar", nullptr));
+        btnLoadMaze->setText(QCoreApplication::translate("MainWindow", "Cargar", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("MainWindow", "Casillas especiales", nullptr));
         radioPointerNormal->setText(QCoreApplication::translate("MainWindow", "Normal", nullptr));
         radioPointerStart->setText(QCoreApplication::translate("MainWindow", "Fijar inicio", nullptr));
         radioPointerGoal->setText(QCoreApplication::translate("MainWindow", "Fijar destino", nullptr));
+        radioPointerSpecial->setText(QCoreApplication::translate("MainWindow", "Fijar especiales", nullptr));
         groupBox_12->setTitle(QCoreApplication::translate("MainWindow", "Simulaci\303\263n", nullptr));
         radioBtnRealView->setText(QCoreApplication::translate("MainWindow", "M\303\272ndo f\303\255sico", nullptr));
         radioBtnRobotView->setText(QCoreApplication::translate("MainWindow", "Memoria robot", nullptr));
