@@ -280,29 +280,41 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
   }
 
   case Unerbus::CommandId::CMD_UPDATE_MAZE_CELL: {
-    if (payload.size() >= 4) {
-      quint8 x, y_stm, walls, heading;
-      stream >> x >> y_stm >> walls >> heading;
+      if (payload.size() >= 4) {
+          quint8 x, y_stm, walls, heading;
+          stream >> x >> y_stm >> walls >> heading;
 
-      const int y_qt = (MAZE_HEIGHT - 1) - static_cast<int>(y_stm);
+          const int y_qt = (MAZE_HEIGHT - 1) - static_cast<int>(y_stm);
 
-      qDebug() << "Actualización de laberinto STM32 X:" << x << "Y:" << y_stm
-               << "-> Qt Y:" << y_qt << "Walls:" << Qt::bin << walls
-               << "Heading:" << heading;
+          if (x < MAZE_WIDTH && y_stm < MAZE_HEIGHT && y_qt >= 0 && y_qt < MAZE_HEIGHT) {
 
-      if (x < MAZE_WIDTH && y_stm < MAZE_HEIGHT && y_qt >= 0 &&
-          y_qt < MAZE_HEIGHT) {
-        sim_maze_map[x][y_qt] = walls;
-        // Sincronizamos la posición y heading del cuadradito verde con la del
-        // robot real
-        current_x = x;
-        current_y = static_cast<uint8_t>(y_qt);
-        current_heading = static_cast<Heading>(heading); // Ajuste al enum de Qt
+              // Rescatar banderas exclusivas de Qt antes de sobreescribir
+              uint8_t flags_exclusivas_qt = sim_maze_map[x][y_qt] & CELL_SPECIAL;
 
-        // Refrescar entorno gráfico para que aparezca la pared y la ruta óptima
-        drawMaze();
+              // Actualizamos paredes y visitado del STM32, sumando las banderas de Qt
+              sim_maze_map[x][y_qt] = walls | flags_exclusivas_qt;
+
+              // Propagación simétrica de paredes a los vecinos
+              if (walls & WALL_NORTH && y_qt > 0)
+                  sim_maze_map[x][y_qt - 1] |= WALL_SOUTH;
+
+              if (walls & WALL_SOUTH && y_qt < MAZE_HEIGHT - 1)
+                  sim_maze_map[x][y_qt + 1] |= WALL_NORTH;
+
+              if (walls & WALL_EAST && x < MAZE_WIDTH - 1)
+                  sim_maze_map[x + 1][y_qt] |= WALL_WEST;
+
+              if (walls & WALL_WEST && x > 0)
+                  sim_maze_map[x - 1][y_qt] |= WALL_EAST;
+
+              // Sincronizamos la posición y heading del cuadradito verde
+              current_x = x;
+              current_y = static_cast<uint8_t>(y_qt);
+              current_heading = static_cast<Heading>(heading);
+
+              drawMaze();
+          }
       }
-    }
     break;
   }
 
