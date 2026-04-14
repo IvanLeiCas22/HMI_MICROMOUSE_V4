@@ -346,6 +346,7 @@ public:
     QGroupBox *groupBox_10;
     QVBoxLayout *verticalLayout_25;
     QPushButton *btnSimReset;
+    QPushButton *btnSyncMaze;
     QGroupBox *groupBox_11;
     QHBoxLayout *horizontalLayout_26;
     QPushButton *btnRotMapL;
@@ -2201,6 +2202,11 @@ public:
 
         verticalLayout_25->addWidget(btnSimReset);
 
+        btnSyncMaze = new QPushButton(groupBox_10);
+        btnSyncMaze->setObjectName("btnSyncMaze");
+
+        verticalLayout_25->addWidget(btnSyncMaze);
+
 
         verticalLayout_23->addWidget(groupBox_10);
 
@@ -2479,7 +2485,7 @@ public:
         label_ki_braking->setText(QCoreApplication::translate("MainWindow", "ki:", nullptr));
         editKiBraking->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_kd_braking->setText(QCoreApplication::translate("MainWindow", "kd:", nullptr));
-        editKdBraking->setText(QCoreApplication::translate("MainWindow", "0.6", nullptr));
+        editKdBraking->setText(QCoreApplication::translate("MainWindow", "20", nullptr));
         label_stop_target->setText(QCoreApplication::translate("MainWindow", "Setpoint Distancia Parada:", nullptr));
         editStopTargetAdc->setText(QCoreApplication::translate("MainWindow", "20", nullptr));
         label_accel_stop->setText(QCoreApplication::translate("MainWindow", "Umbral Accel. Parada:", nullptr));
@@ -2530,6 +2536,7 @@ public:
         btnSimWallRight->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));
         groupBox_10->setTitle(QCoreApplication::translate("MainWindow", "Utilidades", nullptr));
         btnSimReset->setText(QCoreApplication::translate("MainWindow", "Reset laberinto", nullptr));
+        btnSyncMaze->setText(QCoreApplication::translate("MainWindow", "Sincronizar mapa con STM32", nullptr));
         groupBox_11->setTitle(QCoreApplication::translate("MainWindow", "Rotar mapa", nullptr));
         btnRotMapL->setText(QCoreApplication::translate("MainWindow", "Izq", nullptr));
         btnRotMapR->setText(QCoreApplication::translate("MainWindow", "Der", nullptr));

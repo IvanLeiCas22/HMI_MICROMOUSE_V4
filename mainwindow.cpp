@@ -417,6 +417,43 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
     updateDelayTicksUI(payload);
     break;
   }
+  case Unerbus::CommandId::CMD_SYNC_MAZE_COLUMN: {
+      // Necesitamos 1(col) + 15(datos) + 1(x) + 1(y) + 1(heading) = 19 bytes
+      if (payload.size() >= (MAZE_HEIGHT + 4)) {
+          quint8 col;
+          stream >> col;
+
+          // 1. Extraemos y guardamos las 15 celdas de esta columna
+          for (int i = 0; i < MAZE_HEIGHT; i++) {
+              quint8 cell_data;
+              stream >> cell_data;
+
+              // MUY IMPORTANTE: Traducimos la Y de STM32 a la Y visual de Qt (invertida)
+              int y_qt = (MAZE_HEIGHT - 1) - i;
+
+              // Rescatamos las banderas de Qt (ej. celdas especiales marcadas en UI)
+              uint8_t qt_flags = sim_maze_map[col][y_qt] & CELL_SPECIAL;
+              sim_maze_map[col][y_qt] = cell_data | qt_flags;
+          }
+
+          // 2. Extraemos la posición y orientación actual del robot
+          quint8 x, y_stm, heading;
+          stream >> x >> y_stm >> heading;
+          current_x = x;
+          current_y = static_cast<uint8_t>((MAZE_HEIGHT - 1) - y_stm); // Traducir Y
+          current_heading = static_cast<Heading>(heading);
+
+          // 3. PING-PONG: ¿Faltan columnas?
+          if (col < MAZE_WIDTH - 1) {
+              requestMazeColumn(col + 1); // Pedimos la siguiente instantáneamente
+          } else {
+              // Si ya llegó la columna 14, terminamos. Actualizamos el dibujo.
+              drawMaze();
+              ui->commsLog->appendPlainText("¡Sincronización del laberinto completada con éxito!");
+          }
+      }
+      break;
+  }
   default:
     qDebug() << "Comando desconocido:" << Qt::hex << command;
     break;
@@ -2667,3 +2704,21 @@ void MainWindow::on_btnLoadMaze_clicked()
     }
 }
 
+
+void MainWindow::on_btnSyncMaze_clicked()
+{
+    if (!serialPort->isOpen() && !udpSocket) {
+        QMessageBox::warning(this, "Error", "Debe estar conectado para sincronizar el laberinto.");
+        return;
+    }
+    ui->commsLog->appendPlainText("Iniciando sincronización del laberinto...");
+    requestMazeColumn(0); // Iniciamos el efecto dominó pidiendo la columna 0
+}
+
+void MainWindow::requestMazeColumn(quint8 col) {
+    QByteArray payload;
+    QDataStream stream(&payload, QIODevice::WriteOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream << col;
+    sendUnerbusCommand(Unerbus::CommandId::CMD_SYNC_MAZE_COLUMN, payload);
+}

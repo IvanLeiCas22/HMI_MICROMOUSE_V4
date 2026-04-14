@@ -120,6 +120,8 @@ private slots:
 
   void on_btnLoadMaze_clicked();
 
+  void on_btnSyncMaze_clicked();
+
   private:
   Ui::MainWindow *ui;
   QButtonGroup *navigationButtonGroup; // Nuevo miembro para agrupar los botones
@@ -198,6 +200,7 @@ private slots:
   // --- Funciones LABERINTO ---
   // Función que hará toda la magia de iluminar las paredes
   void drawMaze();
+  void requestMazeColumn(quint8 col);
   void calculateFastestPath(int sx, int sy, int gx, int gy);
   int getFloodFillDistance(int sx, int sy, int gx, int gy);
   void autonomousTick();

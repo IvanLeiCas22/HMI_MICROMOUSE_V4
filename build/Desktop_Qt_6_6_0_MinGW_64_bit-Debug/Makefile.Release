@@ -121,10 +121,11 @@ compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_unerbuspars
 compiler_moc_header_clean:
 	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_unerbusparser.cpp release\moc_unerbus_protocol.cpp
 release/moc_mainwindow.cpp: ../../mainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		../../Comunicacion/unerbusparser.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qglobal.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtversionchecks.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtconfiginclude.h \
@@ -168,19 +169,9 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtresource.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qttranslation.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstring.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qchar.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringview.h \
@@ -227,41 +218,64 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qbindingstorage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
+		../../Comunicacion/unerbus_protocol.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvariant.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qdebug.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtextstream.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringconverter_base.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qmap.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qset.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qhash.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpainterpath.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qbrush.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfont.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontinfo.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qsizepolicy.h \
@@ -278,25 +292,15 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputdevice.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qscreen.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QList \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QRect \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSize \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/QTransform \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
-		../../Comunicacion/unerbusparser.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
-		../../Comunicacion/unerbus_protocol.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/QUdpSocket \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qudpsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
@@ -304,9 +308,25 @@ release/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimezone.h \
 		release/moc_predefs.h \
 		C:/Qt/6.6.0/mingw_64/bin/moc.exe
 	C:\Qt\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/ivanl/OneDrive/Escritorio/MICROCONTROLADORES/HMI_MICROMOUSE_V4/build/Desktop_Qt_6_6_0_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.6.0/mingw_64/mkspecs/win32-g++ -IC:/Users/ivanl/OneDrive/Escritorio/MICROCONTROLADORES/HMI_MICROMOUSE_V4 -IC:/Qt/6.6.0/mingw_64/include -IC:/Qt/6.6.0/mingw_64/include/QtWidgets -IC:/Qt/6.6.0/mingw_64/include/QtGui -IC:/Qt/6.6.0/mingw_64/include/QtSerialPort -IC:/Qt/6.6.0/mingw_64/include/QtNetwork -IC:/Qt/6.6.0/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o release\moc_mainwindow.cpp
@@ -541,10 +561,11 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 release/main.o: ../../main.cpp ../../mainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		../../Comunicacion/unerbusparser.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qglobal.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtversionchecks.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtconfiginclude.h \
@@ -588,19 +609,9 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtresource.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qttranslation.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstring.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qchar.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringview.h \
@@ -647,41 +658,64 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qbindingstorage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
+		../../Comunicacion/unerbus_protocol.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvariant.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qdebug.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtextstream.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringconverter_base.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qmap.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qset.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qhash.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpainterpath.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qbrush.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfont.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontinfo.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qsizepolicy.h \
@@ -698,25 +732,15 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputdevice.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qscreen.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QList \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QRect \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSize \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/QTransform \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
-		../../Comunicacion/unerbusparser.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
-		../../Comunicacion/unerbus_protocol.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/QUdpSocket \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qudpsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
@@ -724,9 +748,25 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimezone.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QApplication \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qcoreapplication.h \
@@ -747,15 +787,15 @@ release/main.o: ../../main.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qpromise.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		../../Comunicacion/unerbusparser.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qglobal.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtversionchecks.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtconfiginclude.h \
@@ -799,19 +839,9 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtresource.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qttranslation.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstring.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qchar.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringview.h \
@@ -858,41 +888,64 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qbindingstorage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
+		../../Comunicacion/unerbus_protocol.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtguiexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvariant.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qdebug.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qtextstream.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qstringconverter_base.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qmap.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qshareddata_impl.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qset.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qhash.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/q23utility.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qrect.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qmargins.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qsize.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qpoint.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpainterpath.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtransform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpolygon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qregion.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qline.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixmap.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpaintdevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qcolor.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgb.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qrgba64.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qimage.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpixelformat.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsRectItem \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qbrush.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfont.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qaction.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qkeysequence.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qicon.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpalette.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontinfo.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qsizepolicy.h \
@@ -909,25 +962,15 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputdevice.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qscreen.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QList \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QRect \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSize \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QSizeF \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/QTransform \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QButtonGroup \
-		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
-		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
-		../../Comunicacion/unerbusparser.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QByteArray \
-		../../Comunicacion/unerbus_protocol.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/QUdpSocket \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qudpsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
@@ -935,32 +978,46 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 		C:/Qt/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QTimer \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimer.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
-		ui_mainwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPort \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialport.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportglobal.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qtserialportexports.h \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/QSerialPortInfo \
+		C:/Qt/6.6.0/mingw_64/include/QtSerialPort/qserialportinfo.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMessageBox \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qdialog.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QDebug \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qlocale.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		ui_mainwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/QBrush \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QDataStream \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDebug \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/QIntValidator \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QMetaEnum \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/qmetaobject.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/QMouseEvent \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/QPen \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/QTextBlock \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextobject.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextformat.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qpen.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextoption.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextlayout.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qglyphrun.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qrawfont.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qfontdatabase.h \
 		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextcursor.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextdocument.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QMetaEnum \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qmetaobject.h \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/QIntValidator \
-		C:/Qt/6.6.0/mingw_64/include/QtGui/qvalidator.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qregularexpression.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/qlocale.h
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\..\mainwindow.cpp
 
 release/unerbusparser.o: ../../Comunicacion/unerbusparser.cpp ../../Comunicacion/unerbusparser.h \
