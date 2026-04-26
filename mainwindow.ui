@@ -305,7 +305,7 @@ QPushButton:checked {
     <item>
      <widget class="QStackedWidget" name="stackedScreens">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageHome">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -723,45 +723,6 @@ QPushButton:checked {
            </item>
            <item>
             <layout class="QGridLayout" name="layoutDistanceSensors">
-             <item row="0" column="1">
-              <widget class="QProgressBar" name="progBarIrRightSide">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="minimum">
-                <number>20</number>
-               </property>
-               <property name="maximum">
-                <number>150</number>
-               </property>
-               <property name="value">
-                <number>20</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="textVisible">
-                <bool>true</bool>
-               </property>
-               <property name="format">
-                <string>%v</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelIrRightSide">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>D</string>
-               </property>
-              </widget>
-             </item>
              <item row="5" column="1">
               <widget class="QProgressBar" name="progBarIrLeftSide">
                <property name="font">
@@ -801,6 +762,71 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelIrRightSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>D</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QProgressBar" name="progBarIrRightSide">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="minimum">
+                <number>20</number>
+               </property>
+               <property name="maximum">
+                <number>150</number>
+               </property>
+               <property name="value">
+                <number>20</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textVisible">
+                <bool>true</bool>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="lblWallRightDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="label_55">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -824,18 +850,6 @@ QPushButton:checked {
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelIrFrontRight">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>D</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QProgressBar" name="progBarIrFrontRight">
                <property name="font">
@@ -860,6 +874,18 @@ QPushButton:checked {
                </property>
                <property name="format">
                 <string>%v</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelIrFrontRight">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>D</string>
                </property>
               </widget>
              </item>
@@ -902,6 +928,19 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="lblWallFrontDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -925,18 +964,6 @@ QPushButton:checked {
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelIrRightDiag">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>D</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QProgressBar" name="progBarIrLeftDiag">
                <property name="font">
@@ -1003,6 +1030,44 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelIrRightDiag">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>D</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="lblWallDiagRightDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="lblWallDiagLeftDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -1026,6 +1091,30 @@ QPushButton:checked {
            </item>
            <item>
             <layout class="QGridLayout" name="layoutGroundSensors">
+             <item row="0" column="1">
+              <widget class="QProgressBar" name="progBarIrGroundFront">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="minimum">
+                <number>0</number>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="format">
+                <string>%v</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="labelIrGroundFront">
                <property name="font">
@@ -1038,6 +1127,30 @@ QPushButton:checked {
                </property>
                <property name="margin">
                 <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QProgressBar" name="progBarIrGroundRear">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="minimum">
+                <number>0</number>
+               </property>
+               <property name="maximum">
+                <number>4095</number>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="format">
+                <string>%v</string>
                </property>
               </widget>
              </item>
@@ -1062,51 +1175,29 @@ QPushButton:checked {
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QProgressBar" name="progBarIrGroundFront">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
+             <item row="0" column="2">
+              <widget class="QLabel" name="lblFloorFrontDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
                </property>
-               <property name="minimum">
-                <number>20</number>
-               </property>
-               <property name="maximum">
-                <number>150</number>
-               </property>
-               <property name="value">
-                <number>20</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="format">
-                <string>%v</string>
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QProgressBar" name="progBarIrGroundRear">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
+             <item row="3" column="2">
+              <widget class="QLabel" name="lblFloorRearDetected">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
                </property>
-               <property name="minimum">
-                <number>20</number>
-               </property>
-               <property name="maximum">
-                <number>150</number>
-               </property>
-               <property name="value">
-                <number>20</number>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="format">
-                <string>%v</string>
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>
