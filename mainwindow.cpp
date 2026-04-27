@@ -6,11 +6,29 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsRectItem>
 #include <QIntValidator>
+#include <QLabel>
 #include <QMessageBox>
 #include <QMetaEnum>
 #include <QMouseEvent>
 #include <QPen>
 #include <QTextBlock>
+
+namespace {
+constexpr quint8 SENSOR_DET_WALL_FRONT = 0x01;
+constexpr quint8 SENSOR_DET_WALL_LEFT = 0x02;
+constexpr quint8 SENSOR_DET_WALL_RIGHT = 0x04;
+constexpr quint8 SENSOR_DET_WALL_DIAG_LEFT = 0x08;
+constexpr quint8 SENSOR_DET_WALL_DIAG_RIGHT = 0x10;
+constexpr quint8 SENSOR_DET_FLOOR_FRONT = 0x20;
+constexpr quint8 SENSOR_DET_FLOOR_REAR = 0x40;
+
+void setDetectionLabel(QLabel *label, bool active) {
+  label->setText(active ? " " : "");
+  label->setStyleSheet(
+      active ? "background-color: #22c55e; border: 1px solid #15803d; border-radius: 4px;"
+             : "background-color: transparent; border: 1px solid #4b5563; border-radius: 4px;");
+}
+} // namespace
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
@@ -264,7 +282,7 @@ void MainWindow::onPacketReceived(quint8 command, const QByteArray &payload) {
     qDebug() << "Comando GET_ALIVE recibido.";
     break;
   }
-  case Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES: {
+  case Unerbus::CommandId::CMD_GET_IR_SENSOR_SNAPSHOT: {
     updateIrSensorsUI(payload);
     break;
   }
@@ -477,8 +495,8 @@ void MainWindow::populateCMDComboBox() {
       "GET_MPU_DATA (0xA2)",
       static_cast<quint8>(Unerbus::CommandId::CMD_GET_MPU_DATA));
   ui->CMDComboBox->addItem(
-      "GET_LAST_ADC_VALUES (0xA0)",
-      static_cast<quint8>(Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES));
+      "GET_IR_SENSOR_SNAPSHOT (0xA0)",
+      static_cast<quint8>(Unerbus::CommandId::CMD_GET_IR_SENSOR_SNAPSHOT));
   ui->CMDComboBox->addItem(
       "GET_MOTOR_SPEEDS (0xA4)",
       static_cast<quint8>(Unerbus::CommandId::CMD_GET_MOTOR_SPEEDS));
@@ -651,28 +669,29 @@ void MainWindow::on_chkBoxAutoRefreshSensorsValues_toggled(bool checked) {
  * @brief Solicita todos los datos de sensores al microcontrolador.
  */
 void MainWindow::requestSensorData() {
-  sendUnerbusCommand(Unerbus::CommandId::CMD_GET_LAST_ADC_VALUES);
+  sendUnerbusCommand(Unerbus::CommandId::CMD_GET_IR_SENSOR_SNAPSHOT);
   sendUnerbusCommand(Unerbus::CommandId::CMD_GET_MPU_DATA);
   sendUnerbusCommand(Unerbus::CommandId::CMD_GET_YAW_ANGLE);
 }
 
 /**
  * @brief Actualiza los QProgressBar de los sensores IR con los datos recibidos.
- * @param payload El payload del paquete CMD_GET_LAST_ADC_VALUES.
+ * @param payload El payload del paquete CMD_GET_IR_SENSOR_SNAPSHOT.
  */
 void MainWindow::updateIrSensorsUI(const QByteArray &payload) {
-  if (payload.size() < 16)
-    return; // 8 canales * 2 bytes/canal
+  if (payload.size() < 17)
+    return; // 8 valores uint16_t + detection_flags
 
   QDataStream stream(payload);
   stream.setByteOrder(QDataStream::LittleEndian);
 
   quint16 ir_front_left, ir_front_right, ir_diag_left, ir_diag_right,
       ir_side_left, ir_side_right, ir_gnd_front, ir_gnd_rear;
+  quint8 detection_flags;
 
-  // Orden: ADC0, ADC1, ADC2, ADC3, ADC4, ADC5, ADC6, ADC7.
   stream >> ir_side_right >> ir_diag_right >> ir_front_right >> ir_gnd_front >>
-      ir_front_left >> ir_diag_left >> ir_side_left >> ir_gnd_rear;
+      ir_front_left >> ir_diag_left >> ir_side_left >> ir_gnd_rear >>
+      detection_flags;
 
   ui->progBarIrFrontLeft->setValue(ir_front_left);
   ui->progBarIrFrontRight->setValue(ir_front_right);
@@ -682,6 +701,21 @@ void MainWindow::updateIrSensorsUI(const QByteArray &payload) {
   ui->progBarIrRightSide->setValue(ir_side_right);
   ui->progBarIrGroundFront->setValue(ir_gnd_front);
   ui->progBarIrGroundRear->setValue(ir_gnd_rear);
+
+  setDetectionLabel(ui->lblWallFrontDetected,
+                    (detection_flags & SENSOR_DET_WALL_FRONT) != 0);
+  setDetectionLabel(ui->lblWallLeftDetected,
+                    (detection_flags & SENSOR_DET_WALL_LEFT) != 0);
+  setDetectionLabel(ui->lblWallRightDetected,
+                    (detection_flags & SENSOR_DET_WALL_RIGHT) != 0);
+  setDetectionLabel(ui->lblWallDiagLeftDetected,
+                    (detection_flags & SENSOR_DET_WALL_DIAG_LEFT) != 0);
+  setDetectionLabel(ui->lblWallDiagRightDetected,
+                    (detection_flags & SENSOR_DET_WALL_DIAG_RIGHT) != 0);
+  setDetectionLabel(ui->lblFloorFrontDetected,
+                    (detection_flags & SENSOR_DET_FLOOR_FRONT) != 0);
+  setDetectionLabel(ui->lblFloorRearDetected,
+                    (detection_flags & SENSOR_DET_FLOOR_REAR) != 0);
 }
 
 /**

@@ -21,7 +21,7 @@ namespace Unerbus
         CMD_FIRMWARE = 0xF1,
         CMD_GET_BUTTON_STATE = 0x12,
         CMD_GET_MPU_DATA = 0xA2,
-        CMD_GET_LAST_ADC_VALUES = 0xA0,
+        CMD_GET_IR_SENSOR_SNAPSHOT = 0xA0,
         CMD_TEST_MOTORS = 0xA1,
         CMD_GET_MOTOR_SPEEDS = 0xA4,
         CMD_SET_MOTOR_PWM = 0xA5,
